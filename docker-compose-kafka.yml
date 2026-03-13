@@ -1,5 +1,7 @@
 version: '3.8'
 
+name: docker-kafka
+
 services:
 
   kafka:
