@@ -587,4 +587,52 @@ garantir que eles funcionem corretamente dentro do cluster Kubernetes. Caso seja
 contêiner debug não terá um comando de longa duração para manter o pod em execução, e o Kubernetes tentará reiniciar o pod repetidamente, resultando em um ciclo
 de falhas (crashloop) para o contêiner debug.
 
+--Static pods
+Os static pods são um tipo especial de pod no Kubernetes que são gerenciados diretamente pelo kubelet em um nó específico do cluster, em vez de serem
+gerenciados pelo control plane do Kubernetes. Eles são usados para executar componentes essenciais do cluster Kubernetes, como o kube-apiserver,
+kube-controller-manager e kube-scheduler, que são necessários para o funcionamento do cluster Kubernetes. Os static pods são definidos em arquivos de
+configuração YAML que são colocados em um diretório específico no nó, geralmente `/etc/kubernetes/manifests/`. O kubelet monitora esse diretório e cria os
+static pods com base nos arquivos de configuração encontrados lá. Os static pods são úteis para garantir que os componentes essenciais do cluster Kubernetes
+estejam sempre em execução, mesmo que o control plane do Kubernetes esteja indisponível, permitindo que o cluster Kubernetes continue funcionando de forma
+resiliente. Certifique-se de configurar os static pods corretamente para garantir que os componentes essenciais do cluster Kubernetes sejam executados com
+sucesso e que o cluster Kubernetes funcione corretamente. Lembre-se de que os static pods são gerenciados diretamente pelo kubelet e não são controlados pelo
+control plane do Kubernetes, portanto, eles não são afetados por falhas ou indisponibilidade do control plane, garantindo que os componentes essenciais do
+cluster Kubernetes estejam sempre em execução para manter o cluster Kubernetes funcionando de forma resiliente.
+Abaixo está um exemplo de configuração de static pods em um arquivo YAML para um pod do Kubernetes:
 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: multicontainerpod
+  name: multicontainerpod
+spec:
+  containers:
+    - image: httpd
+      name: httpd
+    - image: alpine:latest
+      name: debug
+      command: [ "sleep", "infinity" ]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+```
+
+--Lifecycle dos pods
+O lifecycle dos pods no Kubernetes é o ciclo de vida que um pod passa desde a sua criação até a sua exclusão. O lifecycle dos pods é composto por diferentes
+fases, cada uma representando um estado específico do pod. As fases do lifecycle dos pods incluem:
+
+- `Pending`: O pod foi criado, mas ainda não foi atribuído a um nó do cluster para execução. Ele está aguardando recursos disponíveis para ser agendado.
+- `Running`: O pod foi atribuído a um nó do cluster e está em execução. Ele pode estar em execução, mas ainda não está pronto para receber tráfego.
+- `Succeeded`: O pod foi concluído com sucesso e não está mais em execução. Ele pode ter sido concluído com sucesso ou ter sido concluído devido a um erro, mas
+  não está mais em execução.
+- `Failed`: O pod foi concluído com falha e não está mais em execução. Ele pode ter sido concluído devido a um erro ou ter sido concluído com sucesso, mas não
+  está mais em execução.
+- `Unknown`: O estado do pod é desconhecido, geralmente devido a um problema de comunicação com o nó do cluster onde o pod está em execução. O Kubernetes não
+  tem informações suficientes para determinar o estado do pod.
+
+O lifecycle dos pods é importante para entender o estado atual de um pod e para monitorar o comportamento dos pods dentro do cluster Kubernetes. Ele permite
+que os usuários identifiquem se um pod está em execução, se foi concluído com sucesso ou se ocorreu um erro durante a execução. O lifecycle dos pods é
+gerenciado pelo Kubernetes e pode ser monitorado usando o comando `kubectl get pods` para verificar o estado dos pods e tomar as ações necessárias com base no
+estado atual dos pods dentro do cluster Kubernetes. Certifique-se de entender o lifecycle dos pods para gerenciar e monitorar os recursos do cluster
+Kubernetes de forma eficiente usando o kubectl.
