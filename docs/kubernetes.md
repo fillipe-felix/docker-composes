@@ -513,4 +513,78 @@ removam pods de forma mais granular e organizada dentro do cluster usando o kube
 namespaces do cluster Kubernetes. Certifique-se de que o namespace especificado exista no cluster Kubernetes para evitar erros ao usar o kubectl com o
 namespaceconfigurado.
 
+--Init containers
+Os init containers são contêineres especiais que são executados antes dos contêineres principais em um pod do Kubernetes. Eles são usados para realizar tarefas
+de inicialização, como configuração,verificação de dependências ou preparação do ambiente antes que os contêineres principais sejam iniciados. Os init
+containers são definidos na seção `initContainers` do arquivo de configuração do pod e são executados em ordem, um após o outro. Cada init container deve ser
+concluído com sucesso antes que o próximo seja iniciado, e os contêineres principais só serão iniciados após a conclusão de todos os init containers. Os init
+containers são úteis para garantir que o ambiente do pod esteja configurado corretamente antes que os contêineres principais sejam executados, permitindo que os
+usuários realizem tarefas de inicialização de forma eficiente e organizada dentro do cluster Kubernetes usando o kubectl. Certifique-se de configurar os init
+containers corretamente para garantir que eles sejam executados com sucesso e que os contêineres principais sejam iniciados corretamente dentro do pod do
+Kubernetes.
+Abaixo está um exemplo de configuração de init containers em um arquivo YAML para um pod do Kubernetes:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-cd
+  namespace: default
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+  initContainers:
+    - name: waitfordns
+      image: busybox:latest
+      command: [ 'sh', '-c', 'until nslookup mymysql.default.svc.cluster.local; do echo waiting for dns...; sleep 2; done;' ]
+```
+
+O nginx-cd é o contêiner principal do pod, que executa a imagem do nginx e expõe a porta 80. O init container waitfordns é executado antes do contêiner
+principal e usa a imagem do busybox para executar um comando que verifica se o serviço de banco de dados MySQL (mymysql) está disponível no cluster Kubernetes.
+O init container aguarda até que o serviço de banco de dados esteja disponível antes de permitir que o contêiner principal seja iniciado, garantindo que o
+ambiente do pod esteja configurado corretamente para a aplicação nginx funcionar corretamente. Certifique-se de configurar os init containers de acordo com as
+necessidades da sua aplicação e do ambiente do cluster Kubernetes para garantir que eles sejam executados com sucesso e que os contêineres principais sejam
+iniciados corretamente dentro do pod do Kubernetes.
+
+--Multi-container pods
+Os multi-container pods são pods do Kubernetes que contêm mais de um contêiner. Eles são usados para executar aplicativos que exigem a colaboração de múltiplos
+contêineres, como uma aplicação principal e um sidecar para realizar tarefas auxiliares, como monitoramento, logging ou proxy reverso. Os multi-container pods
+são definidos na seção `containers` do arquivo de configuração do pod, onde cada contêiner é especificado com seu nome, imagem e outras configurações
+relevantes. Os contêineres dentro de um multi-container pod compartilham o mesmo ambiente de execução, como rede, armazenamento e recursos de computação,
+permitindo que eles se comuniquem e colaborem de forma eficiente dentro do pod. Os multi-container pods são úteis para executar aplicativos complexos que exigem
+a colaboração de múltiplos contêineres, permitindo que os usuários criem e gerenciem recursos de forma eficiente dentro do cluster Kubernetes usando o kubectl.
+Certifique-se de configurar os multi-container pods corretamente para garantir que os contêineres colaborem de forma eficiente e que a aplicação funcione
+corretamente dentro do cluster Kubernetes.
+Abaixo está um exemplo de configuração de multi-container pods em um arquivo YAML para um pod do Kubernetes:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: multicontainerpod
+  name: multicontainerpod
+spec:
+  containers:
+    - image: httpd
+      name: httpd
+    - image: alpine:latest
+      name: debug
+      command: [ "sleep", "infinity" ]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+```
+
+O multi-container pod chamado multicontainerpod contém dois contêineres: o contêiner httpd, que executa a imagem do servidor web Apache HTTP, e o contêiner
+debug,que executa a imagem do Alpine Linux e tem um comando de longa duração para manter o pod em execução. Os contêineres dentro do multi-container pod
+compartilham o mesmo ambiente de execução, permitindo que eles se comuniquem e colaborem de forma eficiente dentro do pod. O contêiner httpd pode servir
+conteúdo web, enquanto o contêiner debug pode ser usado para depuração ou administração do pod usando o comando `kubectl exec` para acessar o terminal do
+contêiner debug. Certifique-se de configurar os multi-container pods de acordo com as necessidades da sua aplicação e do ambiente do cluster Kubernetes para
+garantir que eles funcionem corretamente dentro do cluster Kubernetes. Caso seja removido o command do conteiner debug, o pod irá entrar em crashloop, pois o
+contêiner debug não terá um comando de longa duração para manter o pod em execução, e o Kubernetes tentará reiniciar o pod repetidamente, resultando em um ciclo
+de falhas (crashloop) para o contêiner debug.
+
 
