@@ -181,10 +181,6 @@ informações sobre os clusters, usuários e contextos configurados, permitindo 
 apropriado para suas operações no Kubernetes.
 kubectl config current-context -> exibe o contexto atual em uso em um arquivo de configuração do Kubernetes, permitindo
 que os usuários verifiquem qual cluster, usuário e contexto estão ativos para suas operações no Kubernetes.
-kubectl apply -f <arquivo.yaml> -> aplica as alterações a um recurso do Kubernetes a partir de um arquivo deconfiguração
-YAML, criando ou atualizando o recurso conforme necessário. Este comando é amplamente utilizado paragerenciar recursos
-do Kubernetes de forma declarativa, permitindo que os usuários definam o estado desejado dos recursos em arquivos de
-configuração e apliquem essas configurações ao cluster Kubernetes de maneira eficiente e consistente.
 kubectl api-resources -> lista os tipos de recursos disponíveis na API do Kubernetes, mostrando informações sobre os recursos
 suportados, suas versões e se eles são recursos de namespace ou de cluster, permitindo que os usuários entendam os recursos disponíveis para gerenciamento e
 operação em seus clusters Kubernetes.
@@ -212,6 +208,14 @@ permitindo que os usuários filtrem os pods com base em suas labels para gerenci
 kubectl get -n kube-system etcd-comunidade-devops-control-plane -oyaml -> exibe detalhes sobre o pod etcd-comunidade-devops-control-plane no namespace
 kube-system em formato YAML, permitindo que os usuários obtenham informações estruturadas e detalhadas sobre o pod etcd e seus recursos associados para
 depuração e administração avançada no Kubernetes.
+kubectl delete pod <pod-name> -> exclui um pod específico do cluster Kubernetes, permitindo que os usuários removam pods que não são mais necessários ou que
+estão causando problemas no cluster.
+kubectl delete pod <pod-name> -n <namespace> -> exclui um pod específico de um namespace específico no cluster Kubernetes, permitindo que os usuários removam
+pods de forma mais granular e organizada dentro do cluster.
+kubectl delete deployment <deployment-name> -> exclui um deployment específico do cluster Kubernetes, permitindo que os usuários removam deployments que não são
+mais necessários ou que estão causando problemas no cluster.
+kubectl delete service <service-name> -> exclui um serviço específico do cluster Kubernetes, permitindo que os usuários removam serviços que não são mais
+necessários ou que estão causando problemas no cluster.
 
 --Configurando o kubectl para acessar um cluster Kubernetes local criado com o Kind
 Para configurar o kubectl para acessar um cluster Kubernetes local criado com o Kind, siga os passos abaixo:
@@ -370,25 +374,143 @@ Kubernetes.
 Exemplo de arquivo YAML para criar um deployment do Kubernetes:
 
 ```yaml
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: meu-deployment
-  labels:
-    app: minha-aplicacao
+  name: nginx
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: minha-aplicacao
-  template:
-    metadata:
-      labels:
-        app: minha-aplicacao
-    spec:
-      containers:
-        - name: meu-container
-          image: minha-imagem:latest
-          ports:
-            - containerPort: 80
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
 ```
+
+--Namespace o que é e para que serve
+No Kubernetes, um namespace é uma forma de organizar e isolar recursos dentro de um cluster. Ele permite que você crie múltiplos ambientes lógicos dentro do
+mesmo cluster, cada um com seus próprios recursos, como pods, serviços e deployments. Os namespaces são úteis para separar diferentes equipes,projetos ou
+ambientes (como desenvolvimento, teste e produção) dentro do mesmo cluster Kubernetes. Eles também ajudam a evitar conflitos de nomes entre recursos, permitindo
+que você tenha recursos com o mesmo nome em diferentes namespaces. Além disso, os namespaces podem ser usados para aplicar políticas de segurança e controle de
+acesso específicas para cada namespace, garantindo que os recursos sejam gerenciados de forma segura e eficiente dentro do cluster Kubernetes.
+
+--Comandos relacionados a namespaces
+kubectl create namespace <nome-do-namespace> -> cria um novo namespace no cluster Kubernetes, permitindo que os usuários organizem e isolem recursos dentro do
+cluster Kubernetes usando namespaces.
+kubectl get namespaces -> lista os namespaces disponíveis no cluster Kubernetes, mostrando informações sobre cada namespace, como nome, status e outras
+informações relevantes para monitoramento e administração do cluster Kubernetes usando namespaces.
+kubectl delete namespace <nome-do-namespace> -> exclui um namespace do cluster Kubernetes, removendo todos os recursos associados a esse namespace, permitindo
+que os usuários limpem recursos desnecessários ou obsoletos do cluster Kubernetes usando namespaces.
+kubectl get pods -n <nome-do-namespace> -> lista os pods em um namespace específico, mostrando informações como nome, status, idade e outros detalhes relevantes
+para monitoramento e administração dos recursos dentro do namespace usando o kubectl.
+kubectl apply -f <arquivo.yaml> -n <nome-do-namespace> -> aplica as alterações a um recurso do Kubernetes a partir de um arquivo de configuração YAML dentro de
+um namespace específico, criando ou atualizando o recurso conforme necessário, permitindo que os usuários gerenciem recursos de forma eficiente dentro do
+namespace usando o kubectl.
+kubectl config set-context --current --namespace=<nome-do-namespace> -> define o namespace padrão para o contexto atual do kubectl, permitindo que os usuários
+trabalhem com um namespace específico sem precisar especificar o namespace em cada comando do kubectl, facilitando a administração e operação de recursos dentro
+do namespace usando o kubectl. Certifique-se de que o namespace especificado exista no cluster Kubernetes para evitar erros ao usar o kubectl com o namespace
+configurado.
+
+--namespaces padrões
+O Kubernetes vem com alguns namespaces pré-definidos que são usados para diferentes propósitos dentro do cluster. Os namespaces padrão incluem:
+
+- `default`: Este é o namespace padrão onde os recursos são criados se nenhum namespace for especificado. Ele é usado para recursos que não se encaixam em
+  outros
+  namespaces ou para recursos de teste e desenvolvimento.
+- `kube-system`: Este namespace é usado para os componentes do control plane do Kubernetes, como o kube-apiserver, kube-controller-manager, kube-scheduler e
+  outros
+  componentes essenciais do cluster Kubernetes. Ele é reservado para os recursos do sistema e não deve ser usado para recursos de usuário.
+- `kube-public`: Este namespace é usado para recursos que devem ser acessíveis publicamente, como ConfigMaps ou Secrets que precisam ser compartilhados entre
+  diferentes namespaces. Ele é de leitura pública e pode ser acessado por qualquer usuário do cluster Kubernetes.
+- `kube-node-lease`: Este namespace é usado para armazenar informações sobre os nós do cluster Kubernetes, como o status dos nós e as informações de lease. Ele
+  é usado para monitorar a saúde dos nós e garantir que eles estejam funcionando corretamente dentro do cluster Kubernetes.
+- `local-path-storage`: Este namespace é usado para os recursos relacionados ao local-path-storage, que é um provisionador de armazenamento local para o
+  Kubernetes. Ele é usado para fornecer armazenamento persistente para os pods dentro do cluster Kubernetes usando o armazenamento local do nó.
+
+--Pods
+No Kubernetes, um pod é a menor unidade de implantação e execução. Ele representa um grupo de um ou mais contêineres que compartilham o mesmo ambiente de
+execução, como rede, armazenamento e recursos de computação. Os pods são usados para executar aplicativos e serviços dentro do cluster Kubernetes, e cada pod é
+atribuído a um nó do cluster para execução. Os pods são efêmeros, o que significa que eles podem ser criados,atualizados e excluídos dinamicamente pelo
+Kubernetes com base na demanda e nas necessidades do cluster. Os pods são gerenciados por controladores, como deployments, statefulsets e daemonsets, que
+garantem que o número desejado de réplicas de pods esteja sempre em execução e que os pods sejam reiniciados ou substituídos em caso de falhas. Os pods também
+podem ser expostos a outros recursos do Kubernetes, como serviços, para permitir a comunicação entre os pods e outros recursos dentro do cluster Kubernetes.
+Normalmente cada pod contem um container com uma aplicação, mas é possível ter mais de um container em um pod, normalmente é criado um sidecar para realizar
+tarefas auxiliares para a aplicação principal, como monitoramento, logging ou proxy reverso. Os pods são uma parte fundamental do Kubernetes e são usados para
+executar e gerenciar aplicativos e serviços dentro do cluster Kubernetes de forma eficiente e escalável.
+
+As vezes é necessário acessar o terminal de um container em execução dentro de um pod para depuração ou administração. Para isso, você pode usar o comando
+`kubectl exec -it <nome-do-pod> -- <comando>`, onde `<nome-do-pod>` é o nome do pod que contém o container que você deseja acessar, e `<comando>` é o comando
+que você deseja executar dentro do container. Por exemplo, se você quiser acessar um terminal interativo dentro do container, pode usar o comando
+`kubectl exec -it <nome-do-pod> -- sh` para iniciar um shell dentro do container. Isso permitirá que você interaja diretamente com o container para depuração ou
+administração usando o kubectl. Certifique-se de que o pod esteja em execução e que o container que você deseja acessar esteja saudável para garantir que o
+comando `kubectl exec` funcione corretamente e que você possa acessar o terminal do container com sucesso.
+Uma forma de manter o pod sempre em execução para acessar o terminal interativo é criar um pod com um contêiner que execute um comando de longa duração, como
+`sleep infinity`. Isso garantirá que o pod permaneça em execução indefinidamente, permitindo que você acesse o terminal interativo do contêiner a qualquer
+momento usando o comando `kubectl exec -it <nome-do-pod> -- sh` ou outro comando de shell. Certifique-se de que o pod esteja configurado corretamente para
+garantir que ele permaneça em execução e que você possa acessar o terminal do contêiner de forma eficiente para depuração ou administração usando o kubectl.
+Abaixo esta uma forma de criar um pod com um contêiner que execute o comando `sleep infinity` para manter o pod em execução:
+
+```yamlapiVersion: v1
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: terraform-demo
+  name: terraform-demo
+spec:
+  containers:
+    - image: hashicorp/terraform:latest
+      name: terraform-demo
+      resources: { }
+      command:
+        - "sleep"
+        - "infinity"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+```
+
+--Comandos relacionados a pods
+kubectl run <nome-do-pod> --image=<imagem-do-container> -> cria um novo pod com um contêiner específico, permitindo que os usuários implantem aplicativos e
+serviços dentro do cluster Kubernetes usando o kubectl.
+kubectl run --image=<imagem-do-container> --rm -it sh <nome-do-pod> -> cria um novo pod com um contêiner específico e inicia um terminal interativo dentro do
+contêiner, permitindo que os usuários interajam diretamente com o contêiner para depuração ou administração usando o kubectl. O pod será removido
+automaticamente após a sessão interativa ser encerrada.
+kubectl run --image=<imagem-do-container> <nome-do-pod> --dry-run -oyaml -> gera um arquivo YAML de configuração para um pod com um contêiner
+específico, permitindo que os usuários criem um arquivo de configuração para o pod e personalizem suas configurações antes de aplicá-lo ao cluster Kubernetes
+usando o kubectl.
+kubectl run --image=<imagem-do-container> <nome-do-pod> --dry-run -oyaml > <arquivo.yaml> -> gera um arquivo YAML de configuração para um pod com um contêiner
+específico e salva o arquivo em um local especificado, permitindo que os usuários criem um arquivo de configuração para o pod e personalizem suas configurações
+antes de aplicá-lo ao cluster Kubernetes usando o kubectl.
+kubectl apply -f <arquivo.yaml> -> aplica as alterações a um recurso do Kubernetes a partir de um arquivo de configuração YAML, criando ou atualizando o recurso
+conforme necessário, permitindo que os usuários gerenciem recursos do Kubernetes de forma eficiente usando o kubectl.
+kubectl get pods -> lista os pods em um cluster Kubernetes, mostrando informações como nome, status, idade e outros detalhes relevantes para monitoramento e
+administração dos recursos do cluster Kubernetes usando o kubectl.
+kubectl get pods -w -> lista os pods em um cluster Kubernetes e continua monitorando as mudanças em tempo real, mostrando informações como nome, status, idade e
+outros detalhes relevantes para monitoramento e administração dos recursos do cluster Kubernetes usando o kubectl.
+kubectl describe pod <nome-do-pod> -> exibe detalhes sobre um pod específico, incluindo informações sobre os contêineres em execução, eventos relacionados e
+outros detalhes importantes para a depuração e administração do pod usando o kubectl.
+kubectl logs <nome-do-pod> -> exibe os logs de um pod específico, permitindo que os usuários monitorem o comportamento dos contêineres em execução e
+identifiquem possíveis problemas ou erros usando o kubectl.
+kubectl exec -it <nome-do-pod> -- <comando> -> executa um comando interativo em um contêiner em execução dentro de um pod, permitindo que os usuários interajam
+diretamente com os contêineres para depuração ou administração usando o kubectl.
+kubectl port-forward <nome-do-pod> <porta-local>:<porta-do-pod> -> encaminha uma porta local para um pod específico, permitindo que os usuários acessem serviços
+em execução dentro do cluster Kubernetes a partir de suas máquinas locais usando o kubectl.
+kubectl delete pod <nome-do-pod> -> exclui um pod específico do cluster Kubernetes, permitindo que os usuários removam pods que não são mais necessários ou que
+estão causando problemas no cluster usando o kubectl.
+kubectl get pods -n <nome-do-namespace> -> lista os pods em um namespace específico, mostrando informações como nome, status, idade e outros detalhes relevantes
+para monitoramento e administração dos recursos dentro do namespace usando o kubectl.
+kubectl describe pod <nome-do-pod> -n <nome-do-namespace> -> exibe detalhes sobre um pod específico em um namespace específico, incluindo informações sobre os
+contêineres em execução, eventos relacionados e outros detalhes importantes para a depuração e administração do pod dentro do namespace usando o kubectl.
+kubectl logs <nome-do-pod> -n <nome-do-namespace> -> exibe os logs de um pod específico em um namespace específico, permitindo que os usuários monitorem o
+comportamento dos contêineres em execução e identifiquem possíveis problemas ou erros dentro do namespace usando o kubectl.
+kubectl exec -it <nome-do-pod> -n <nome-do-namespace> -- <comando> -> executa um comando interativo em um contêiner em execução dentro de um pod específico em
+um namespace específico, permitindo que os usuários interajam diretamente com os contêineres para depuração ou administração dentro do namespace usando o
+kubectl.
+kubectl port-forward <nome-do-pod> -n <nome-do-namespace> <porta-local>:<porta-do-pod> -> encaminha uma porta local para um pod específico em um namespace
+específico, permitindo que os usuários acessem serviços em execução dentro do cluster Kubernetes a partir de suas máquinas locais usando o kubectl, mesmo quando
+os pods estão organizados em namespaces diferentes.
+kubectl delete pod <nome-do-pod> -n <nome-do-namespace> -> exclui um pod específico de um namespace específico do cluster Kubernetes, permitindo que os usuários
+removam pods de forma mais granular e organizada dentro do cluster usando o kubectl, garantindo que os recursos sejam gerenciados de forma eficiente dentro dos
+namespaces do cluster Kubernetes. Certifique-se de que o namespace especificado exista no cluster Kubernetes para evitar erros ao usar o kubectl com o
+namespaceconfigurado.
+
+
