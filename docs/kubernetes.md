@@ -812,4 +812,73 @@ opções disponíveis e exemplos de uso, permitindo que os usuários entendam me
 kubectl. Certifique-se de usar o comando `kubectl explain deployment` para obter informações detalhadas sobre os deployments e garantir que eles sejam
 configurados corretamente para atender às necessidades da sua aplicação e do ambiente do cluster Kubernetes usando o kubectl.
 
+--Gerenciamento de rolling updates
+No Kubernetes, o gerenciamento de rolling updates é uma estratégia de atualização que permite atualizar os pods de um deployment de forma gradual, garantindo a
+disponibilidade da aplicação durante o processo de atualização. O Kubernetes gerencia os rolling updates automaticamente, substituindo os pods antigos por novos
+de forma controlada, garantindo que a aplicação continue funcionando durante a atualização. O Kubernetes monitora o estado dos pods durante o processo de
+atualização e garante que o número desejado de réplicas esteja sempre em execução, mesmo durante a atualização. O gerenciamento de rolling updates é útil para
+garantir a alta disponibilidade e a escalabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários atualizem suas aplicações
+de forma eficiente e sem downtime usando o kubectl. Certifique-se de configurar os deployments corretamente para garantir que o gerenciamento de rolling updates
+funcione de forma eficiente e que a disponibilidade da aplicação seja mantida durante o processo de atualização usando o kubectl. Além disso, é possível
+configurar a estratégia de atualização para controlar como as atualizações dos pods são realizadas, como RollingUpdate, Recreate ou BlueGreen, para atender às
+necessidades específicas da sua aplicação e do ambiente do cluster Kubernetes usando o kubectl.
+Para poder otimizar o processo de rolling updates, é possivel configurar os parâmetros de maxUnavailable e maxSurge, que controlam o número máximo de pods que
+podem estar indisponíveis durante a atualização e o número máximo de pods que podem ser criados além do número desejado de réplicas durante aatualização,
+respectivamente. Esses parâmetros são configurados na seção `strategy` do arquivo de configuração do deployment e podem ser ajustados de acordo com as
+necessidades da aplicação e do ambiente do cluster Kubernetes para garantir que o processo de rolling updates seja realizado de forma eficiente e que a
+disponibilidade da aplicação seja mantida durante o processo de atualização usando o kubectl.
+Abaixo está um exemplo de configuração de maxUnavailable e maxSurge em um arquivo YAML para um deployment do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+    environment: development
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: {
+    type: RollingUpdate,
+    rollingUpdate: {
+      maxUnavailable: 1,
+      maxSurge: 1
+    }
+  }
+  template:
+    metadata:
+      labels:
+        app: nginx
+        environment: development
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources: { }
+```
+
+--comandos relacionados a rolling updates
+`kubectl rollout status deployment/<nome-do-deployment>` -> exibe o status do rollout de um deployment específico, mostrando informações sobre o progresso da
+atualização, o número de pods atualizados e outros detalhes relevantes para monitoramento e administração do processo de atualização usando o kubectl.
+`kubectl rollout history deployment/<nome-do-deployment>` -> exibe o histórico de rollouts de um deployment específico, mostrando informações sobre as versões
+anteriores do deployment, as mudanças realizadas e outros detalhes relevantes para monitoramento e administração do processo de atualização usando o kubectl.
+`kubectl rollout undo deployment/<nome-do-deployment>` -> desfaz a última atualização de um deployment específico, revertendo para a versão anterior do
+deployment, permitindo que os usuários revertam rapidamente para uma versão estável em caso de problemas durante o processo de atualização usando o kubectl.
+`kubectl rollout undo deployment/<nome-do-deployment> --to-revision=<número-da-revisão>` -> desfaz uma atualização específica de um deployment, revertendo para
+uma versão anterior do deployment com base no número da revisão, permitindo que os usuários revertam para uma versão específica em caso de problemas durante o
+processo de atualização usando o kubectl.
+`kubectl rollout pause deployment/<nome-do-deployment>` -> pausa o processo de atualização de um deployment específico, permitindo que os usuários interrompam
+temporariamente o processo de atualização para realizar verificações ou ajustes antes de retomar a atualização usando o kubectl.
+`kubectl rollout resume deployment/<nome-do-deployment>` -> retoma o processo de atualização de um deployment específico que foi pausado, permitindo que os
+usuários continuem o processo de atualização após realizar verificações ou ajustes necessários usando o kubectl.
+`kubectl rollout restart deployment/<nome-do-deployment>` -> reinicia os pods de um deployment específico, forçando a criação de novos pods com a mesma
+configuração, permitindo que os usuários reiniciem os pods para aplicar mudanças de configuração ou resolver problemas sem alterar a versão do deployment usando
+o kubectl. Certifique-se de usar os comandos de rollout de forma adequada para gerenciar o processo de atualização dos deployments e garantir que a
+disponibilidade da aplicação seja mantida durante o processo de atualização usando o kubectl.
+
+
 
