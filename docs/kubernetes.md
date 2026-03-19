@@ -1325,3 +1325,35 @@ spec:
     matchLabels:
       app: nginx
 ```
+
+--Comandos relacionados a Pod Disruption Budget (PDB)
+`kubectl create pdb <nome-do-pdb> --selector=<seletor-de-labels> --max-unavailable=<número-máximo-de-pods-indisponíveis>` -> cria um novo Pod Disruption
+Budget (PDB) com um seletor de labels específico e um número máximo de pods indisponíveis, permitindo que os usuários definam regras para a interrupção de pods
+dentro do cluster Kubernetes usando o kubectl.
+`kubectl create pdb <nome-do-pdb> --selector=<seletor-de-labels> --max-unavailable=<número-máximo-de-pods-indisponíveis> --dry-run -oyaml` -> gera um arquivo
+YAML de configuração para um Pod Disruption Budget (PDB) com um seletor de labels específico e um número máximo de pods indisponíveis, permitindo que os
+usuários criem um arquivo de configuração para o PDB e personalizem suas configurações antes de aplicá-lo ao cluster Kubernetes usando o kubectl.
+`kubectl create pdb <nome-do-pdb> --selector=<seletor-de-labels> --max-unavailable=<número-máximo-de-pods-indisponíveis> --dry-run -oyaml > <arquivo.yaml>` ->
+gera um arquivo YAML de configuração para um Pod Disruption Budget (PDB) com um seletor de labels específico e um número máximo de pods indisponíveis, e salva o
+arquivo em um local especificado, permitindo que os usuários criem um arquivo de configuração para o PDB e personalizem suas configurações antes de aplicá-lo ao
+cluster Kubernetes usando o kubectl.
+`kubectl get pdb` -> lista os Pod Disruption Budgets (PDBs) em um cluster Kubernetes, mostrando informações como nome, número de pods afetados, status e outros
+detalhes relevantes para monitoramento e administração dos recursos do cluster Kubernetes usando o kubectl.
+`kubectl describe pdb <nome-do-pdb>` -> exibe detalhes sobre um Pod Disruption Budget (PDB) específico, incluindo informações sobre os pods afetados, eventos
+relacionados e outros detalhes importantes para a depuração e administração do PDB usando o kubectl.
+`kubectl delete pdb <nome-do-pdb>` -> exclui um Pod Disruption Budget (PDB) específico do cluster Kubernetes, permitindo que os usuários removam PDBs que não
+são mais necessários ou que estão causando problemas no cluster usando o kubectl.
+`kubectl get pdb -n <nome-do-namespace>` -> lista os Pod Disruption Budgets (PDBs) em um namespace específico, mostrando informações como nome, número de pods
+afetados, status e outros detalhes relevantes para monitoramento e administração dos recursos dentro do namespace usando o kubectl.
+`kubectl describe pdb <nome-do-pdb> -n <nome-do-namespace>` -> exibe detalhes sobre um Pod Disruption Budget (PDB) específico em um namespace específico,
+incluindo informações sobre os pods afetados, eventos relacionados e outros detalhes importantes para a depuração e administração do PDB dentrodo namespace
+usando o kubectl.
+`kubectl delete pdb <nome-do-pdb> -n <nome-do-namespace>` -> exclui um Pod Disruption Budget (PDB) específico de um namespace específico do cluster Kubernetes,
+permitindo que os usuários removam PDBs de forma mais granular e organizada dentro do cluster usando o kubectl, garantindo que os recursos sejam gerenciados de
+forma eficiente dentro dos namespaces do cluster Kubernetes.
+`kubectl explain pdb <nome-do-pdb>` -> exibe uma explicação detalhada sobre um Pod Disruption Budget (PDB) específico, incluindo informações sobre os campos de
+configuração, opções disponíveis e exemplos de uso, permitindo que os usuários entendam melhor como configurar e gerenciar Pod Disruption Budgets dentro do
+cluster Kubernetes usando o kubectl. Certifique-se de usar o comando `kubectl explain pdb` para obter informações detalhadas sobre os Pod Disruption Budgets e
+garantir que eles sejam configurados corretamente para atender às necessidades da sua aplicação e do ambiente do cluster Kubernetes usando o kubectl. O uso
+adequado de Pod Disruption Budgets é fundamental para garantir a resiliência e a alta disponibilidade dos aplicativos e serviços dentro do cluster Kubernetes,
+permitindo que os usuários gerenciem as interrupções de pods de forma eficiente usando o kubectl.
