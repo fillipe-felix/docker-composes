@@ -1145,4 +1145,183 @@ gerenciados de forma eficiente dentro dos namespaces do cluster Kubernetes.
 configuração, opções disponíveis e exemplos de uso, permitindo que os usuários entendam melhor como configurar e gerenciar DaemonSets dentro do cluster
 Kubernetes usando o kubectl.
 
+--StatefulSets
+No Kubernetes, um StatefulSet é um recurso que gerencia a implantação e a escalabilidade de aplicativos stateful, ou seja, aplicativos que precisam de
+armazenamento persistente e identificação única para cada instância. O StatefulSet é usado para implantar aplicativos como bancos de dados, sistemas de
+mensagens ou outros aplicativos que exigem armazenamento persistente e identificação única para cada instância. O StatefulSet é definido em um arquivo de
+configuração YAML que especifica a imagem do contêiner a ser usada,o número desejado de réplicas, as políticas de atualização e outras configurações relevantes
+para a implantação dos pods. O StatefulSet é gerenciado pelo control plane do Kubernetes, que monitora o estado dos pods e garante que o número desejado de
+réplicas esteja sempre em execução, mesmo durante o processo de atualização. O StatefulSet é útil para garantir a alta disponibilidade e a escalabilidade dos
+aplicativos stateful dentro do cluster Kubernetes, permitindo que os usuários criem e gerenciem recursos de forma eficiente usando o kubectl.
+Existe o stateful e o stateless, o stateful é para aplicações que precisam de armazenamento persistente, ou seja, que precisam manter o estado entre as
+reinicializações dos pods, como bancos de dados, sistemas de mensagens ou outros aplicativos que exigem armazenamento persistente e identificação única para
+cada instância. Já o stateless é para aplicações que não precisam de armazenamento persistente, ou seja, que não precisam manter o estado entre as
+reinicializações dos pods, como servidores web, serviços de API ou outros aplicativos que não exigem armazenamento persistente e identificação única para cada
+instância. O StatefulSet é recomendado para aplicativos stateful, enquanto o Deployment é recomendado para aplicativos stateless, permitindo que os usuários
+escolham o recurso de implantação adequado para as necessidades da sua aplicação e do ambiente do cluster Kubernetes usando o kubectl. O StatefulSet é uma opção
+poderosa para gerenciar aplicativos stateful dentro do cluster Kubernetes, garantindo a alta disponibilidade e a escalabilidade desses aplicativos, permitindo
+que os usuários criem e gerenciem recursos de forma eficiente usando o kubectl. Uma das vantagens do StatefulSet é que ele garante a ordem de criação e exclusão
+dos pods, ou seja, os pods são criados e excluídos em uma ordem específica, garantindo que os aplicativos stateful sejam implantados e escalados de forma
+eficiente dentro do cluster Kubernetes usando okubectl. O StatefulSet também suporta a atualização de pods de forma controlada, garantindo que aplicação
+stateful seja atualizada de forma eficiente e sem downtime, permitindo que os usuários gerenciem os aplicativos stateful de forma eficiente dentro do cluster
+Kubernetes usando o kubectl. O StatefulSet é uma opção recomendada para aplicativos stateful que exigem armazenamento persistente e identificação única para
+cada instância, garantindo a alta disponibilidade e a escalabilidade desses aplicativos dentro do cluster Kubernetes usando o kubectl.
 
+Para poder realizar a persistencia de dados em um StatefulSet, é necessário configurar um PersistentVolume (PV) e um PersistentVolumeClaim (PVC) para cada pod
+do StatefulSet. O PV é um recurso do Kubernetes que representa um volume de armazenamento físico, enquanto o PVC é um recurso que solicita um volume de
+armazenamento específico para ser usado por um pod. O StatefulSet pode ser configurado para usar PVCs para cada pod, garantindo que cada instância do aplicativo
+stateful tenha seu próprio armazenamento persistente. O Kubernetes gerencia a criação e a associação dos PVs e PVCs para cada pod do StatefulSet, garantindo que
+os dados sejam persistidos de forma eficiente e segura dentro do cluster Kubernetes usando o kubectl.
+
+Com isso para poder usar em um ambiente on-premises, vamos utilizar o local-path-provisioner, que é um provisionador de armazenamento local para Kubernetes. Ele
+permite que os usuários criem volumes persistentes usando o armazenamento local do nó onde o pod está sendo executado. O local-path-provisioner é útil para
+ambientes on-premises onde o armazenamento em nuvem não está disponível ou não é desejado, permitindo que os usuários criem volumes persistentes de forma
+eficiente usando o armazenamento local do cluster Kubernetes. Para instalar o local-path-provisioner no cluster Kubernetes, siga os passos abaixo:
+
+1. Rode o comando para instalar o local-path-provisioner usando o kubectl:
+
+```bash
+   kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.35/deploy/local-path-storage.yaml
+```
+
+2. Verifique se o local-path-provisioner foi instalado corretamente:
+
+```bash
+   kubectl get pods -n local-path-storage
+```
+
+3. Verifique se o local-path-provisioner foi configurado como o provisionador de armazenamento padrão para o cluster Kubernetes:
+
+```bash
+   kubectl get storageclass -A
+```
+
+4. Caso não esteja configurado como o provisionador de armazenamento padrão, configure o local-path-provisioner como o provisionador de armazenamento padrão
+   para o cluster
+   Kubernetes, editando o arquivo de configuração do cluster e definindo o local-path-provisioner como o provisionador de armazenamento padrão.
+
+```bash
+   kubectl edit storageclass local-path
+```
+
+5. No editor de texto que será aberto, adicione a seguinte linha na seção `annotations` do arquivo de configuração do storage class local-path:
+
+```yaml
+    storageclass.kubernetes.io/is-default-class: "true"
+```
+
+6. Salve e feche o arquivo de configuração do storage class local-path para aplicar as alterações.
+
+Abaixo está um exemplo de configuração de StatefulSet em um arquivo YAML para um StatefulSet do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: nginx-html
+  volumeClaimTemplates:
+    - metadata:
+        name: nginx-html
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1G
+```
+
+--Comandos relacionados a StatefulSets
+`kubectl create statefulset <nome-do-statefulset> --image=<imagem-do-container>` -> cria um novo StatefulSet com um contêiner específico, permitindo que os
+usuários implantem aplicativos stateful dentro do cluster Kubernetes usando o kubectl.
+`kubectl create statefulset <nome-do-statefulset> --image=<imagem-do-container> --dry-run -oyaml` -> gera um arquivo YAML de configuração para um StatefulSet
+com um contêiner específico, permitindo que os usuários criem um arquivo de configuração para o StatefulSet e personalizem suas configurações antes de aplicá-lo
+ao cluster Kubernetes usando o kubectl.
+`kubectl create statefulset <nome-do-statefulset> --image=<imagem-do-container> --dry-run -oyaml > <arquivo.yaml>` -> gera um arquivo YAML de configuração para
+um StatefulSet com um contêiner específico e salva o arquivo em um local especificado, permitindo que os usuários criem um arquivo de configuração para o
+StatefulSet e personalizem suas configurações antes de aplicá-lo ao cluster Kubernetes usando o kubectl.
+`kubectl get statefulsets` -> lista os StatefulSets em um cluster Kubernetes, mostrando informações como nome, número de réplicas, status e outros detalhes
+relevantes para monitoramento e administração dos recursos do cluster Kubernetes usando o kubectl.
+`kubectl describe statefulset <nome-do-statefulset>` -> exibe detalhes sobre um StatefulSet específico, incluindo informações sobre os pods gerenciados pelo
+StatefulSet, eventos relacionados e outros detalhes importantes para a depuração e administração do StatefulSet usando o kubectl.
+`kubectl apply -f <arquivo.yaml>` -> aplica as alterações a um recurso do Kubernetes a partir de um arquivo de configuração YAML, criando ou atualizando o
+recurso conforme necessário, permitindo que os usuários gerenciem recursos do Kubernetes de forma eficiente usando o kubectl.
+`kubectl delete statefulset <nome-do-statefulset>` -> exclui um StatefulSet específico do cluster Kubernetes, permitindo que os usuários removam StatefulSets
+que não são mais necessários ou que estão causando problemas no cluster usando o kubectl.
+`kubectl get statefulsets -n <nome-do-namespace>` -> lista os StatefulSets em um namespace específico, mostrando informações como nome, número de réplicas,
+status e outros detalhes relevantes para monitoramento e administração dos recursos dentro do namespace usando o kubectl.
+`kubectl describe statefulset <nome-do-statefulset> -n <nome-do-namespace>` -> exibe detalhes sobre um StatefulSet específico em um namespace específico,
+incluindo informações sobre os pods gerenciados pelo StatefulSet, eventos relacionados e outros detalhes importantes para a depuração e administração do
+StatefulSet dentro do namespace usando o kubectl.
+`kubectl delete statefulset <nome-do-statefulset> -n <nome-do-namespace>` -> exclui um StatefulSet específico de um namespace específico do cluster Kubernetes,
+permitindo que os usuários removam StatefulSets de forma mais granular e organizada dentro do cluster usando o kubectl, garantindo que os recursos sejam
+gerenciados de forma eficiente dentro dos namespaces do cluster Kubernetes.
+`kubectl explain statefulset <nome-do-statefulset>` -> exibe uma explicação detalhada sobre um StatefulSet específico, incluindo informações sobre os campos de
+configuração, opções disponíveis e exemplos de uso, permitindo que os usuários entendam melhor como configurar e gerenciar StatefulSets dentro do cluster
+Kubernetes usando o kubectl. Certifique-se de usar o comando `kubectl explain statefulset` para obter informações detalhadas sobre os StatefulSets e garantir
+que eles sejam configurados corretamente para atender às necessidades da sua aplicação e do ambiente do cluster Kubernetes usando o kubectl.
+`kubectl get pvc` -> lista os PersistentVolumeClaims (PVCs) em um cluster Kubernetes, mostrando informações como nome, status, capacidade e outros detalhes
+relevantes para monitoramento e administração dos recursos de armazenamento dentro do cluster Kubernetes usando o kubectl.
+`kubectl describe pvc <nome-do-pvc>` -> exibe detalhes sobre um PersistentVolumeClaim (PVC) específico, incluindo informações sobre o volume associado, eventos
+relacionados e outros detalhes importantes para a depuração e administração do PVC usando o kubectl.
+`kubectl delete pvc <nome-do-pvc>` -> exclui um PersistentVolumeClaim (PVC) específico do cluster Kubernetes, permitindo que os usuários removam PVCs que não
+são mais necessários ou que estão causando problemas no cluster usando o kubectl.
+`kubectl get pv` -> lista os PersistentVolumes (PVs) em um cluster Kubernetes, mostrando informações como nome, status, capacidade e outros detalhes relevantes
+para monitoramento e administração dos recursos de armazenamento dentro do cluster Kubernetes usando o kubectl.
+`kubectl describe pv <nome-do-pv>` -> exibe detalhes sobre um PersistentVolume (PV) específico, incluindo informações sobre o volume, eventos relacionados e
+outros detalhes importantes para a depuração e administração do PV usando o kubectl.
+`kubectl delete pv <nome-do-pv>` -> exclui um PersistentVolume (PV) específico do cluster Kubernetes, permitindo que os usuários removam PVs que não são mais
+necessários ou que estão causando problemas no cluster usando o kubectl. Certifique-se de usar os comandos relacionados a PVCs e PVs de forma adequada para
+gerenciar os recursos de armazenamento dentro do cluster Kubernetes e garantir que os aplicativos stateful tenham acesso ao armazenamento persistente necessário
+para funcionar corretamente usando o kubectl.
+`kubectl get storageclass` -> lista os StorageClasses em um cluster Kubernetes, mostrando informações como nome, provisionador e outros detalhes relevantes para
+monitoramento e administração dos recursos de armazenamento dentro do cluster Kubernetes usando o kubectl.
+`kubectl describe storageclass <nome-do-storageclass>` -> exibe detalhes sobre um StorageClass específico, incluindo informações sobre o provisionador,
+parâmetros de configuração e outros detalhes importantes para a depuração e administração do StorageClass usando o kubectl.
+`kubectl delete storageclass <nome-do-storageclass>` -> exclui um StorageClass específico do cluster Kubernetes, permitindo que os usuários removam
+StorageClasses que não são mais necessários ou que estão causando problemas no cluster usando o kubectl. Certifique-se de usar os comandos relacionados a
+StorageClasses de forma adequada para gerenciar os recursos de armazenamento dentro do cluster Kubernetes e garantir que os aplicativos stateful tenham acesso
+ao armazenamento persistente necessário para funcionar corretamente usando o kubectl.
+
+--Pod disruption budget (PDB)
+No Kubernetes, um Pod Disruption Budget (PDB) é um recurso que define as regras para a interrupção de pods em um cluster Kubernetes. Ele é usado para garantir a
+disponibilidade e a estabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários definam limites para a quantidade de pods
+que podem ser interrompidos durante operações de manutenção, atualizações ou falhas. O PDB é definido em um arquivo de configuração YAML que especifica o número
+mínimo de pods que devem estar disponíveis durante uma interrupção, o número máximo de pods que podem ser interrompidos e outras configurações relevantes para a
+gestão de interrupções de pods. O PDB é gerenciado pelo control plane do Kubernetes, que monitora o estado dos pods e garante que as regras definidas no PDB
+sejam respeitadas durante as operações de manutenção, atualizações ou falhas, garantindo a disponibilidade e a estabilidade dos aplicativos e serviços dentro do
+cluster Kubernetes usando o kubectl. O PDB é uma ferramenta importante para garantir a resiliência e a alta disponibilidade dos aplicativos e serviços dentro do
+cluster Kubernetes, permitindo que os usuários gerenciem as interrupções de pods de forma eficiente usando o kubectl. O PDB é especialmente útil em ambientes de
+produção, onde a disponibilidade dos aplicativos e serviços é crítica, permitindo que os usuários definam regras para garantir que as interrupções de pods sejam
+gerenciadas de forma eficiente e que a disponibilidade dos aplicativos e serviços seja mantida durante as operações de manutenção, atualizações ou falhas usando
+o kubectl. Segue o link da documentação oficial do Kubernetes sobre Pod Disruption Budget (PDB) para mais
+informações: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#think-about-how-your-application-reacts-to-disruptions.
+Abaixo está um exemplo de configuração de Pod Disruption Budget (PDB) em um arquivo YAML para um PDB do Kubernetes:
+
+```yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: nginx-pdb
+spec:
+  maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: nginx
+```
