@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: echo-command
+spec:
+  template:
+    spec:
+      containers:
+        - name: sleep
+          image: alpine
+          command: [ "echo", "Comunidade devops é foda" ]
+      restartPolicy: OnFailure
+  ttlSecondsAfterFinished: 0
+  backoffLimit: 4

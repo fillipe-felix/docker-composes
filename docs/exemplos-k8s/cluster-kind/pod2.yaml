@@ -1,0 +1,18 @@
+# Esta é uma definição de pod simples que inclui um contêiner init para aguardar a resolução de DNS de um serviço antes de
+# iniciar o contêiner principal. O contêiner init usa uma imagem busybox para executar um comando shell que verifica a entrada DNS
+# do serviço "mymysql" no namespace "default". O contêiner principal executa um servidor nginx.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-cd
+  namespace: default
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+  initContainers:
+    - name: waitfordns
+      image: busybox:latest
+      command: [ 'sh', '-c', 'until nslookup mymysql.default.svc.cluster.local; do echo waiting for dns...; sleep 2; done;' ]

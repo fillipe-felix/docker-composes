@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: multicontainerpod
+  name: multicontainerpod
+spec:
+  containers:
+    - image: httpd
+      name: httpd
+    - image: alpine:latest
+      name: debug
+      command: [ "sleep", "infinity" ]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
