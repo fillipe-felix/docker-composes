@@ -540,9 +540,7 @@ de inicialização, como configuração,verificação de dependências ou prepar
 containers são definidos na seção `initContainers` do arquivo de configuração do pod e são executados em ordem, um após o outro. Cada init container deve ser
 concluído com sucesso antes que o próximo seja iniciado, e os contêineres principais só serão iniciados após a conclusão de todos os init containers. Os init
 containers são úteis para garantir que o ambiente do pod esteja configurado corretamente antes que os contêineres principais sejam executados, permitindo que os
-usuários realizem tarefas de inicialização de forma eficiente e organizada dentro do cluster Kubernetes usando o kubectl. Certifique-se de configurar os init
-containers corretamente para garantir que eles sejam executados com sucesso e que os contêineres principais sejam iniciados corretamente dentro do pod do
-Kubernetes.
+usuários realizem tarefas de inicialização de forma eficiente e organizada dentro do cluster Kubernetes usando o kubectl.
 Abaixo está um exemplo de configuração de init containers em um arquivo YAML para um pod do Kubernetes:
 
 ```yaml
@@ -566,9 +564,7 @@ spec:
 O nginx-cd é o contêiner principal do pod, que executa a imagem do nginx e expõe a porta 80. O init container waitfordns é executado antes do contêiner
 principal e usa a imagem do busybox para executar um comando que verifica se o serviço de banco de dados MySQL (mymysql) está disponível no cluster Kubernetes.
 O init container aguarda até que o serviço de banco de dados esteja disponível antes de permitir que o contêiner principal seja iniciado, garantindo que o
-ambiente do pod esteja configurado corretamente para a aplicação nginx funcionar corretamente. Certifique-se de configurar os init containers de acordo com as
-necessidades da sua aplicação e do ambiente do cluster Kubernetes para garantir que eles sejam executados com sucesso e que os contêineres principais sejam
-iniciados corretamente dentro do pod do Kubernetes.
+ambiente do pod esteja configurado corretamente para a aplicação nginx funcionar corretamente.
 
 --Multi-container pods
 Os multi-container pods são pods do Kubernetes que contêm mais de um contêiner. Eles são usados para executar aplicativos que exigem a colaboração de múltiplos
@@ -577,8 +573,6 @@ são definidos na seção `containers` do arquivo de configuração do pod, onde
 relevantes. Os contêineres dentro de um multi-container pod compartilham o mesmo ambiente de execução, como rede, armazenamento e recursos de computação,
 permitindo que eles se comuniquem e colaborem de forma eficiente dentro do pod. Os multi-container pods são úteis para executar aplicativos complexos que exigem
 a colaboração de múltiplos contêineres, permitindo que os usuários criem e gerenciem recursos de forma eficiente dentro do cluster Kubernetes usando o kubectl.
-Certifique-se de configurar os multi-container pods corretamente para garantir que os contêineres colaborem de forma eficiente e que a aplicação funcione
-corretamente dentro do cluster Kubernetes.
 Abaixo está um exemplo de configuração de multi-container pods em um arquivo YAML para um pod do Kubernetes:
 
 ```yaml
@@ -603,8 +597,7 @@ O multi-container pod chamado multicontainerpod contém dois contêineres: o con
 debug,que executa a imagem do Alpine Linux e tem um comando de longa duração para manter o pod em execução. Os contêineres dentro do multi-container pod
 compartilham o mesmo ambiente de execução, permitindo que eles se comuniquem e colaborem de forma eficiente dentro do pod. O contêiner httpd pode servir
 conteúdo web, enquanto o contêiner debug pode ser usado para depuração ou administração do pod usando o comando `kubectl exec` para acessar o terminal do
-contêiner debug. Certifique-se de configurar os multi-container pods de acordo com as necessidades da sua aplicação e do ambiente do cluster Kubernetes para
-garantir que eles funcionem corretamente dentro do cluster Kubernetes. Caso seja removido o command do conteiner debug, o pod irá entrar em crashloop, pois o
+contêiner debug. Caso seja removido o command do conteiner debug, o pod irá entrar em crashloop, pois o
 contêiner debug não terá um comando de longa duração para manter o pod em execução, e o Kubernetes tentará reiniciar o pod repetidamente, resultando em um ciclo
 de falhas (crashloop) para o contêiner debug.
 
@@ -615,8 +608,7 @@ kube-controller-manager e kube-scheduler, que são necessários para o funcionam
 configuração YAML que são colocados em um diretório específico no nó, geralmente `/etc/kubernetes/manifests/`. O kubelet monitora esse diretório e cria os
 static pods com base nos arquivos de configuração encontrados lá. Os static pods são úteis para garantir que os componentes essenciais do cluster Kubernetes
 estejam sempre em execução, mesmo que o control plane do Kubernetes esteja indisponível, permitindo que o cluster Kubernetes continue funcionando de forma
-resiliente. Certifique-se de configurar os static pods corretamente para garantir que os componentes essenciais do cluster Kubernetes sejam executados com
-sucesso e que o cluster Kubernetes funcione corretamente. Lembre-se de que os static pods são gerenciados diretamente pelo kubelet e não são controlados pelo
+resiliente. Lembre-se de que os static pods são gerenciados diretamente pelo kubelet e não são controlados pelo
 control plane do Kubernetes, portanto, eles não são afetados por falhas ou indisponibilidade do control plane, garantindo que os componentes essenciais do
 cluster Kubernetes estejam sempre em execução para manter o cluster Kubernetes funcionando de forma resiliente.
 Abaixo está um exemplo de configuração de static pods em um arquivo YAML para um pod do Kubernetes:
@@ -703,8 +695,7 @@ específico de réplicas de pods esteja sempre em execução, mesmo em caso de f
 de configuração YAML que especifica o número desejado de réplicas, a imagem do contêiner a ser usada e outras configurações relevantes para a implantação dos
 pods. O deployment é gerenciado pelo control plane do Kubernetes, que monitora o estado dos pods e garante que o número desejado de réplicas esteja sempre em
 execução. O deployment é útil para garantir a alta disponibilidade e a escalabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os
-usuários criem e gerenciem recursos de forma eficiente usando o kubectl. Certifique-se de configurar os deployments corretamente para garantir que eles sejam
-executados com sucesso e que os aplicativos e serviços dentro do cluster Kubernetes funcionem corretamente.
+usuários criem e gerenciem recursos de forma eficiente usando o kubectl.
 
 Para subir uma aplicação para rodar de verdade em abientes de qa, desenvolvimento ou produção, é recomendado usar um desses tres tipos, sendo o deployment,
 statefulset ou um daemonset. Em termos simples o deployment vai ser para aplicações stateless, ou seja, que não precisam de armazenamento persistente, o
@@ -764,6 +755,13 @@ significa que as atualizações serão realizadas de forma gradual para garantir
 configurar os deployments de acordo com as necessidades da sua aplicação e do ambiente do cluster Kubernetes para garantir que eles sejam executados com sucesso
 e que os aplicativos e serviços dentro do cluster Kubernetes funcionem corretamente usando o kubectl.
 
+Uma forma de poder alterar a quantidade de réplicas de um deployment é usando o comando
+`kubectl scale deployment <nome-do-deployment> --replicas=<número-de-réplicas>`, onde `<nome-do-deployment>` é o nome do deployment que você deseja escalar, e
+`<número-de-réplicas>` é o número desejado de réplicas que você deseja para o deployment. Por exemplo, se você quiser escalar um deployment chamado nginx para 3
+réplicas, pode usar o comando `kubectl scale deployment nginx --replicas=3`. Isso permitirá que você ajuste a quantidade de réplicas de um deployment de forma
+rápida e eficiente usando o kubectl, garantindo que a aplicação tenha a quantidade adequada de réplicas para atender à demanda e garantir a alta disponibilidade
+dentro do cluster Kubernetes.
+
 --Labels e selectors
 No Kubernetes, labels são pares de chave-valor que são atribuídos a objetos do Kubernetes, como pods, serviços e deployments, para identificar e organizar esses
 objetos de forma eficiente. Os labels são usados para agrupar e selecionar objetos com base em critérios específicos, permitindo que os usuários filtrem e
@@ -818,8 +816,7 @@ disponibilidade da aplicação durante o processo de atualização. O Kubernetes
 de forma controlada, garantindo que a aplicação continue funcionando durante a atualização. O Kubernetes monitora o estado dos pods durante o processo de
 atualização e garante que o número desejado de réplicas esteja sempre em execução, mesmo durante a atualização. O gerenciamento de rolling updates é útil para
 garantir a alta disponibilidade e a escalabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários atualizem suas aplicações
-de forma eficiente e sem downtime usando o kubectl. Certifique-se de configurar os deployments corretamente para garantir que o gerenciamento de rolling updates
-funcione de forma eficiente e que a disponibilidade da aplicação seja mantida durante o processo de atualização usando o kubectl. Além disso, é possível
+de forma eficiente e sem downtime usando o kubectl. Além disso, é possível
 configurar a estratégia de atualização para controlar como as atualizações dos pods são realizadas, como RollingUpdate, Recreate ou BlueGreen, para atender às
 necessidades específicas da sua aplicação e do ambiente do cluster Kubernetes usando o kubectl.
 Para poder otimizar o processo de rolling updates, é possivel configurar os parâmetros de maxUnavailable e maxSurge, que controlam o número máximo de pods que
@@ -880,5 +877,272 @@ configuração, permitindo que os usuários reiniciem os pods para aplicar mudan
 o kubectl. Certifique-se de usar os comandos de rollout de forma adequada para gerenciar o processo de atualização dos deployments e garantir que a
 disponibilidade da aplicação seja mantida durante o processo de atualização usando o kubectl.
 
+--Resources requests e limits
+No Kubernetes, os recursos requests e limits são usados para gerenciar os recursos de computação, como CPU e memória, que um contêiner pode solicitar e usar
+dentro de um pod. Os recursos requests são a quantidade mínima de recursos que um contêiner precisa para ser agendado e executado, enquanto os recursos limits
+são a quantidade máxima de recursos que um contêiner pode usar. Os recursos requests e limits são configurados na seção `resources` do arquivo de configuração
+do pod e podem ser ajustados de acordo com as necessidades da aplicação e do ambiente do cluster Kubernetes para garantir que os contêineres tenham os recursos
+necessários para funcionar corretamente, sem exceder os limites de recursos disponíveis no cluster Kubernetes. O uso adequado de recursos requests e limits é
+fundamental para garantir a eficiência e a estabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários gerenciem os
+recursos de forma eficiente usando o kubectl. O request é a garantia do que é necessario para o pod iniciar, e o limit é o limite máximo que o pod pode usar, ou
+seja, se o pod tentar usar mais do que o limite configurado, ele pode ser restringido ou até mesmo ser encerrado pelo Kubernetes para evitar o consumo excessivo
+de recursos e garantir a estabilidade do cluster Kubernetes.
+Abaixo está um exemplo de configuração de recursos requests e limits em um arquivo YAML para um pod do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+    environment: development
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: {
+    type: RollingUpdate,
+    rollingUpdate: {
+      maxUnavailable: 1,
+      maxSurge: 1
+    }
+  }
+  template:
+    metadata:
+      labels:
+        app: nginx
+        environment: development
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources: {
+            requests: {
+              cpu: "250m",
+              memory: "512Mi"
+            },
+            limits: {
+              cpu: "500m",
+              memory: "1024Mi"
+            }
+          }
+```
+
+Neste exemplo, o contêiner nginx tem recursos requests configurados para 250 millicores de CPU e 512 MiB de memória, o que significa que ele precisa de pelo
+menos essa quantidade de recursos para ser agendado e executado. Os recursos limits estão configurados para 500 millicores de CPU e 1024 MiB de memória, o que
+significa que o contêiner não pode usar mais do que essa quantidade de recursos.
+
+--Goldilocks
+Goldilocks é uma ferramenta de código aberto para otimizar os recursos de computação em clusters Kubernetes. Ele analisa o uso de recursos dos pods e fornece
+recomendações para ajustar os recursos requests e limits de forma eficiente, garantindo que os contêineres tenham os recursos necessários para funcionar
+corretamente, sem exceder os limites de recursos disponíveis no cluster Kubernetes. O Goldilocks é útil para garantir a eficiência e a estabilidade dos
+aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários otimizem os recursos de forma eficiente usando o kubectl. Ele pode ser instalado
+e configurado no cluster Kubernetes para monitorar o uso de recursos dos pods e fornecer recomendações de otimização, ajudando os usuários a gerenciar os
+recursos de forma eficiente e garantir a estabilidade do cluster Kubernetes. Um ponto é que o goldilock não monitora pods diretamente, ele monitora deployments,
+statefulsets e daemonsets, ou seja, ele monitora os recursos de computação dos pods gerenciados por esses recursos, fornecendo recomendações de otimização com
+base no uso de recursos desses pods, permitindo que os usuários otimizem os recursos de forma eficiente dentro do cluster Kubernetes usando o kubectl.
+
+--Instalação do Goldilocks
+Para instalar o Goldilocks no cluster Kubernetes, siga os passos abaixo:
+
+1. Adicione o repositório do Goldilocks ao Helm:
+   ```bash
+   helm repo add fairwinds-stable https://charts.fairwinds.com/stable
+   helm repo update
+   ```
+2. Instale o Goldilocks usando o Helm:
+   ```bash
+   helm install goldilocks fairwinds-stable/goldilocks --namespace goldilocks --create-namespace -f values.yaml
+   ```
+3. O arquivo `values.yaml` você pode pegar em https://artifacthub.io/packages/helm/fairwinds-stable/goldilocks, onde você vai pegar os valores default e vai
+   ativar o `vpa` e o `metricsServer` para que o Goldilocks possa coletar os dados de uso de recursos dos pods e fornecer recomendações de otimização.
+4. Verifique se o Goldilocks foi instalado corretamente:
+   ```bash
+   kubectl get pods -n goldilocks
+   ```
+5. Configure o Goldilocks para monitorar os namespaces desejados, editando o arquivo de configuração do Goldilocks e adicionando os namespaces que você deseja
+   monitorar.
+   ```bash
+   kubectl label ns <namespace-para-monitorar> goldilocks.fairwinds.com/enabled=true
+   ```
+6. Aguarde alguns minutos para que o Goldilocks colete dados de uso de recursos dos pods e forneça recomendações de otimização.
+7. Verifique as recomendações do Goldilocks usando o comando:
+   ```bash
+   kubectl get vpa -n <namespace>
+   ```
+8. Aplique as recomendações do Goldilocks para otimizar os recursos dos pods usando o comando:
+   ```bash
+   kubectl apply -f <arquivo-de-recomendações.yaml>
+   ```
+9. Para poder visualizar os dados em um dashboard, é possível instalar o Goldilocks Dashboard usando o comando:
+   ```bash
+   kubectl -n goldilocks port-forward svc/goldilocks-dashboard 8080:80
+   ```
+10. Depois basta acessar o dashboard em `http://localhost:8080` para visualizar os dados de uso de recursos dos pods e as recomendações de otimização fornecidas
+    pelo Goldilocks. No dashboard, você pode visualizar os dados de uso de recursos dos pods, as recomendações de otimização e outras informações relevantes
+    para gerenciar os recursos de forma eficiente dentro do cluster Kubernetes usando o kubectl. De preferenia para o Burstable QoS, para que o Goldilocks possa
+    fornecer recomendações de otimização mais precisas e eficientes para os recursos de computação dos pods dentro do cluster Kubernetes usando o kubectl.
+
+Certifique-se de seguir as instruções de instalação e configuração do Goldilocks corretamente para garantir que ele funcione corretamente e forneça
+recomendações de otimização eficientes para os recursos de computação dentro do cluster Kubernetes usando o kubectl. O Goldilocks é uma ferramenta poderosa para
+otimizar os recursos de computação e garantir a eficiência e a estabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários
+gerenciem os recursos de forma eficiente usando o kubectl.
+
+--commandos relacionados ao Goldilocks
+`kubectl get vpa -n <namespace>` -> exibe as recomendações de otimização de recursos fornecidas pelo Goldilocks para os pods em um namespace específico,
+mostrando informações sobre os recursos requests e limits recomendados para cada pod, permitindo que os usuários otimizem os recursos de forma eficiente dentro
+do cluster Kubernetes usando o kubectl.
+`kubectl apply -f <arquivo-de-recomendações.yaml>` -> aplica as recomendações de otimização fornecidas pelo Goldilocks para os pods, ajustando os recursos
+requests e limits de acordo com as recomendações, permitindo que os usuários otimizem os recursos de forma eficiente dentro do cluster Kubernetes usando o
+kubectl.
+`kubectl describe vpa -n <namespace> <nome-do-pod>` -> exibe detalhes sobre as recomendações de otimização fornecidas pelo Goldilocks para um pod específico,
+mostrando informações sobre os recursos requests e limits recomendados, as mudanças sugeridas e outros detalhes relevantes para otimizar os recursos de forma
+eficiente dentro do cluster Kubernetes usando o kubectl.
+
+--Probes (health checks)
+As probes, ou health checks, são mecanismos de monitoramento usados no Kubernetes para verificar a saúde e o status dos contêineres dentro de um pod. Elas são
+usadas para garantir que os contêineres estejam funcionando corretamente e para tomar ações corretivas, como reiniciar um contêiner que esteja com problemas.
+Existem três tipos principais de probes no Kubernetes: liveness probe, readiness probe e startup probe. A liveness probe verifica se um contêiner está vivo e
+funcionando, a readiness probe verifica se um contêiner está pronto para receber tráfego, e a startup probe verifica se um contêiner está iniciando
+corretamente. As probes são configuradas na seção `containers` do arquivo de configuração do pod e podem ser ajustadas de acordo com as necessidades da
+aplicação e do ambiente do cluster Kubernetes para garantir que os contêineres sejam monitorados de forma eficiente e que as ações corretivas sejam tomadas
+quando necessário usando o kubectl. O uso adequado de probes é fundamental para garantir a estabilidade e a disponibilidade dos aplicativos e serviços dentro do
+cluster Kubernetes, permitindo que os usuários monitorem a saúde dos contêineres e tomem ações corretivas de forma eficiente usando o kubectl.
+Abaixo está um exemplo de configuração de probes em um arquivo YAML para um pod do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources: { }
+          #readinessProbe:
+          #  httpGet:
+          #    path: "/"
+          #    port: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+```
+
+--Variáveis de ambiente
+As variáveis de ambiente são usadas no Kubernetes para fornecer informações de configuração e dados para os contêineres dentro de um pod. Elas são usadas para
+configurar o comportamento dos contêineres e para fornecer dados sensíveis, como senhas ou chaves de API, de forma segura. As variáveis de ambiente são
+configuradas na seção `containers` do arquivo de configuração do pod e podem ser ajustadas de acordo com as necessidades da aplicação e do ambiente do cluster
+Kubernetes para garantir que os contêineres tenham as informações necessárias para funcionar corretamente usando o kubectl. As variáveis de ambiente podem ser
+definidas diretamente no arquivo de configuração do pod ou podem ser referenciadas a partir de ConfigMaps ou Secrets, permitindo que os usuários gerenciem as
+informações de configuração e os dados sensíveis de forma eficiente dentro do cluster Kubernetes usando o kubectl.
+Abaixo está um exemplo de configuração de variáveis de ambiente em um arquivo YAML para um pod do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources: { }
+          env:
+            - name: "ENVIRONMENT"
+              value: "development"
+            - name: "LOG_LEVEL"
+              value: "debug"
+```
+
+--Daemonsets
+No Kubernetes, um DaemonSet é um recurso que garante que uma cópia de um pod seja executada em cada nó do cluster Kubernetes. Ele é usado para implantar
+aplicativos ou serviços que precisam ser executados em todos os nós do cluster, como agentes de monitoramento, coleta de logs ou outros serviços de
+infraestrutura. O DaemonSet é definido em um arquivo de configuração YAML que especifica a imagem do contêiner a ser usada e outras configurações relevantes
+para a implantação dos pods. O DaemonSet é gerenciado pelo control plane do Kubernetes, que monitora o estado dos pods e garante que uma cópia do pod esteja
+sempre em execução em cada nó do cluster Kubernetes. O DaemonSet é útil para garantir a consistência e a disponibilidade dos aplicativos ou serviços que
+precisam ser executados em todos os nós do cluster Kubernetes, permitindo que os usuários criem e gerenciem recursos de forma eficiente usando o kubectl.
+
+Abaixo está um exemplo de configuração de DaemonSet em um arquivo YAML para um DaemonSet do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources: { }
+      nodeSelector:
+        kubernetes.io/hostname: comunidade-devops-worker
+```
+
+--Comandos relacionados a DaemonSets
+`kubectl create daemonset <nome-do-daemonset> --image=<imagem-do-container>` -> cria um novo DaemonSet com um contêiner específico, permitindo que os usuários
+implantem aplicativos ou serviços que precisam ser executados em todos os nós do cluster Kubernetes usando o kubectl.
+`kubectl create daemonset <nome-do-daemonset> --image=<imagem-do-container> --dry-run -oyaml` -> gera um arquivo YAML de configuração para um DaemonSet com um
+contêiner específico, permitindo que os usuários criem um arquivo de configuração para o DaemonSet e personalizem suas configurações antes de aplicá-lo ao
+cluster Kubernetes usando o kubectl.
+`kubectl create daemonset <nome-do-daemonset> --image=<imagem-do-container> --dry-run -oyaml > <arquivo.yaml>` -> gera um arquivo YAML de configuração para um
+DaemonSet com um contêiner específico e salva o arquivo em um local especificado, permitindo que os usuários criem um arquivo de configuração para o DaemonSet e
+personalizem suas configurações antes de aplicá-lo ao cluster Kubernetes usando o kubectl.
+`kubectl get daemonsets` -> lista os DaemonSets em um cluster Kubernetes, mostrando informações como nome, número de pods, status e outros detalhes relevantes
+para monitoramento e administração dos recursos do cluster Kubernetes usando o kubectl.
+`kubectl describe daemonset <nome-do-daemonset>` -> exibe detalhes sobre um DaemonSet específico, incluindo informações sobre os pods gerenciados pelo
+DaemonSet, eventos relacionados e outros detalhes importantes para a depuração e administração do DaemonSet usando o kubectl.
+`kubectl apply -f <arquivo.yaml>` -> aplica as alterações a um recurso do Kubernetes a partir de um arquivo de configuração YAML, criando ou atualizando o
+recurso conforme necessário, permitindo que os usuários gerenciem recursos do Kubernetes de forma eficiente usando o kubectl.
+`kubectl delete daemonset <nome-do-daemonset>` -> exclui um DaemonSet específico do cluster Kubernetes, permitindo que os usuários removam DaemonSets que não
+são mais necessários ou que estão causando problemas no cluster usando o kubectl.
+`kubectl get daemonsets -n <nome-do-namespace>` -> lista os DaemonSets em um namespace específico, mostrando informações como nome, número de pods, status e
+outros detalhes relevantes para monitoramento e administração dos recursos dentro do namespace usando o kubectl.
+`kubectl describe daemonset <nome-do-daemonset> -n <nome-do-namespace>` -> exibe detalhes sobre um DaemonSet específico em um namespace específico, incluindo
+informações sobre os pods gerenciados pelo DaemonSet, eventos relacionados e outros detalhes importantes para a depuração e administração do DaemonSet dentro do
+namespace usando o kubectl.
+`kubectl delete daemonset <nome-do-daemonset> -n <nome-do-namespace>` -> exclui um DaemonSet específico de um namespace específico do cluster Kubernetes,
+permitindo que os usuários removam DaemonSets de forma mais granular e organizada dentro do cluster usando o kubectl, garantindo que os recursos sejam
+gerenciados de forma eficiente dentro dos namespaces do cluster Kubernetes.
+`kubectl explain daemonset <nome-do-daemonset>` -> exibe uma explicação detalhada sobre um DaemonSet específico, incluindo informações sobre os campos de
+configuração, opções disponíveis e exemplos de uso, permitindo que os usuários entendam melhor como configurar e gerenciar DaemonSets dentro do cluster
+Kubernetes usando o kubectl.
 
 
