@@ -1460,3 +1460,24 @@ spec:
       targetPort: 80
   type: ClusterIP
 ```
+
+--Comandos relacionados a Services
+`kubectl create service <tipo-de-serviço> <nome-do-serviço> --tcp=<porta>:<targetPort>` -> cria um novo Service com um tipo de serviço específico e uma
+configuração de porta, permitindo que os usuários exponham os aplicativos e serviços dentro do cluster Kubernetes de forma eficiente usando o kubectl.
+`kubectl create service <tipo-de-serviço> <nome-do-serviço> --tcp=<porta>:<targetPort> --dry-run -oyaml` -> gera um arquivo YAML de configuração para um Service
+com um tipo de serviço específico e uma configuração de porta, permitindo que os usuários criem um arquivo de configuração para o Service e personalizem suas
+configurações antes de aplicá-lo ao cluster Kubernetes usando o kubectl.
+
+--Dica usando o kubectl expose
+O comando `kubectl expose` é uma maneira rápida e fácil de criar um Service para um recurso existente, como um Deployment, um ReplicaSet ou um Pod. Ele permite
+que os usuários exponham os aplicativos e serviços dentro do cluster Kubernetes de forma eficiente usando o kubectl, sem a necessidade de criar um arquivo de
+configuração YAML para o Service. O comando `kubectl expose` é recomendado para casos em que os usuários desejam expor rapidamente um recurso existente,
+enquanto a criação de um arquivo de configuração YAML é recomendada para casos em que os usuários desejam personalizar as configurações do Service de forma mais
+detalhada. O comando `kubectl expose` é uma opção poderosa para expor os aplicativos e serviços dentro do cluster Kubernetes de forma rápida e eficiente usando
+o kubectl, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre o
+comando `kubectl expose` para mais informações: https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#expose.
+
+--Comandos relacionados a kubectl expose
+`kubectl expose <tipo-de-recurso> <nome-do-recurso> --port=<porta> --target-port=<targetPort>` -> expõe um recurso existente, como um Deployment, um ReplicaSet
+ou um Pod, criando um Service com uma configuração de porta específica, permitindo que os usuários exponham os aplicativos e serviços dentro do cluster
+Kubernetes de forma eficiente usando o kubectl.
