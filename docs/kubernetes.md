@@ -1742,3 +1742,136 @@ Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente u
 políticas de tráfego para mais
 informações: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-policies.
 
+--Canary Deployments
+Os Canary Deployments são uma estratégia de implantação no Kubernetes que permite que os usuários implantem uma nova versão de um aplicativo ou serviço para um
+pequeno subconjunto de usuários ou tráfego, permitindo que os usuários testem a nova versão em um ambiente de produção real antes de implantá-la para todos os
+usuários. Os Canary Deployments são recomendados para casos em que os usuários desejam testar uma nova versão de um aplicativo ou serviço em um ambiente de
+produção real, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre
+Canary Deployments para mais
+informações: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#canary-deployment.
+
+Abaixo um exemplo de configuração de Deployment para um Canary `raiz` Deployment em um arquivo YAML para um Deployment do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-blue
+  labels:
+    app: nginx-blue
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          imagePullPolicy: Always
+          image: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-green
+  labels:
+    app: nginx-green
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: httpd
+          imagePullPolicy: Always
+          image: httpd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: nginx
+  type: LoadBalancer
+```
+
+--Blue-Green Deployments
+Os Blue-Green Deployments são uma estratégia de implantação no Kubernetes que envolve a criação de duas versões do aplicativo ou serviço, uma versão "blue" e
+uma versão "green". A versão "blue" é a versão atual do aplicativo ou serviço que está em produção, enquanto a versão "green" é a nova versão do aplicativo ou
+serviço que está sendo testada. Os Blue-Green Deployments são recomendados para casos em que os usuários desejam implantar uma nova versão de um aplicativo ou
+serviço com o mínimo de tempo de inatividade e risco, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl. Segue o link da
+documentação oficial do Kubernetes sobre Blue-Green Deployments para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#blue-green-deployments.
+
+Abaixo um exemplo de configuração de Deployment para um Blue-Green `raiz` Deployment em um arquivo YAML para um Deployment do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-blue
+  labels:
+    app: nginx-blue
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx-blue
+    spec:
+      containers:
+        - name: nginx
+          imagePullPolicy: Always
+          image: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-green
+  labels:
+    app: nginx-green
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: nginx-green
+  template:
+    metadata:
+      labels:
+        app: nginx-green
+    spec:
+      containers:
+        - name: httpd
+          imagePullPolicy: Always
+          image: httpd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: nginx-green
+  type: ClusterIP
+```
