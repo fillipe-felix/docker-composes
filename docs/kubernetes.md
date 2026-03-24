@@ -1923,3 +1923,51 @@ spec:
 
 O Ingress Resource acima define uma regra de roteamento para o tráfego de entrada para o serviço `nginx` com base no host `nginx.demo.com` e no caminho `/`,
 garantindo que os usuários acessem os serviços de forma eficiente usando o kubectl.
+
+--Ingress Classes (Multiplos controladores de Ingress)
+As Ingress Classes são um recurso do Kubernetes que permite que os usuários definam diferentes classes de Ingress para controlar o roteamento de tráfego de
+entrada para os serviços dentro do cluster Kubernetes. Elas permitem que os usuários definam diferentes controladores de Ingress para diferentes classes de
+Ingress, garantindo que os serviços dentro do cluster Kubernetes sejam acessíveis de forma eficiente e confiável usando o kubectl.
+Para utilizar o multiplos controladores vamos utilizar o traefik como controlador de Ingress, que é um controlador de Ingress popular e amplamente utilizado no
+Kubernetes, permitindo que os usuários controlem o roteamento de tráfego de entrada para os serviços dentro do cluster Kubernetes usando o kubectl. O Traefik é
+recomendado para casos em que os usuários desejam usar um controlador de Ingress alternativo para controlar o roteamento de tráfego de entrada para os serviços
+dentro do cluster Kubernetes, permitindo que os usuários acessem os serviços de forma eficiente usando o kubectl. Segue o link da documentação oficial do
+Traefik para mais informações: https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-helm-chart.
+Primeiro é necessário instalar o Traefik usando o Helm, que é um gerenciador de pacotes para Kubernetes, permitindo que os usuários instalem e gerenciem o
+Traefik de forma eficiente usando o kubectl. Para instalar o Traefik usando o Helm, siga os passos abaixo:
+
+1. Adicione o repositório do Traefik ao Helm usando o comando `helm repo add traefik https://helm.traefik.io/traefik`, garantindo que o repositório do Traefik
+   seja adicionado ao Helm para que os usuários possam instalar o Traefik usando o kubectl.
+2. Atualize o repositório do Helm usando o comando `helm repo update`, garantindo que o repositório do Traefik seja atualizado para que os usuários possam
+   instalar a versão mais recente do Traefik usando o kubectl.
+3. Instale o Traefik usando o comando `helm install traefik traefik/traefik --namespace traefik --create-namespace --set logs.access.enable=true`, garantindo
+   que o Traefik seja instalado no namespace `traefik` com os logs de acesso habilitados, permitindo que os usuários controlem o roteamento de tráfego de
+   entrada
+   para os serviços dentro do cluster Kubernetes usando o kubectl.
+4. Após a instalação do Traefik, é necessário configurar o IngressClass para o Traefik, basta usar o comando `kubectl apply -f <arquivo-ingressclass>.yaml` para
+   aplicar a configuração do IngressClass para o Traefik, garantindo que o controlador de Ingress do Traefik seja configurado corretamente para controlar o
+   roteamento de tráfego de entrada para os serviços dentro do cluster Kubernetes usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre
+   IngressClass para mais informações: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class.
+
+Abaixo um exemplo de configuração de Ingress Class para o Traefik em um arquivo YAML para um Ingress do Kubernetes:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-service-ingress
+spec:
+  ingressClassName: traefik # Nome do controlador de Ingress a ser usado
+  rules:
+    - host: nginx.demo.com
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+```
+

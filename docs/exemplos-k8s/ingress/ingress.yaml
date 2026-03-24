@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: web-service-ingress
 spec:
-  ingressClassName: nginx # Nome do controlador de Ingress a ser usado
+  ingressClassName: traefik # Nome do controlador de Ingress a ser usado
   rules:
     - host: nginx.demo.com
     - http:
