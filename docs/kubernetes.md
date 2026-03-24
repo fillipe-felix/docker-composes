@@ -1524,3 +1524,52 @@ corretamente para os pods que estão atendendo ao serviço. Aqui está um resumo
 Caso algum problema de roteamento, verificar porque talvez pode ser um problema relacionado ao selector do service que pode estar mandando para uma label
 errada, as labels que esta em pods não estão relacionados aquele serviço ou labels duplicadas.
 
+--Kube-proxy: IPVS mode
+O kube-proxy é um componente do Kubernetes que é responsável por gerenciar o roteamento de tráfego para os serviços dentro do cluster Kubernetes. Ele é
+executado em cada nó do cluster Kubernetes e é responsável por garantir que as requisições sejam roteadas de forma eficiente para os pods associados aos
+serviços. O kube-proxy suporta diferentes modos de operação, incluindo o modo IPVS (IP Virtual Server), que é um modo de balanceamento de carga de alto
+desempenho para serviços dentro do cluster Kubernetes. O modo IPVS usa o kernel do Linux para realizar o balanceamento de carga, permitindo que as requisições
+sejam roteadas de forma eficiente para os pods associados aos serviços, mesmo em casos de alta carga ou falhas nos pods, garantindo a disponibilidade e a
+confiabilidade dos aplicativos e serviços dentro do cluster Kubernetes usando o kubectl. O modo IPVS é recomendado para ambientes de produção que exigem alto
+desempenho e escalabilidade para os serviços dentro do cluster Kubernetes, permitindo que os usuários gerenciem o roteamento de tráfego de forma eficiente
+usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre o kube-proxy e o modo IPVS para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#proxy-mode-ipvs. O uso adequado do kube-proxy e do modo IPVS é fundamental para
+garantir a disponibilidade e a confiabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários gerenciem o roteamento de
+tráfego de forma eficiente usando o kubectl. O kube-proxy é uma parte essencial da infraestrutura de rede do Kubernetes, garantindo que as requisições sejam
+roteadas de forma eficiente para os pods associados aos serviços, mesmo em casos de alta carga ou falhas nos pods, garantindo a disponibilidade e a
+confiabilidade dos aplicativos e serviços dentro do cluster Kubernetes usando o kubectl. O modo IPVS é uma opção poderosa para ambientes de produção que exigem
+alto desempenho e escalabilidade para os serviços dentro do cluster Kubernetes, permitindo que os usuários gerenciem oroteamento de tráfego de forma eficiente
+usando o kubectl.
+
+Voce pode alterar o modo de operação do kube-proxy para IPVS editando a configuração do cluster Kubernetes e definindo o modo de proxy para IPVS, garantindo que
+o kube-proxy use o modo IPVS para gerenciar o roteamento de tráfego para os serviços dentro do cluster Kubernetes, permitindo que os usuários gerenciem o
+roteamento de tráfego de forma eficiente usando o kubectl. Para alterar o modo de operação do kube-proxy para IPVS, siga os passos abaixo:
+
+1. Edite a configuração do cluster Kubernetes usando o comando `kubectl edit configmap kube-proxy -n kube-system` para abrir o arquivo de configuração do
+   kube-proxy em um editor de texto.
+2. No arquivo de configuração do kube-proxy, localize a seção `mode` e altere o valor para `ipvs`, garantindo que o kube-proxy use o modo IPVS para gerenciar
+   o roteamento de tráfego para os serviços dentro do cluster Kubernetes.
+3. Salve e feche o arquivo de configuração do kube-proxy para aplicar as alterações.
+4. O kube-proxy será reiniciado automaticamente para aplicar as alterações, garantindo que o modo IPVS seja ativado para gerenciar o roteamento de tráfego para
+   os serviços dentro do cluster Kubernetes, permitindo que os usuários gerenciem o roteamento de tráfego de forma eficiente usando o kubectl. É importante para
+   garantir que as configurações sejam aplicadas, rebutando ou excluindo os pods do kube-proxy para que eles sejam recriados com as novas configurações,
+   garantindo que o modo IPVS seja ativado para gerenciar o roteamento de tráfego para os serviços dentro do cluster Kubernetes, permitindo que os usuários
+   gerenciem o roteamento de tráfego de forma eficiente usando o kubectl.
+
+--Kube-proxy: Iptables mode
+O modo iptables é o modo de proxy padrão para o kube-proxy no Kubernetes. Ele usa o sistema de firewall iptables do Linux para gerenciar o roteamento de tráfego
+para os serviços dentro do cluster Kubernetes. O modo iptables é uma opção confiável e amplamente suportada para gerenciar o roteamento de tráfego para os
+serviços dentro do cluster Kubernetes, permitindo que os usuários gerenciem o roteamento de tráfego de forma eficiente usando o kubectl. O modo iptables é
+recomendado para ambientes de desenvolvimento e teste, onde o desempenho e a escalabilidade não são tão críticos, permitindo que os usuários gerenciem o
+roteamento de tráfego de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre o kube-proxy e o modo iptables para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#proxy-mode-iptables. O uso adequado do kube-proxy e do modo iptables é fundamental
+para garantir a disponibilidade e a confiabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários gerenciem o roteamento de
+tráfego de forma eficiente usando o kubectl. O kube-proxy é uma parte essencial da infraestrutura de rede do Kubernetes, garantindo que as requisições sejam
+roteadas de forma eficiente para os pods associados aos serviços, mesmo em casos de alta carga ou falhas nos pods, garantindo a disponibilidade e a
+confiabilidade dos aplicativos e serviços dentro do cluster Kubernetes usando o kubectl.
+Uma forma de salvar as configurações atuais do iptables é usando o comando `iptables-save > <arquivo-iptables>.txt`, que salva as regras atuais do iptables em
+um arquivo de texto, permitindo que os usuários tenham um backup das configurações atuais do iptables antes de fazer alterações, garantindo que as configurações
+possam ser restauradas se necessário, permitindo que os usuários gerenciem o roteamento de tráfego de forma eficiente usando o kubectl. Segue o link da
+documentação oficial do Kubernetes sobre o comando `iptables-save` para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#proxy-mode-iptables.
+
