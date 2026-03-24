@@ -1714,3 +1714,21 @@ spec:
   type: ClusterIP
   clusterIP: None
 ```
+
+--ExternalName
+O ExternalName é um tipo de serviço no Kubernetes que mapeia um nome de serviço para um nome DNS externo, permitindo que os usuários acessem os recursos usando
+um nome de domínio personalizado, em vez de usar um endereço IP do serviço. O ExternalName é recomendado para casos em que os usuários desejam acessar recursos
+externos ao cluster Kubernetes usando um nome de domínio personalizado, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl.
+Segue o link da documentação oficial do Kubernetes sobre ExternalName para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#externalname.
+Abaixo segue um exemplo de configuração de ExternalName em um arquivo YAML para um Service do Kubernetes:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog
+spec:
+  type: ExternalName
+  externalName: fillipefelixdev.com
+```
