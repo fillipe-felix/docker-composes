@@ -1875,3 +1875,51 @@ spec:
     app: nginx-green
   type: ClusterIP
 ```
+
+--Ingress
+O Ingress é um recurso do Kubernetes que permite que os usuários exponham os serviços dentro do cluster Kubernetes para o mundo externo, permitindo que os
+usuários acessem os serviços usando um nome de domínio personalizado, em vez de usar um endereço IP do serviço. O Ingress é recomendado para casos em que os
+usuários desejam expor os serviços para o mundo externo usando um nome de domínio personalizado, permitindo que os usuários acessem os serviços de forma
+eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre Ingress para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/ingress/.
+
+Em `docs/examplos-k8s/ingress` tem um exemplo de configuração de Ingress em um arquivo YAML para um Ingress do Kubernetes, que inclui a configuração de um
+controlador de Ingress, regras de roteamento e um serviço associado para expor os serviços dentro do cluster Kubernetes para o mundo externo usando o kubectl.
+Para configurar o ingressclass e deixar um como padrão, basta usar o comando `kubectl edit ingressclass nginx` e adicionar a linha em annotations
+`ingressclass.kubernetes.io/is-default-class: "true"`, garantindo que o controlador de Ingress seja configurado como o controlador de Ingress padrão para o
+cluster Kubernetes, permitindo que os usuários exponham os serviços para o mundo externo usando um nome de domínio personalizado, em vez de usar um endereço IP
+do serviço, garantindo que os usuários acessem os serviços de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre
+IngressClass para mais informações: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class.
+
+--Ingress Resource
+O Ingress Resource é um recurso do Kubernetes que define as regras de roteamento para o tráfego de entrada para os serviços dentro do cluster Kubernetes. Ele
+permite que os usuários definam regras para o roteamento de tráfego com base em host, caminho e outras condições, garantindo que os serviços dentro do cluster
+Kubernetes sejam acessíveis de forma eficiente e confiável usando o kubectl. O Ingress Resource é recomendado para casos em que os usuários desejam controlar o
+roteamento de tráfego de entrada para os serviços dentro do cluster Kubernetes, permitindo que os usuários acessem os serviços de forma eficiente usando o
+kubectl. Segue o link da documentação oficial do Kubernetes sobre Ingress Resource para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource.
+
+Abaixo um exemplo de configuração de Ingress Resource em um arquivo YAML para um Ingress do Kubernetes:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-service-ingress
+spec:
+  ingressClassName: nginx # Nome do controlador de Ingress a ser usado
+  rules:
+    - host: nginx.demo.com
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+```
+
+O Ingress Resource acima define uma regra de roteamento para o tráfego de entrada para o serviço `nginx` com base no host `nginx.demo.com` e no caminho `/`,
+garantindo que os usuários acessem os serviços de forma eficiente usando o kubectl.
