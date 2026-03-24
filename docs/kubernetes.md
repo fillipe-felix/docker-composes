@@ -1481,3 +1481,46 @@ comando `kubectl expose` para mais informações: https://kubernetes.io/docs/ref
 `kubectl expose <tipo-de-recurso> <nome-do-recurso> --port=<porta> --target-port=<targetPort>` -> expõe um recurso existente, como um Deployment, um ReplicaSet
 ou um Pod, criando um Service com uma configuração de porta específica, permitindo que os usuários exponham os aplicativos e serviços dentro do cluster
 Kubernetes de forma eficiente usando o kubectl.
+
+--Service Discovery(DNS)
+No Kubernetes, o Service Discovery é um mecanismo que permite que os aplicativos e serviços dentro do cluster Kubernetes se descubram e se comuniquem entre si
+usando nomes de serviço em vez de endereços IP. O Kubernetes fornece um sistema de DNS interno que resolve os nomes de serviço para os endereços IP dos pods
+associados ao serviço, permitindo que os aplicativos e serviços se comuniquem de forma eficiente e confiável dentro do cluster Kubernetes usando o kubectl. O
+Service Discovery é uma ferramenta importante para garantir a comunicação eficiente entre os aplicativos e serviços dentro do cluster Kubernetes, permitindo que
+os usuários acessem os recursos de forma eficiente usando o kubectl. O Service Discovery é recomendado para casos em que os aplicativos e serviços dentro do
+cluster Kubernetes precisam se comunicar entre si de forma eficiente e confiável,permitindo que os usuários acessem os recursos de forma eficiente usando o
+kubectl. O Service Discovery é uma opção poderosa para garantir a comunicação eficiente entre os aplicativos e serviços dentro do cluster Kubernetes,permitindo
+que os usuários acessem os recursos de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre Service Discovery para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#discovering-services.
+Caso eu esteja em uma service que esteja em um namespace diferente e queira acessar o `nginx` que está em outro namespace, eu posso por exemplo acessa-lo usando
+o nome do serviço e o namespace, como `nginx.<namespace>.svc.cluster.local`, ou seja, usando o formato
+`<nome-do-serviço>.<nome-do-namespace>.svc.cluster.local`, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl, mesmo quando os
+serviços estão em namespaces diferentes dentro do cluster Kubernetes. O uso adequado dos Services é fundamental para garantir a disponibilidade e a
+confiabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl.
+E se for um pod e eu tenha o ip dele e queira acessar ele de outro namespace, eu posso acessar ele usando o formato
+`<ip-do-pod>.<nome-do-namespace>.pod.cluster.local`, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl, mesmo quando os pods
+estão em namespaces diferentes dentro do cluster Kubernetes. O uso adequado dos Services e dos pods é fundamental para garantir a disponibilidade e a
+confiabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl.
+
+--Como uma requisição chega no pod
+Quando uma requisição é feita para um serviço no Kubernetes, o processo de roteamento envolve várias etapas para garantir que a requisição seja direcionada
+corretamente para os pods que estão atendendo ao serviço. Aqui está um resumo de como uma requisição chega a um pod:
+
+1. O cliente faz uma requisição para o serviço usando o nome do serviço ou o endereço IP do serviço.
+2. O Kubernetes usa o sistema de DNS interno para resolver o nome do serviço para o endereço IP do serviço.
+3. O Kubernetes verifica as regras de roteamento definidas para o serviço, como as regras de balanceamento de carga e as regras de afinidade, para determinar
+   quais pods estão associados ao serviço e como a requisição deve ser roteada.
+4. O Kubernetes seleciona um pod que está associado ao serviço com base nas regras de roteamento e encaminha a requisição para o pod selecionado.
+5. O pod recebe a requisição e processa a solicitação,gerando uma resposta que é enviada de volta para o cliente através do serviço.
+6. O serviço encaminha a resposta do pod de volta para o cliente, garantindo que a comunicação entre o cliente e o pod seja eficiente e confiável dentro do
+   cluster Kubernetes usando o kubectl.
+   Esse processo de roteamento é gerenciado pelo control plane do Kubernetes, que monitora o estado dos pods e garante que as requisições sejam roteadas de
+   forma eficiente para os pods dentro do cluster Kubernetes, mesmo em caso de falhas ou reinicializações dos pods, garantindo a disponibilidade e a
+   confiabilidade dos aplicativos e serviços dentro do cluster Kubernetes usando o kubectl. O uso adequado dos Services é fundamental para garantir a
+   disponibilidade e a confiabilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente
+   usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre como as requisições chegam aos pods para mais
+   informações: https://kubernetes.io/docs/concepts/services-networking/service/#how-requests-reach-pods.
+
+Caso algum problema de roteamento, verificar porque talvez pode ser um problema relacionado ao selector do service que pode estar mandando para uma label
+errada, as labels que esta em pods não estão relacionados aquele serviço ou labels duplicadas.
+
