@@ -1588,3 +1588,65 @@ permitindo que os usuários acessem os serviços de forma eficiente usando o kub
 ou excluindo os pods do serviço para que eles sejam recriados com as novas configurações, garantindo que o serviço seja exposto em uma porta específica em cada
 nó do cluster Kubernetes, permitindo que os usuários acessem os serviços de forma eficiente usando o kubectl.
 
+--LoadBalancer
+O LoadBalancer é um tipo de serviço no Kubernetes que cria um balanceador de carga externo para expor os serviços dentro do cluster Kubernetes para o mundo
+externo. Ele permite que os usuários acessam os serviços de forma eficiente usando o kubectl, mesmo quando os serviços estão em nós diferentes dentro do cluster
+Kubernetes. O LoadBalancer é uma opção poderosa para expor os serviços dentro do cluster Kubernetes para o mundo externo, permitindo que os
+usuários acessem os serviços de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre LoadBalancer para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer.
+Quando esta rodando em cloud você não vai conseguir ver dados do cloud controller manager, mas se estiver rodando em bare metal, você pode usar o comando
+`kubectl get service <nome-do-serviço> -o yaml` para verificar as informações do serviço, incluindo o endereço IP externo atribuído pelo balanceador de carga,
+permitindo que os usuários verifiquem as informações do serviço e acessem os serviços de forma eficiente usando o kubectl. Se o serviço estiver rodando em um
+ambiente de nuvem, como AWS, GCP ou Azure, o endereço IP externo atribuído pelo balanceador de carga pode ser verificado usando as ferramentas de gerenciamento
+da nuvem, como o console de gerenciamento da AWS, o console do GCP ou o portal do Azure, permitindo que os usuários verifiquem as informações do serviço e
+acessem os serviços de forma eficiente usando o kubectl e para mais informações: https://github.com/kubernetes/kubernetes/tree/v1.28.0/pkg/cloudprovider.
+Abaixo segue um exemplo de configuração de Service do tipo LoadBalancer em um arquivo YAML para um Service do Kubernetes:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: nginx
+  type: LoadBalancer
+```
+
+Para rodar local é necessário usar uma ferramenta como o MetalLB, que é um balanceador de carga para ambientes de bare metal, permitindo que os usuários testem
+e desenvolvam serviços do tipo LoadBalancer em um ambiente local usando o kubectl. O MetalLB é uma opção poderosa para rodar serviços do tipo LoadBalancer em um
+ambiente local, permitindo que os usuários testem e desenvolvam serviços de forma eficiente usando o kubectl. Segue o link da documentação oficial do MetalLB
+para mais informações: https://metallb.universe.tf/.
+
+Para realizar a instalação do MetalLB, siga a documentação oficial do MetalLB: https://metallb.universe.tf/installation/#installation-by-manifest.
+Após a instalação do MetalLB, é necessário configurar o pool de endereços IP para o MetalLB, basta seguir a documentação oficial do
+MetalLb: https://metallb.universe.tf/configuration/#layer-2-configuration.
+Para esse exemplo vamos criar um Layer 2 Configuration, que é uma configuração simples para ambientes de rede onde os nós do cluster Kubernetes estão na mesma
+sub-rede, permitindo que o MetalLB atribua endereços IP diretamente aos serviços do tipo LoadBalancer, garantindo que os serviços sejam acessíveis de forma
+eficiente usando o kubectl. Abaixo segue um exemplo de configuração de Layer 2 para o MetalLB em um arquivo YAML:
+
+```yaml
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: private-subnet-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 172.18.0.240-172.18.0.250
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: private-subnet-advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - private-subnet-pool
+```
+
+O iprange passado em `addresses` deve ser o mesmo do internal-IP dos nodes, que podem ser acessados por `kubectl get node -owide` e o range deve ser pequeno,
+para evitar conflitos de IPs, garantindo que os serviços do tipo LoadBalancer sejam acessíveis de forma eficiente usando o kubectl.
