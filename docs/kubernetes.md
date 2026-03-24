@@ -1732,3 +1732,13 @@ spec:
   type: ExternalName
   externalName: fillipefelixdev.com
 ```
+
+--Trafic Policies
+As políticas de tráfego no Kubernetes são um conjunto de regras e configurações que controlam como o tráfego é roteado e gerenciado dentro do cluster
+Kubernetes. Elas permitem que os usuários definam regras para o roteamento de tráfego, balanceamento de carga, afinidade de pods e outras configurações
+relacionadas ao tráfego, garantindo que os aplicativos e serviços dentro do cluster Kubernetes sejam acessíveis de forma eficiente e confiável usando o kubectl.
+As políticas de tráfego são recomendadas para casos em que os usuários desejam controlar o roteamento de tráfego e a distribuição de carga dentro do cluster
+Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre
+políticas de tráfego para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#traffic-policies.
+
