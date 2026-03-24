@@ -2008,3 +2008,71 @@ spec:
                 port:
                   number: 80
 ```
+
+--ConfigMaps e Secrets
+Os ConfigMaps e Secrets são recursos do Kubernetes que permitem que os usuários armazenem e gerenciem informações de configuração e dados sensíveis dentro do
+cluster Kubernetes. Os ConfigMaps são usados para armazenar informações de configuração não sensíveis, como variáveis de ambiente, arquivos de configuração e
+outros dados de configuração, enquanto os Secrets são usados para armazenar informações sensíveis, como senhas, chaves de API e outros dados confidenciais. Os
+ConfigMaps e Secrets são recomendados para casos em que os usuários desejam armazenar e gerenciar informações de configuração e dados sensíveis dentro do
+cluster Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre
+ConfigMaps e Secrets para mais
+informações: https://kubernetes.io/docs/concepts/configuration/configmap/ e https://kubernetes.io/docs/concepts/configuration/secret/.
+Abaixo um exemplo de configuração de ConfigMap e Secret em um arquivo YAML para um ConfigMap e um Secret do Kubernetes:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-demo
+data:
+  virual_host: "vhost1.localhost.com"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources: { }
+          env:
+            - name: VIRTUAL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: nginx-demo
+                  key: virual_host
+```
+
+--Comandos para configMaps e Secrets
+
+`kubectl create configmap <nome-do-configmap> --from-literal=<chave>=<valor>`: Cria um ConfigMap a partir de um par chave-valor, permitindo que os usuários
+criem ConfigMaps de forma rápida e eficiente usando o kubectl.
+`kubectl create secret generic <nome-do-secret> --from-literal=<chave>=<valor>`: Cria um Secret a partir de um par chave-valor, permitindo que os usuários criem
+Secrets de forma rápida e eficiente usando o kubectl.
+`kubectl get configmap <nome-do-configmap> -o yaml`: Exibe as informações de um ConfigMap em formato YAML, permitindo que os usuários verifiquem as informações
+de configuração armazenadas em um ConfigMap usando o kubectl.
+`kubectl get secret <nome-do-secret> -o yaml`: Exibe as informações de um Secret em formato YAML, permitindo que os usuários verifiquem as informações sensíveis
+armazenadas em um Secret usando o kubectl.
+`kubectl edit configmap <nome-do-configmap>`: Edita um ConfigMap usando um editor de texto, permitindo que os usuários modifiquem as informações de configuração
+armazenadas em um ConfigMap de forma eficiente usando o kubectl.
+`kubectl edit secret <nome-do-secret>`: Edita um Secret usando um editor de texto, permitindo que os usuários modifiquem as informações sensíveis armazenadas em
+um Secret de forma eficiente usando o kubectl.
+`kubectl delete configmap <nome-do-configmap>`: Exclui um ConfigMap, permitindo que os usuários removam informações de configuração armazenadas em um ConfigMap
+usando o kubectl.
+`kubectl delete secret <nome-do-secret>`: Exclui um Secret, permitindo que os usuários removam informações sensíveis armazenadas em um Secret usando o kubectl.
+Segue o link da documentação oficial do Kubernetes sobre comandos para ConfigMaps e Secrets para mais
+informações: https://kubernetes.io/docs/concepts/configuration/configmap/#create-a-configmap-from-literal-values
+e https://kubernetes.io/docs/concepts/configuration/secret/#create-a-secret-from-literal-values.
