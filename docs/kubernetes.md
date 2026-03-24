@@ -1573,3 +1573,18 @@ possam ser restauradas se necessário, permitindo que os usuários gerenciem o r
 documentação oficial do Kubernetes sobre o comando `iptables-save` para mais
 informações: https://kubernetes.io/docs/concepts/services-networking/service/#proxy-mode-iptables.
 
+--NodePort
+O NodePort é um tipo de serviço no Kubernetes que expõe um serviço em uma porta específica em cada nó do cluster Kubernetes. Ele permite que os usuários acessem
+os serviços dentro do cluster Kubernetes de forma eficiente usando o kubectl, mesmo quando os serviços estão em nós diferentes dentro do cluster Kubernetes. O
+NodePort é recomendado para casos em que os usuários desejam expor um serviço para o mundo externo, permitindo que os usuários acessem os serviços usando um
+endereço IP do nó e a porta do NodePort, garantindo que os serviços sejam acessíveis de forma eficiente usando o kubectl. O NodePort é uma opção poderosa para
+expor os serviços dentro do cluster Kubernetes para o mundo externo, permitindo que os usuários acessem os serviços de forma eficiente usando o kubectl. Segue o
+link da documentação oficial do Kubernetes sobre NodePort para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport. O uso adequado do NodePort é fundamental para garantir a disponibilidade
+e a confiabilidade dos serviços dentro do cluster Kubernetes, permitindo que os usuários acessem os serviços de forma eficiente usando o kubectl.
+Se eu quiser alterar o meu serviço para o tipo NodePort, eu posso editar a configuração do serviço usando o comando `kubectl edit service <nome-do-serviço>`,
+localizando a seção `type` e alterando o valor para `NodePort`, garantindo que o serviço seja exposto em uma porta específica em cada nó do cluster Kubernetes,
+permitindo que os usuários acessem os serviços de forma eficiente usando o kubectl. É importante para garantir que as configurações sejam aplicadas, rebutando
+ou excluindo os pods do serviço para que eles sejam recriados com as novas configurações, garantindo que o serviço seja exposto em uma porta específica em cada
+nó do cluster Kubernetes, permitindo que os usuários acessem os serviços de forma eficiente usando o kubectl.
+
