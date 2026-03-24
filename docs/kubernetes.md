@@ -2106,6 +2106,72 @@ o arquivo `vhost.conf` do ConfigMap é montado no caminho `/etc/nginx/conf.d/vho
 usuários acessem os recursos de forma eficiente usando o kubectl. A diretiva subPath é usada para montar apenas o arquivo `index.html` do ConfigMap no caminho
 especificado dentro do contêiner, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl.
 
+--Secrets
+Os Secrets são usados para armazenar informações sensíveis, como senhas, chaves de API e outros dados confidenciais, garantindo que os usuários acessem os
+recursos de forma eficiente usando o kubectl. Os Secrets são recomendados para casos em que os usuários desejam armazenar e gerenciar informações sensíveis
+dentro do cluster Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl. Segue o link da documentação oficial do
+Kubernetes sobre Secrets para mais informações: https://kubernetes.io/docs/concepts/configuration/secret/.
+Abaixo um exemplo de configuração de Secret em um arquivo YAML para um Secret do Kubernetes:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: credentials
+type: kunernetes.io/basic-auth
+data:
+  username: bWF0ZXVz
+  password: bWF0ZXVz
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources: { }
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: password
+          volumeMounts:
+            - mountPath: /tmp
+              name: credentials
+              readOnly: true
+      volumes:
+        - name: credentials
+          secret:
+            secretName: credentials
+```
+
+O Secret acima define duas chaves, `username` e `password`, que contêm as credenciais codificadas em base64. O Deployment do Nginx monta o Secret como um volume
+no caminho `/tmp` dentro do contêiner, garantindo que os usuários acessem os recursos de forma eficiente usando o kubectl. As variáveis de ambiente `USERNAME` e
+`PASSWORD` são definidas usando a diretiva `valueFrom` para referenciar as chaves do Secret, permitindo que os usuários acessem os recursos de forma eficiente
+usando o kubectl. O Secret é montado como um volume no caminho `/tmp` dentro do contêiner, garantindo que os usuários acessem os recursos de forma eficiente
+usando o kubectl. O tipo do Secret é definido como `kubernetes.io/basic-auth`, indicando que o Secret contém credenciais de autenticação básica, garantindo que
+os usuários acessem os recursos de forma eficiente usando o kubectl.
+
 --Comandos para configMaps e Secrets
 
 `kubectl create configmap <nome-do-configmap> --from-literal=<chave>=<valor>`: Cria um ConfigMap a partir de um par chave-valor, permitindo que os usuários
