@@ -1650,3 +1650,67 @@ spec:
 
 O iprange passado em `addresses` deve ser o mesmo do internal-IP dos nodes, que podem ser acessados por `kubectl get node -owide` e o range deve ser pequeno,
 para evitar conflitos de IPs, garantindo que os serviços do tipo LoadBalancer sejam acessíveis de forma eficiente usando o kubectl.
+
+--Headless Service
+Um Headless Service é um tipo de serviço no Kubernetes que não atribui um endereço IP para o serviço, permitindo que os usuários acessem os pods associados ao
+serviço diretamente usando os nomes dos pods, em vez de usar um endereço IP do serviço. O Headless Service é recomendado para casos em que os usuários desejam
+acessar os pods associados ao serviço diretamente, como em casos de bancos de dados ou outros aplicativos que exigem acesso direto aos pods, permitindo que os
+usuários acessem os recursos de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre Headless Service para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/service/#headless-services.
+
+Abaixo segue um exemplo de configuração de Headless Service em um arquivo YAML para um Service do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: nginx
+  name: nginx-master
+spec:
+  serviceName: "nginx"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: nginx-html
+  volumeClaimTemplates:
+    - metadata:
+        name: nginx-html
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1G
+```
+
+O StatefulSet acima cria 3 réplicas do nginx, cada uma com um volume persistente para armazenar os dados. O serviço associado a esse StatefulSet é um Headless
+Service, que permite que os usuários acessem os pods diretamente usando os nomes dos pods, como `nginx-master-0`, `nginx-master-1` e `nginx-master-2`, em vez de
+usar um endereço IP do serviço, garantindo que os usuários acessem os recursos de forma eficiente usando o kubectl. Abaixo segue um exemplo de configuração de
+Headless Service em um arquivo YAML para um Service do Kubernetes:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: nginx
+  ports:
+    - name: https
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+  clusterIP: None
+```
