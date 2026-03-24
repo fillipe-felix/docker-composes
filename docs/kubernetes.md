@@ -2026,6 +2026,30 @@ metadata:
   name: nginx-demo
 data:
   virual_host: "vhost1.localhost.com"
+  index.html: |
+    <html>
+    <head>
+        <title>ConfigMap Example</title>
+    </head>
+    <body>
+    <h1>ConfigMap Example</h1>
+    <p>This is an example of a ConfigMap in Kubernetes.</p>
+    </body>
+    </html>
+  vhost.conf: |
+    server {
+        listen 80;
+        listen [::]:80;
+
+        root /usr/share/nginx/app1;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name app.localhost.com www.app.localhost.com;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+    }
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -2054,7 +2078,33 @@ spec:
                 configMapKeyRef:
                   name: nginx-demo
                   key: virual_host
+          volumeMounts:
+            - mountPath: /usr/share/nginx/app1/index.html
+              subPath: index.html
+              name: index-html
+            - mountPath: /etc/nginx/conf.d/vhost.conf
+              subPath: vhost.conf
+              name: vhost
+      volumes:
+        - name: index-html
+          configMap:
+            name: nginx-demo
+            items:
+              - key: index.html
+                path: index.html
+        - name: vhost
+          configMap:
+            name: nginx-demo
+            items:
+              - key: vhost.conf
+                path: vhost.conf
 ```
+
+O ConfigMap acima define duas chaves, `index.html` e `vhost.conf`, que contêm o conteúdo do arquivo HTML e do arquivo de configuração do Nginx, respectivamente.
+O Deployment do Nginx monta o arquivo `index.html` do ConfigMap no caminho `/usr/share/nginx/app1/index.html` dentro do contêiner usando a diretiva `subPath`, e
+o arquivo `vhost.conf` do ConfigMap é montado no caminho `/etc/nginx/conf.d/vhost.conf` dentro do contêiner usando a diretiva `subPath`, garantindo que os
+usuários acessem os recursos de forma eficiente usando o kubectl. A diretiva subPath é usada para montar apenas o arquivo `index.html` do ConfigMap no caminho
+especificado dentro do contêiner, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl.
 
 --Comandos para configMaps e Secrets
 
