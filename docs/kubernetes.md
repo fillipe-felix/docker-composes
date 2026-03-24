@@ -1971,3 +1971,40 @@ spec:
                   number: 80
 ```
 
+--Multiples services no mesmo Ingress
+É possível configurar múltiplos serviços no mesmo Ingress no Kubernetes, permitindo que os usuários controlem o roteamento de tráfego de entrada para vários
+serviços dentro do cluster Kubernetes usando um único recurso de Ingress, garantindo que os serviços sejam acessíveis de forma eficiente e confiável usando o
+kubectl. Para configurar múltiplos serviços no mesmo Ingress, basta definir múltiplas regras de roteamento no recurso de Ingress, cada uma apontando para um
+serviço diferente, garantindo que os usuários controlem o roteamento de tráfego de entrada para vários serviços dentro do cluster Kubernetes usando o kubectl.
+Segue o link da documentação oficial do Kubernetes sobre Ingress para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource.
+Abaixo um exemplo de configuração de múltiplos serviços no mesmo Ingress em um arquivo YAML para um Ingress do Kubernetes:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-service-ingress
+spec:
+  ingressClassName: nginx # Nome do controlador de Ingress a ser usado
+  rules:
+    - host: nginx.demo.com
+    - http:
+        paths:
+          - path: /nginx
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+    - http:
+        paths:
+          - path: /httpd
+            pathType: Prefix
+            backend:
+              service:
+                name: httpd
+                port:
+                  number: 80
+```

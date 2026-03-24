@@ -8,7 +8,7 @@ spec:
     - host: nginx.demo.com
     - http:
         paths:
-          - path: /
+          - path: /nginx
             pathType: Prefix
             backend:
               service:
