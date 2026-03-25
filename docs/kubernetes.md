@@ -2409,3 +2409,61 @@ Abaixo uma visão geral dos principais Reclaim Policies no Kubernetes:
   Kubernetes, garantindo que os dados sejam removidos de forma eficiente e confiável usando o kubectl. Atualmente a Reclaim Policy Recycle está obsoleta e não é
   mais recomendada para uso, sendo substituída por outras opções de recuperação, como Retain ou Delete, para garantir que os dados sejam gerenciados de forma
   eficiente e confiável usando o kubectl.
+
+--Projected Volumes
+Os Projected Volumes são um recurso do Kubernetes que permite que os usuários projetem múltiplos volumes em um único volume dentro do cluster Kubernetes,
+permitindo que os usuários combinem diferentes fontes de dados, como ConfigMaps, Secrets e Downward API, em um único volume para ser montado pelos pods e
+aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl. Os Projected Volumes são
+recomendados para casos em que os usuários desejam combinar diferentes fontes de dados em um único volume para ser montado pelos pods e aplicativos dentro do
+cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl. Segue o link da documentação oficial do Kubernetes
+sobre Projected Volumes para mais informações: https://kubernetes.io/docs/concepts/storage/projected-volumes/.
+Abaixo um exemplo de configuração de Projected Volume em um arquivo YAML para um Projected Volume do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - mountPath: /tmp # Caminho onde os arquivos do volume serão montados no container
+              name: all-in-one # Nome do volume a ser referenciado no container
+      volumes:
+        - name: all-in-one # Nome do volume a ser referenciado no container
+          projected:
+            sources:
+              - configMap:
+                  name: nginx-demo
+                  items:
+                    - key: index.html
+                      path: index.html
+                    - key: vhost.conf
+                      path: vhost.conf
+                    - key: virual_host
+                      path: virual_host
+              - secret:
+                  name: credentials
+                  items:
+                    - key: username
+                      path: creds/username
+                    - key: password
+                      path: creds/password
+```
+
+O exemplo acima define um Deployment do Nginx que monta um Projected Volume chamado `all-in-one` no caminho `/tmp` dentro do contêiner. O Projected Volume
+combinadados de um ConfigMap chamado `nginx-demo` e um Secret chamado `credentials`, permitindo que os arquivos `index.html`, `vhost.conf` e `virual_host` do
+ConfigMap, bem como as chaves `username` e `password` do Secret, sejam montados em um único volume para ser acessado pelo contêiner.

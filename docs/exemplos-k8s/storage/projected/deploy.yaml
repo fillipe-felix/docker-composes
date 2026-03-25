@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - mountPath: /tmp # Caminho onde os arquivos do volume serão montados no container
+              name: all-in-one # Nome do volume a ser referenciado no container
+      volumes:
+        - name: all-in-one # Nome do volume a ser referenciado no container
+          projected:
+            sources:
+              - configMap:
+                  name: nginx-demo
+                  items:
+                    - key: index.html
+                      path: index.html
+                    - key: vhost.conf
+                      path: vhost.conf
+                    - key: virual_host
+                      path: virual_host
+              - secret:
+                  name: credentials
+                  items:
+                    - key: username
+                      path: creds/username
+                    - key: password
+                      path: creds/password
