@@ -2365,3 +2365,47 @@ solicitações de armazenamento feitas pelos PVCs, sem a necessidade de criar PV
 encarrega de criar os PVs automaticamente com base nas solicitações dos PVCs e configurar os diretorios necessarios, os permissionamentos e o que for necessário
 para garantir que os dados sejam armazenados. Dessa forma fica tudo muito mais automatizado e eficiente, permitindo que os usuários acessem os recursos de forma
 eficiente usando o kubectl.
+
+--Access Modes
+Os Access Modes são um recurso do Kubernetes que define os modos de acesso para os volumes persistentes dentro do cluster Kubernetes, permitindo que os usuários
+controlem como os volumes são acessados pelos pods e aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam armazenados de forma eficiente e
+confiável usando o kubectl. Os Access Modes são recomendados para casos em que os usuários desejam controlar como os volumes persistentes são acessados pelos
+pods e aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam armazenados de forma eficiente e confiável usando o kubectl. Segue o link da
+documentação oficial do Kubernetes sobre Access Modes para mais informações: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes.
+Abaixo uma visão geral dos principais Access Modes no Kubernetes:
+
+- **ReadWriteOnce (RWO)**: Permite que um volume seja montado como leitura e escrita por um único nó(node), ainda pode que varios pods acessem o mesmo volume,
+  desde que eles estejam rodando no mesmo node.
+- **ReadOnlyMany (ROX)**: Permite que um volume seja montado como somente leitura por vários nós(nodes), garantindo que os dados sejam acessados de forma
+  eficiente e confiável usando o kubectl. O Access Mode ReadOnlyMany é recomendado para casos em que os usuários desejam garantir que um volume seja montado
+  como somente leitura por vários nós dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl.
+- **ReadWriteMany (RWX)**: Permite que um volume seja montado como leitura e escrita por vários nós, garantindo que os dados sejam acessados de forma eficiente
+  e confiável usando o kubectl. O Access Mode ReadWriteMany é recomendado para casos em que os usuários desejam garantir que um volume seja montado como leitura
+  e escrita por vários nós dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl.
+- **ReadWriteOncePod (RWOP)**: Permite que um volume seja montado como leitura e escrita por um único pod, garantindo que os dados sejam acessados de forma
+  eficiente e confiável usando o kubectl. O Access Mode ReadWriteOncePod é recomendado para casos em que os usuários desejam garantir que um volume seja montado
+  como leitura e escrita por um único pod dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl.
+
+--Reclaim Policy
+A Reclaim Policy é um recurso do Kubernetes que define a política de recuperação para os volumes persistentes dentro do cluster Kubernetes, permitindo que os
+usuários controlem o que acontece com os volumes persistentes quando eles são liberados pelos pods ou aplicativos dentro do cluster Kubernetes, garantindo que
+os dados sejam armazenados de forma eficiente e confiável usando o kubectl. A Reclaim Policy é recomendada para casos em que os usuários desejam controlar o que
+acontece com os volumes persistentes quando eles são liberados pelos pods ou aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam armazenados
+de forma eficiente e confiável usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre Reclaim Policy para mais
+informações: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaim-policy.
+Abaixo uma visão geral dos principais Reclaim Policies no Kubernetes:
+
+- **Retain**: A política de recuperação Retain mantém o volume persistente mesmo após ele ser liberado pelos pods ou aplicativos, garantindo que os dados sejam
+  preservados e possam ser recuperados posteriormente usando o kubectl. A Reclaim Policy Retain é recomendada para casos em que os usuários desejam garantir que
+  um volume persistente seja mantido mesmo após ser liberado pelos pods ou aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam preservados
+  e possam ser recuperados posteriormente usando o kubectl.
+- **Delete**: A política de recuperação Delete exclui o volume persistente quando ele é liberado pelos pods ou aplicativos, garantindo que os dados sejam
+  removidos de forma eficiente e confiável usando o kubectl. A Reclaim Policy Delete é recomendada para casos em que os usuários desejam garantir que um volume
+  persistente seja excluído quando ele for liberado pelos pods ou aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam removidos de forma
+  eficiente e confiável usando o kubectl.
+- **Recycle**: A política de recuperação Recycle limpa o volume persistente e o torna disponível para reutilização quando ele é liberado pelos pods ou
+  aplicativos, garantindo que os dados sejam removidos de forma eficiente e confiável usando o kubectl. A Reclaim Policy Recycle é recomendada para casos em que
+  os usuários desejam garantir que um volume persistente seja limpo e reutilizado quando ele for liberado pelos pods ou aplicativos dentro do cluster
+  Kubernetes, garantindo que os dados sejam removidos de forma eficiente e confiável usando o kubectl. Atualmente a Reclaim Policy Recycle está obsoleta e não é
+  mais recomendada para uso, sendo substituída por outras opções de recuperação, como Retain ou Delete, para garantir que os dados sejam gerenciados de forma
+  eficiente e confiável usando o kubectl.

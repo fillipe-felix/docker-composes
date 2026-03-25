@@ -1,0 +1,11 @@
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-client-retain
+parameters:
+  archiveOnDelete: "true"
+  pathPattern: ${.PVC.namespace}-${.PVC.name} # Substitua pelo caminho onde os volumes serão criados
+provisioner: cluster.local/nfs-subdir-external # Substitua pelo nome do provisionador que deseja usar
+reclaimPolicy: Retain
+volumeBindingMode: Immediate

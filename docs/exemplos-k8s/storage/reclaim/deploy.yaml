@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - mountPath: /data # Caminho dentro do container onde o volume será montado
+              name: local # Referenciando o nome do volume definido na seção de volumes
+      volumes:
+        - name: local # Nome do volume a ser referenciado no container
+          persistentVolumeClaim:
+            claimName: myclaim-retain # Especificando o nome do PVC para montar o volume
