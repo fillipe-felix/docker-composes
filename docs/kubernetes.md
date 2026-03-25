@@ -945,6 +945,45 @@ recursos de forma eficiente e garantir a estabilidade do cluster Kubernetes. Um 
 statefulsets e daemonsets, ou seja, ele monitora os recursos de computação dos pods gerenciados por esses recursos, fornecendo recomendações de otimização com
 base no uso de recursos desses pods, permitindo que os usuários otimizem os recursos de forma eficiente dentro do cluster Kubernetes usando o kubectl.
 
+Antes de instalar o Goldilocks, certifique-se de ter instalado o metrics-server no cluster Kubernetes, pois o Goldilocks depende do metrics-server para coletar
+dados de uso de recursos dos pods e fornecer recomendações de otimização. Use o comando `kubectl top pods` para verificar se o metrics-server está funcionando
+corretamente e coletando dados de uso de recursos dos pods antes de instalar o Goldilocks. Se o comando `kubectl top pods` não retornar dados de uso de recursos
+dos pods, certifique-se de que o metrics-server esteja instalado e configurado corretamente no cluster Kubernetes antes de prosseguir com a instalação do
+Goldilocks. Para a instalação do metrics-server, você pode seguir as instruções abaixo:
+
+1. Use o comando `kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml` para instalar o metrics-server no
+   cluster Kubernetes.
+2. Verifique se o metrics-server foi instalado corretamente usando o comando `kubectl get pods -n kube-system | grep metrics-server` para verificar se os pods
+   do metrics-server estão em execução.
+3. Aguarde alguns minutos para que o metrics-server colete dados de uso de recursos dos pods e forneça as métricas necessárias para o Goldilocks funcionar
+   corretamente.
+4. Caso o metrics-server não esteja funcionando corretamente localmente, algo que é comum devido ao TLS, edite o deployment do metrics-server, para abrir o
+   arquivo use `kubectl edit deployment metrics-server -n kube-system` e adicione os seguintes argumentos
+   para desabilitar a verificação de TLS:
+   ```yaml
+   template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2026-03-25T15:33:44-03:00"
+      labels:
+        k8s-app: metrics-server
+    spec:
+      containers:
+      - args:
+        - --kubelet-insecure-tls # Adicione este argumento para desabilitar a verificação de TLS
+        - --cert-dir=/tmp
+        - --secure-port=10250
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
+        - --metric-resolution=15s
+   ```
+5. Salve o arquivo e execute o comando `kubectl rollout restart deployment metrics-server -n kube-system` para reiniciar o deployment do metrics-server e
+   aplicar as alterações
+   feitas no arquivo de configuração.
+6. Verifique novamente se o metrics-server está funcionando corretamente usando o comando `kubectl top pods` para verificar se os dados de uso de recursos dos
+   pods estão sendo coletados corretamente pelo metrics-server, garantindo que o Goldilocks possa coletar os dados necessários para fornecer recomendações de
+   otimização eficientes para os recursos de computação dos pods dentro do cluster Kubernetes usando o kubectl.
+
 --Instalação do Goldilocks
 Para instalar o Goldilocks no cluster Kubernetes, siga os passos abaixo:
 
