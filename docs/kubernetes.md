@@ -1775,7 +1775,7 @@ spec:
 --Trafic Policies
 As políticas de tráfego no Kubernetes são um conjunto de regras e configurações que controlam como o tráfego é roteado e gerenciado dentro do cluster
 Kubernetes. Elas permitem que os usuários definam regras para o roteamento de tráfego, balanceamento de carga, afinidade de pods e outras configurações
-relacionadas ao tráfego, garantindo que os aplicativos e serviços dentro do cluster Kubernetes sejam acessíveis de forma eficiente e confiável usando o kubectl.
+relacionadas ao tráfego, garantindo que os aplicativos e serviços dentro do cluster Kubernetes sejam acessíveis de forma eficiente.
 As políticas de tráfego são recomendadas para casos em que os usuários desejam controlar o roteamento de tráfego e a distribuição de carga dentro do cluster
 Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre
 políticas de tráfego para mais
@@ -1933,7 +1933,7 @@ IngressClass para mais informações: https://kubernetes.io/docs/concepts/servic
 --Ingress Resource
 O Ingress Resource é um recurso do Kubernetes que define as regras de roteamento para o tráfego de entrada para os serviços dentro do cluster Kubernetes. Ele
 permite que os usuários definam regras para o roteamento de tráfego com base em host, caminho e outras condições, garantindo que os serviços dentro do cluster
-Kubernetes sejam acessíveis de forma eficiente e confiável usando o kubectl. O Ingress Resource é recomendado para casos em que os usuários desejam controlar o
+Kubernetes sejam acessíveis de forma eficiente. O Ingress Resource é recomendado para casos em que os usuários desejam controlar o
 roteamento de tráfego de entrada para os serviços dentro do cluster Kubernetes, permitindo que os usuários acessem os serviços de forma eficiente usando o
 kubectl. Segue o link da documentação oficial do Kubernetes sobre Ingress Resource para mais
 informações: https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource.
@@ -1966,7 +1966,7 @@ garantindo que os usuários acessem os serviços de forma eficiente usando o kub
 --Ingress Classes (Multiplos controladores de Ingress)
 As Ingress Classes são um recurso do Kubernetes que permite que os usuários definam diferentes classes de Ingress para controlar o roteamento de tráfego de
 entrada para os serviços dentro do cluster Kubernetes. Elas permitem que os usuários definam diferentes controladores de Ingress para diferentes classes de
-Ingress, garantindo que os serviços dentro do cluster Kubernetes sejam acessíveis de forma eficiente e confiável usando o kubectl.
+Ingress, garantindo que os serviços dentro do cluster Kubernetes sejam acessíveis de forma eficiente.
 Para utilizar o multiplos controladores vamos utilizar o traefik como controlador de Ingress, que é um controlador de Ingress popular e amplamente utilizado no
 Kubernetes, permitindo que os usuários controlem o roteamento de tráfego de entrada para os serviços dentro do cluster Kubernetes usando o kubectl. O Traefik é
 recomendado para casos em que os usuários desejam usar um controlador de Ingress alternativo para controlar o roteamento de tráfego de entrada para os serviços
@@ -2236,7 +2236,7 @@ e https://kubernetes.io/docs/concepts/configuration/secret/#create-a-secret-from
 O armazenamento no Kubernetes é um componente fundamental para garantir a persistência dos dados e a disponibilidade dos aplicativos e serviços dentro do
 cluster Kubernetes. O Kubernetes oferece diferentes opções de armazenamento, como Persistent Volumes (PVs), Persistent Volume Claims (PVCs) e Storage Classes,
 permitindo que os usuários escolham a melhor opção de armazenamento para suas necessidades específicas, garantindo que os dados sejam armazenados de forma
-eficiente e confiável usando o kubectl. O armazenamento no Kubernetes é recomendado para casos em que os usuários desejam garantir a persistência dos dados e a
+eficiente. O armazenamento no Kubernetes é recomendado para casos em que os usuários desejam garantir a persistência dos dados e a
 disponibilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl.
 Segue o link da documentação oficial do Kubernetes sobre armazenamento para mais
 informações: https://kubernetes.io/docs/concepts/storage/.
@@ -2256,7 +2256,7 @@ Abaixo uma visão geral dos principais recursos de armazenamento no Kubernetes:
 - As **Storage Classes** são recursos do Kubernetes que definem as classes de armazenamento disponíveis no cluster Kubernetes, permitindo que os usuários
   escolham a melhor opção de armazenamento para suas necessidades específicas, garantindo que os dados sejam armazenados de forma eficiente e confiável usando o
   kubectl. As Storage Classes são recomendadas para casos em que os usuários desejam escolher a melhor opção de armazenamento para suas necessidades específicas
-  dentro do cluster Kubernetes, garantindo que os dados sejam armazenados de forma eficiente e confiável usando o kubectl. É como se fosse uma prateleira de
+  dentro do cluster Kubernetes, garantindo que os dados sejam armazenados de forma eficiente. É como se fosse uma prateleira de
   storages disponiveis, onde você pode escolher qual deles você vai poder utilizar. Segue o link da documentação oficial
   do Kubernetes sobre Storage Classes para mais informações: https://kubernetes.io/docs/concepts/storage/storage-classes/.
 
@@ -2341,7 +2341,7 @@ O exemplo acima define um Persistent Volume (PV) chamado `example-pv` com uma ca
 armazenamento. O Persistent Volume Claim (PVC) chamado `myclaim` solicita 1Gi de armazenamento, com acesso do tipo ReadWriteOnce, e está vinculado diretamente
 ao PV `example-pv` sem usar uma Storage Class. O Deployment do Nginx monta o PVC `myclaim` no caminho `/data` dentro do contêiner, garantindo que os dados sejam
 armazenados no kubectl. O PV é configurado para ser acessível apenas pelo nó `comunidade-devops-worker`, garantindo que os
-dados sejam armazenados de forma eficiente e confiável usando o kubectl.
+dados sejam armazenados de forma eficiente.
 
 Agora vou mostrar um exemplo de configuração de Storage Class (Dynamic Volume) em um arquivo YAML para uma Storage Class do Kubernetes:
 
@@ -2395,9 +2395,9 @@ spec:
 
 O exemplo acima define um Persistent Volume Claim (PVC) chamado `myclaim` que solicita 1Gi de armazenamento, com acesso do tipo ReadWriteOnce, e está vinculado
 a uma Storage Class chamada `local-path`. O Deployment do Nginx monta o PVC `myclaim` no caminho `/data` dentro do contêiner, garantindo que os dados sejam
-armazenados de forma eficiente e confiável usando o kubectl. A Storage Class `local-path` é um exemplo de Storage Class que pode ser usada para provisionamento
+armazenados de forma eficiente. A Storage Class `local-path` é um exemplo de Storage Class que pode ser usada para provisionamento
 dinâmico de volumes locais, permitindo que os usuários criem volumes de forma dinâmica com base nas solicitações de armazenamento feitas pelos PVCs, garantindo
-que os dados sejam armazenados de forma eficiente e confiável usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre Storage Classes para
+que os dados sejam armazenados de forma eficiente. Segue o link da documentação oficial do Kubernetes sobre Storage Classes para
 mais informações: https://kubernetes.io/docs/concepts/storage/storage-classes/.
 Essa é uma das vantagens de usar o privisionamento dinâmico de volumes com Storage Classes, onde os usuários podem criar volumes de forma dinâmica com base nas
 solicitações de armazenamento feitas pelos PVCs, sem a necessidade de criar PVs manualmente, e o controlador de provisionamento dinâmico do Kubernetes se
@@ -2409,28 +2409,28 @@ eficiente usando o kubectl.
 Os Access Modes são um recurso do Kubernetes que define os modos de acesso para os volumes persistentes dentro do cluster Kubernetes, permitindo que os usuários
 controlem como os volumes são acessados pelos pods e aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam armazenados de forma eficiente e
 confiável usando o kubectl. Os Access Modes são recomendados para casos em que os usuários desejam controlar como os volumes persistentes são acessados pelos
-pods e aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam armazenados de forma eficiente e confiável usando o kubectl. Segue o link da
+pods e aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam armazenados de forma eficiente. Segue o link da
 documentação oficial do Kubernetes sobre Access Modes para mais informações: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes.
 Abaixo uma visão geral dos principais Access Modes no Kubernetes:
 
 - **ReadWriteOnce (RWO)**: Permite que um volume seja montado como leitura e escrita por um único nó(node), ainda pode que varios pods acessem o mesmo volume,
   desde que eles estejam rodando no mesmo node.
 - **ReadOnlyMany (ROX)**: Permite que um volume seja montado como somente leitura por vários nós(nodes), garantindo que os dados sejam acessados de forma
-  eficiente e confiável usando o kubectl. O Access Mode ReadOnlyMany é recomendado para casos em que os usuários desejam garantir que um volume seja montado
-  como somente leitura por vários nós dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl.
+  eficiente. O Access Mode ReadOnlyMany é recomendado para casos em que os usuários desejam garantir que um volume seja montado
+  como somente leitura por vários nós dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente.
 - **ReadWriteMany (RWX)**: Permite que um volume seja montado como leitura e escrita por vários nós, garantindo que os dados sejam acessados de forma eficiente
-  e confiável usando o kubectl. O Access Mode ReadWriteMany é recomendado para casos em que os usuários desejam garantir que um volume seja montado como leitura
-  e escrita por vários nós dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl.
+  . O Access Mode ReadWriteMany é recomendado para casos em que os usuários desejam garantir que um volume seja montado como leitura
+  e escrita por vários nós dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente.
 - **ReadWriteOncePod (RWOP)**: Permite que um volume seja montado como leitura e escrita por um único pod, garantindo que os dados sejam acessados de forma
-  eficiente e confiável usando o kubectl. O Access Mode ReadWriteOncePod é recomendado para casos em que os usuários desejam garantir que um volume seja montado
-  como leitura e escrita por um único pod dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl.
+  eficiente. O Access Mode ReadWriteOncePod é recomendado para casos em que os usuários desejam garantir que um volume seja montado
+  como leitura e escrita por um único pod dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente.
 
 --Reclaim Policy
 A Reclaim Policy é um recurso do Kubernetes que define a política de recuperação para os volumes persistentes dentro do cluster Kubernetes, permitindo que os
 usuários controlem o que acontece com os volumes persistentes quando eles são liberados pelos pods ou aplicativos dentro do cluster Kubernetes, garantindo que
-os dados sejam armazenados de forma eficiente e confiável usando o kubectl. A Reclaim Policy é recomendada para casos em que os usuários desejam controlar o que
+os dados sejam armazenados de forma eficiente. A Reclaim Policy é recomendada para casos em que os usuários desejam controlar o que
 acontece com os volumes persistentes quando eles são liberados pelos pods ou aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam armazenados
-de forma eficiente e confiável usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre Reclaim Policy para mais
+de forma eficiente. Segue o link da documentação oficial do Kubernetes sobre Reclaim Policy para mais
 informações: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaim-policy.
 Abaixo uma visão geral dos principais Reclaim Policies no Kubernetes:
 
@@ -2439,22 +2439,22 @@ Abaixo uma visão geral dos principais Reclaim Policies no Kubernetes:
   um volume persistente seja mantido mesmo após ser liberado pelos pods ou aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam preservados
   e possam ser recuperados posteriormente usando o kubectl.
 - **Delete**: A política de recuperação Delete exclui o volume persistente quando ele é liberado pelos pods ou aplicativos, garantindo que os dados sejam
-  removidos de forma eficiente e confiável usando o kubectl. A Reclaim Policy Delete é recomendada para casos em que os usuários desejam garantir que um volume
+  removidos de forma eficiente. A Reclaim Policy Delete é recomendada para casos em que os usuários desejam garantir que um volume
   persistente seja excluído quando ele for liberado pelos pods ou aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam removidos de forma
-  eficiente e confiável usando o kubectl.
+  eficiente.
 - **Recycle**: A política de recuperação Recycle limpa o volume persistente e o torna disponível para reutilização quando ele é liberado pelos pods ou
-  aplicativos, garantindo que os dados sejam removidos de forma eficiente e confiável usando o kubectl. A Reclaim Policy Recycle é recomendada para casos em que
+  aplicativos, garantindo que os dados sejam removidos de forma eficiente. A Reclaim Policy Recycle é recomendada para casos em que
   os usuários desejam garantir que um volume persistente seja limpo e reutilizado quando ele for liberado pelos pods ou aplicativos dentro do cluster
-  Kubernetes, garantindo que os dados sejam removidos de forma eficiente e confiável usando o kubectl. Atualmente a Reclaim Policy Recycle está obsoleta e não é
+  Kubernetes, garantindo que os dados sejam removidos de forma eficiente. Atualmente a Reclaim Policy Recycle está obsoleta e não é
   mais recomendada para uso, sendo substituída por outras opções de recuperação, como Retain ou Delete, para garantir que os dados sejam gerenciados de forma
-  eficiente e confiável usando o kubectl.
+  eficiente.
 
 --Projected Volumes
 Os Projected Volumes são um recurso do Kubernetes que permite que os usuários projetem múltiplos volumes em um único volume dentro do cluster Kubernetes,
 permitindo que os usuários combinem diferentes fontes de dados, como ConfigMaps, Secrets e Downward API, em um único volume para ser montado pelos pods e
-aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl. Os Projected Volumes são
+aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente. Os Projected Volumes são
 recomendados para casos em que os usuários desejam combinar diferentes fontes de dados em um único volume para ser montado pelos pods e aplicativos dentro do
-cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente e confiável usando o kubectl. Segue o link da documentação oficial do Kubernetes
+cluster Kubernetes, garantindo que os dados sejam acessados de forma eficiente. Segue o link da documentação oficial do Kubernetes
 sobre Projected Volumes para mais informações: https://kubernetes.io/docs/concepts/storage/projected-volumes/.
 Abaixo um exemplo de configuração de Projected Volume em um arquivo YAML para um Projected Volume do Kubernetes:
 
@@ -2506,3 +2506,115 @@ spec:
 O exemplo acima define um Deployment do Nginx que monta um Projected Volume chamado `all-in-one` no caminho `/tmp` dentro do contêiner. O Projected Volume
 combinadados de um ConfigMap chamado `nginx-demo` e um Secret chamado `credentials`, permitindo que os arquivos `index.html`, `vhost.conf` e `virual_host` do
 ConfigMap, bem como as chaves `username` e `password` do Secret, sejam montados em um único volume para ser acessado pelo contêiner.
+
+--Autoscaling no Kubernetes
+O Autoscaling no Kubernetes é um recurso que permite que os usuários configurem a escalabilidade automática para os pods e aplicativos dentro do cluster
+Kubernetes. Autoscaling no Kubernetes (K8s) é quando o cluster
+aumenta ou diminui recursos automaticamente, sem você precisar fazer isso manualmente. Segue o link da documentação oficial do Kubernetes sobre Autoscaling para
+mais informações: https://kubernetes.io/docs/concepts/workloads/autoscaling/.
+Existe diferentes tipos de Autoscaling no Kubernetes, como Horizontal Pod Autoscaler (HPA), Vertical Pod Autoscaler (VPA) e Cluster Autoscaler, permitindo que
+os usuários escolham a melhor opção de escalabilidade automática para suas necessidades específicas, garantindo que osrecursos sejam alocados de forma eficiente
+e confiável usando o kubectl. Abaixo uma visão geral dos principais tipos de Autoscaling no Kubernetes:
+
+- **Horizontal Pod Autoscaler (HPA)**: O HPA é um recurso do Kubernetes que permite que os usuários configurem a escalabilidade automática horizontal para os
+  pods dentro do cluster Kubernetes. O HPA é recomendado para casos em que os usuários desejam configurar a escalabilidade automática horizontal para os pods
+  dentro do cluster Kubernetes. O HPA monitora métricas como CPU, memória ou outras métricas personalizadas para ajustar automaticamente o número de réplicas
+  dos pods. Para mais informações sobre o HPA, siga o link da documentação oficial do Kubernetes sobre Horizontal Pod
+  Autoscaler: https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/.
+- **Vertical Pod Autoscaler (VPA)**: O VPA é um recurso do Kubernetes que permite que os usuários configurem a escalabilidade automática vertical para os pods
+  dentro do cluster Kubernetes. O VPA é recomendado para casos em que os usuários desejam configurar a escalabilidade automática vertical para os pods dentro do
+  cluster Kubernetes. O VPA ajusta automaticamente os recursos de CPU e memória dos pods com base nas necessidades de carga. Para mais informações sobre o VPA,
+  siga o link da documentação oficial do Kubernetes sobre Vertical Pod
+  Autoscaler: https://kubernetes.io/docs/concepts/workloads/autoscaling/vertical-pod-autoscale/.
+
+Um ponto importante é que é necessario ter o metrics-server instalado no cluster Kubernetes para que o HPA e o VPA possam coletar as métricas necessárias para
+ajustar a escalabilidade automática dos pods. O metrics-server é um componente do Kubernetes que coleta métricas de recursos, como CPU e memória, dos pods e nós
+dentro do cluster Kubernetes, permitindo que o HPA e o VPA ajustem automaticamente a escalabilidade dos pods com base nas necessidades de carga. Para instalar o
+metrics-server no cluster Kubernetes, siga os passos a passos do link https://github.com/kubernetes-sigs/metrics-server.
+
+Abaixo um exemplo de configuração de Horizontal Pod Autoscaler (HPA) em um arquivo YAML para um HPA do Kubernetes:
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx-hpa
+spec:
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300 # O tempo que o HPA vai esperar para escalar para baixo, ou seja, para reduzir o numero de replicas, depois que a utilização do recurso voltar a ficar abaixo do limite definido, nesse caso 60% de utilização da CPU, para evitar que o HPA fique escalando para baixo e para cima rapidamente, causando instabilidade no cluster
+      policies:
+        - type: Percent
+          value: 100 # O valor máximo que o HPA pode reduzir o numero de replicas em um periodo de tempo, nesse caso 100% ou seja, ele pode reduzir o numero de replicas para 0 em um periodo de tempo, mas como o numero minimo de replicas é 1, ele não vai reduzir para 0
+          periodSeconds: 300 # O periodo de tempo que o HPA vai levar em consideração para aplicar a politica de redução do numero de replicas, nesse caso 300 segundos ou seja, 5 minutos
+  metrics: # As metricas que vai levar em consideração para escalar o deployment, nesse caso a utilização da CPU
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 60
+          type: Utilization
+      type: Resource
+  minReplicas: 1
+  maxReplicas: 100 # Importante colocar um numero maximo de replicas para evitar que o HPA escale demais o deployment e acabe causando problemas no cluster
+  scaleTargetRef: # O deployment que o HPA vai escalar, nesse caso o deployment do nginx
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1 # Esse numero de replicas geralmente não vai ser usada quando utilizamos o HPA, pois ele vai escalar o numero de replicas de acordo com a utilização do recurso, mas é importante colocar um numero inicial para o HPA ter uma base para escalar
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources:
+            requests: # Esse ponto é importante para o HPA, pois ele precisa saber qual é a utilização atual do recurso para poder escalar
+              cpu: 10m
+            limits:
+              cpu: 100m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: nginx
+  type: ClusterIP
+```
+
+Uma forma para poder testar o HPA é utilizando a ferramenta `kubectl run` para criar uma carga de trabalho artificial no cluster Kubernetes, permitindo que os
+usuários testem a escalabilidade automática do HPA de forma eficiente usando o kubectl. Para criar uma carga de trabalho artificial usando o `kubectl run`,
+basta usar o comando `kubectl run -it --image=alpine demo2 --rm sh` para criar um pod interativo com a imagem do alpine, e em seguida usar o
+comando `while true; do curl nginx; done` dentro do pod para gerar uma carga de trabalho contínua no cluster Kubernetes, permitindo que os
+usuários testem a escalabilidade automática do HPA de forma eficiente usando o kubectl. Em outro terminal você pode usar o comando `kubectl get hpa -w` para
+verificar se o HPA está escalando o número de réplicas do deployment do nginx de acordo com a carga de trabalho gerada, garantindo que os dados sejam
+armazenados de forma eficiente usando o kubectl.
+
+--Comandos para HPA
+`kubectl get hpa`: Exibe a lista de Horizontal Pod Autoscalers (HPAs) no cluster Kubernetes, permitindo que os usuários verifiquem os HPAs configurados usando o
+kubectl.
+`kubectl describe hpa <nome-do-hpa>`: Exibe detalhes sobre um Horizontal Pod Autoscaler específico, incluindo as métricas monitoradas, o número de réplicas
+atuais
+e o número de réplicas desejadas, permitindo que os usuários verifiquem as informações detalhadas sobre um HPA específico usando o kubectl.
+`kubectl edit hpa <nome-do-hpa>`: Edita um Horizontal Pod Autoscaler usando um editor de texto, permitindo que os usuários modifiquem as configurações de um HPA
+específico de forma eficiente usando o kubectl.
+`kubectl delete hpa <nome-do-hpa>`: Exclui um Horizontal Pod Autoscaler, permitindo que os usuários removam um HPA específico do cluster Kubernetes usando o
+kubectl.

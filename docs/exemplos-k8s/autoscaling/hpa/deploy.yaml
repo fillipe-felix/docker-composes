@@ -1,0 +1,63 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx-hpa
+spec:
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300 # O tempo que o HPA vai esperar para escalar para baixo, ou seja, para reduzir o numero de replicas, depois que a utilização do recurso voltar a ficar abaixo do limite definido, nesse caso 60% de utilização da CPU, para evitar que o HPA fique escalando para baixo e para cima rapidamente, causando instabilidade no cluster
+      policies:
+        - type: Percent
+          value: 100 # O valor máximo que o HPA pode reduzir o numero de replicas em um periodo de tempo, nesse caso 100% ou seja, ele pode reduzir o numero de replicas para 0 em um periodo de tempo, mas como o numero minimo de replicas é 1, ele não vai reduzir para 0
+          periodSeconds: 300 # O periodo de tempo que o HPA vai levar em consideração para aplicar a politica de redução do numero de replicas, nesse caso 300 segundos ou seja, 5 minutos
+  metrics: # As metricas que vai levar em consideração para escalar o deployment, nesse caso a utilização da CPU
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 60
+          type: Utilization
+      type: Resource
+  minReplicas: 1
+  maxReplicas: 100 # Importante colocar um numero maximo de replicas para evitar que o HPA escale demais o deployment e acabe causando problemas no cluster
+  scaleTargetRef: # O deployment que o HPA vai escalar, nesse caso o deployment do nginx
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1 # Esse numero de replicas geralmente não vai ser usada quando utilizamos o HPA, pois ele vai escalar o numero de replicas de acordo com a utilização do recurso, mas é importante colocar um numero inicial para o HPA ter uma base para escalar
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          resources:
+            requests: # Esse ponto é importante para o HPA, pois ele precisa saber qual é a utilização atual do recurso para poder escalar
+              cpu: 10m
+            limits:
+              cpu: 100m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: nginx
+  type: ClusterIP
