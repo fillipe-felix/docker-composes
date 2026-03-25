@@ -2192,3 +2192,176 @@ usando o kubectl.
 Segue o link da documentação oficial do Kubernetes sobre comandos para ConfigMaps e Secrets para mais
 informações: https://kubernetes.io/docs/concepts/configuration/configmap/#create-a-configmap-from-literal-values
 e https://kubernetes.io/docs/concepts/configuration/secret/#create-a-secret-from-literal-values.
+
+--Storage no Kubernetes
+O armazenamento no Kubernetes é um componente fundamental para garantir a persistência dos dados e a disponibilidade dos aplicativos e serviços dentro do
+cluster Kubernetes. O Kubernetes oferece diferentes opções de armazenamento, como Persistent Volumes (PVs), Persistent Volume Claims (PVCs) e Storage Classes,
+permitindo que os usuários escolham a melhor opção de armazenamento para suas necessidades específicas, garantindo que os dados sejam armazenados de forma
+eficiente e confiável usando o kubectl. O armazenamento no Kubernetes é recomendado para casos em que os usuários desejam garantir a persistência dos dados e a
+disponibilidade dos aplicativos e serviços dentro do cluster Kubernetes, permitindo que os usuários acessem os recursos de forma eficiente usando o kubectl.
+Segue o link da documentação oficial do Kubernetes sobre armazenamento para mais
+informações: https://kubernetes.io/docs/concepts/storage/.
+Abaixo uma visão geral dos principais recursos de armazenamento no Kubernetes:
+
+- Os **Persistent Volumes (PVs)** são recursos do Kubernetes que representam uma parte do armazenamento físico disponível no cluster Kubernetes, permitindo que
+  os usuários provisionem e gerenciem o armazenamento de forma eficiente usando o kubectl. Os PVs são recomendados para casos em que os usuários desejam
+  provisionar e gerenciar o armazenamento de forma eficiente dentro do cluster Kubernetes, garantindo que os dados sejam armazenados de forma confiável usando o
+  kubectl. O PV é o storage que vai ser disponibilizado para os usuários no cluster, é a parte de infra. Segue o link da documentação oficial do Kubernetes
+  sobre Persistent Volumes para mais informações: https://kubernetes.io/docs/concepts/storage/persistent-volumes/.
+- Os **Persistent Volume Claims (PVCs)** são recursos do Kubernetes que representam uma solicitação de armazenamento feita por um usuário ou aplicativo dentro
+  do cluster Kubernetes, permitindo que os usuários solicitem e gerenciem o armazenamento de forma eficiente usando o kubectl. Os PVCs são recomendados para
+  casos em que os usuários desejam solicitar e gerenciar o armazenamento de forma eficiente dentro do cluster Kubernetes, garantindo que os dados sejam
+  armazenados de forma confiável usando o kubectl. Normalmente o pod não se comunica diretamente com o PV, ele se comunica diretamente como PVC, que seria como
+  se fosse um pedaço do PVC. Onde cada aplicação vai ter um PVC atrelado para pedir o pedaço do storage que seria o PV. Segue o link da documentação oficial do
+  Kubernetes sobre Persistent Volume Claims para mais informações: https://kubernetes.io/docs/concepts/storage/persistent-volume-claims/.
+- As **Storage Classes** são recursos do Kubernetes que definem as classes de armazenamento disponíveis no cluster Kubernetes, permitindo que os usuários
+  escolham a melhor opção de armazenamento para suas necessidades específicas, garantindo que os dados sejam armazenados de forma eficiente e confiável usando o
+  kubectl. As Storage Classes são recomendadas para casos em que os usuários desejam escolher a melhor opção de armazenamento para suas necessidades específicas
+  dentro do cluster Kubernetes, garantindo que os dados sejam armazenados de forma eficiente e confiável usando o kubectl. É como se fosse uma prateleira de
+  storages disponiveis, onde você pode escolher qual deles você vai poder utilizar. Segue o link da documentação oficial
+  do Kubernetes sobre Storage Classes para mais informações: https://kubernetes.io/docs/concepts/storage/storage-classes/.
+
+Abaixo um exemplo de configuração de Persistent Volume, Persistent Volume Claim em um arquivo YAML para um Persistent Volume, Persistent
+Volume Claim do Kubernetes:
+
+PV
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - comunidade-devops-worker
+```
+
+PVC
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: "" # Deixando em branco para usar o PV sem StorageClass
+  volumeName: example-pv # Especificando o nome do PV para vincular diretamente
+```
+
+Deploy usando PVC
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - mountPath: /data # Caminho dentro do container onde o volume será montado
+              name: local # Referenciando o nome do volume definido na seção de volumes
+      volumes:
+        - name: local # Nome do volume a ser referenciado no container
+          persistentVolumeClaim:
+            claimName: myclaim # Especificando o nome do PVC para montar o volume
+```
+
+O exemplo acima define um Persistent Volume (PV) chamado `example-pv` com uma capacidade de 5Gi, acesso do tipo ReadWriteOnce e um caminho local para
+armazenamento. O Persistent Volume Claim (PVC) chamado `myclaim` solicita 1Gi de armazenamento, com acesso do tipo ReadWriteOnce, e está vinculado diretamente
+ao PV `example-pv` sem usar uma Storage Class. O Deployment do Nginx monta o PVC `myclaim` no caminho `/data` dentro do contêiner, garantindo que os dados sejam
+armazenados no kubectl. O PV é configurado para ser acessível apenas pelo nó `comunidade-devops-worker`, garantindo que os
+dados sejam armazenados de forma eficiente e confiável usando o kubectl.
+
+Agora vou mostrar um exemplo de configuração de Storage Class (Dynamic Volume) em um arquivo YAML para uma Storage Class do Kubernetes:
+
+PVC
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: "local-path" # Substitua pelo nome da StorageClass que deseja usar
+```
+
+Deploy usando PVC
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - mountPath: /data # Caminho dentro do container onde o volume será montado
+              name: local # Referenciando o nome do volume definido na seção de volumes
+      volumes:
+        - name: local # Nome do volume a ser referenciado no container
+          persistentVolumeClaim:
+            claimName: myclaim # Especificando o nome do PVC para montar o volume
+```
+
+O exemplo acima define um Persistent Volume Claim (PVC) chamado `myclaim` que solicita 1Gi de armazenamento, com acesso do tipo ReadWriteOnce, e está vinculado
+a uma Storage Class chamada `local-path`. O Deployment do Nginx monta o PVC `myclaim` no caminho `/data` dentro do contêiner, garantindo que os dados sejam
+armazenados de forma eficiente e confiável usando o kubectl. A Storage Class `local-path` é um exemplo de Storage Class que pode ser usada para provisionamento
+dinâmico de volumes locais, permitindo que os usuários criem volumes de forma dinâmica com base nas solicitações de armazenamento feitas pelos PVCs, garantindo
+que os dados sejam armazenados de forma eficiente e confiável usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre Storage Classes para
+mais informações: https://kubernetes.io/docs/concepts/storage/storage-classes/.
+Essa é uma das vantagens de usar o privisionamento dinâmico de volumes com Storage Classes, onde os usuários podem criar volumes de forma dinâmica com base nas
+solicitações de armazenamento feitas pelos PVCs, sem a necessidade de criar PVs manualmente, e o controlador de provisionamento dinâmico do Kubernetes se
+encarrega de criar os PVs automaticamente com base nas solicitações dos PVCs e configurar os diretorios necessarios, os permissionamentos e o que for necessário
+para garantir que os dados sejam armazenados. Dessa forma fica tudo muito mais automatizado e eficiente, permitindo que os usuários acessem os recursos de forma
+eficiente usando o kubectl.
