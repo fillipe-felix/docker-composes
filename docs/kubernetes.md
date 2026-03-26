@@ -2761,3 +2761,11 @@ spec:
         - protocol: TCP
           port: 80
 ```
+
+O exemplo acima define várias Network Policies para controlar o tráfego de rede entre os pods e aplicativos dentro do cluster Kubernetes. A Network Policy
+`allow-internet-only` permite que os pods se comuniquem apenas com a internet, bloqueando o tráfego para as redes privadas. A Network Policy `allow-dns` permite
+que os pods se comuniquem com o serviço de DNS do Kubernetes para resolver nomes de domínio. A Network Policy `frontend` permite que os pods com o rótulo
+`app: frontend` se comuniquem com qualquer destino, mas apenas permitem tráfego de saída para os pods com o rótulo `app: backend` na porta 80. A Network Policy
+`backend` permite que os pods com o rótulo `app: backend` se comuniquem apenas com os pods com o rótulo `app: database` na porta 80, e permite tráfego de
+entrada apenas dos pods com o rótulo `app: frontend` na porta 80. Essas Network Policies garantem que os dados sejam transmitidos de forma eficiente usando o
+kubectl, controlando o tráfego de rede entre os pods e aplicativos dentro do cluster Kubernetes.
