@@ -2618,3 +2618,26 @@ e o número de réplicas desejadas, permitindo que os usuários verifiquem as in
 específico de forma eficiente usando o kubectl.
 `kubectl delete hpa <nome-do-hpa>`: Exclui um Horizontal Pod Autoscaler, permitindo que os usuários removam um HPA específico do cluster Kubernetes usando o
 kubectl.
+
+--CNI no Kubernetes
+O CNI (Container Network Interface) é um recurso do Kubernetes que define a interface de rede para os contêineres dentro do cluster Kubernetes, permitindo que
+os usuários configurem e gerenciem a rede de forma eficiente usando o kubectl. O CNI é recomendado para casos em que os usuários desejam configurar e gerenciar
+a rede de forma eficiente dentro do cluster Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. Segue o link da
+documentação oficial do Kubernetes sobre CNI para mais
+informações: https://kubernetes.io/docs/concepts/cluster-administration/networking/.
+O CNI é um padrão de interface de rede para contêineres que permite que os usuários configurem e gerenciem a rede de forma eficiente dentro do cluster
+Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. O CNI é um conjunto de especificações e bibliotecas que permitem que
+os plugins de rede sejam integrados ao Kubernetes, permitindo que os usuários escolham a melhor opção de plugin de rede para suas necessidades específicas,
+garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. Existem diferentes plugins de rede compatíveis com o CNI, como Calico, Flannel,
+Weave Net, Cilium, entre outros, permitindo que os usuários escolham a melhor opção de plugin de rede para suas necessidades específicas, garantindo que os
+dados sejam transmitidos de forma eficiente usando o kubectl. Para mais informações sobre os plugins de rede compatíveis com o CNI, siga o link da documentação
+oficial do Kubernetes sobre plugins de rede compatíveis com o
+CNI: https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/.
+
+--Como funciona a intercomunicação pela CNI com o Flannel
+O Flannel é um plugin de rede compatível com o CNI que permite que os contêineres dentro do cluster Kubernetes se comuniquem entre si de forma eficiente usando
+o kubectl. O Flannel funciona criando uma rede virtual sobre a rede física do cluster Kubernetes, permitindo que os contêineres se comuniquem entre si usando
+endereços IP virtuais, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. Para mais informações sobre o Flannel, siga o link da
+documentação oficial sobre Flannel: https://github.com/flannel-io/flannel.
+
+
