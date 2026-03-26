@@ -2640,4 +2640,124 @@ o kubectl. O Flannel funciona criando uma rede virtual sobre a rede física do c
 endereços IP virtuais, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. Para mais informações sobre o Flannel, siga o link da
 documentação oficial sobre Flannel: https://github.com/flannel-io/flannel.
 
+--Network Policies no Kubernetes
+As Network Policies são um recurso do Kubernetes que permite que os usuários controlem o tráfego de rede entre os pods e aplicativos dentro do cluster
+Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. As Network Policies são recomendadas para casos em que os usuários
+desejam controlar o tráfego de rede entre os pods e aplicativos dentro do cluster Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente
+usando o kubectl. Segue o link da documentação oficial do Kubernetes sobre Network Policies para mais
+informações: https://kubernetes.io/docs/concepts/services-networking/network-policies/.
+As Network Policies permitem que os usuários definam regras de rede para controlar o tráfego de entrada e saída entre os pods e aplicativos dentro do cluster
+Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. As Network Policies são definidas usando um arquivo YAML, onde os
+usuários podem especificar as regras de rede para controlar o tráfego de entrada e saída entre os pods e aplicativos dentro do cluster Kubernetes, garantindo
+que os dados sejam transmitidos de forma eficiente usando okubectl. Abaixo um exemplo de configuração de Network Policy em um arquivo YAML para uma Network
+Policy do Kubernetes:
 
+```yaml
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-internet-only
+spec:
+  podSelector: { }
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              - 10.0.0.0/8
+              - 192.168.0.0/16
+              - 172.16.0.0/20
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-dns
+spec:
+  podSelector: { }
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: frontend
+  policyTypes:
+    - Egress
+    - Ingress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: backend
+      ports:
+        - protocol: TCP
+          port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+    - Egress
+    - Ingress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: database
+      ports:
+        - protocol: TCP
+          port: 80
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+      ports:
+        - protocol: TCP
+          port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: database
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: database
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: backend
+      ports:
+        - protocol: TCP
+          port: 80
+```
