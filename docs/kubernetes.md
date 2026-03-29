@@ -2769,3 +2769,106 @@ que os pods se comuniquem com o serviço de DNS do Kubernetes para resolver nome
 `backend` permite que os pods com o rótulo `app: backend` se comuniquem apenas com os pods com o rótulo `app: database` na porta 80, e permite tráfego de
 entrada apenas dos pods com o rótulo `app: frontend` na porta 80. Essas Network Policies garantem que os dados sejam transmitidos de forma eficiente usando o
 kubectl, controlando o tráfego de rede entre os pods e aplicativos dentro do cluster Kubernetes.
+
+--RBAC no Kubernetes
+O RBAC (Role-Based Access Control) é um recurso do Kubernetes que permite que os usuários controlem o acesso aos recursos do cluster Kubernetes com base em
+funções e permissões, garantindo que os dados sejam protegidos de forma eficiente usando o kubectl. O RBAC é recomendado para casos em que os usuários desejam
+controlar o acesso aos recursos do cluster Kubernetes com base em funções e permissões, garantindo que os dados sejam protegidos de forma eficiente usando o
+kubectl. Segue o link da documentação oficial do Kubernetes sobre RBAC para mais informações: https://kubernetes.io/docs/reference/access-authn-authz/rbac/.
+O RBAC permite que os usuários definam funções (Roles) e permissões (RoleBindings) para controlar o acesso aos recursos do cluster Kubernetes, garantindo que os
+dados sejam protegidos de forma eficiente usando o kubectl. As Roles definem um conjunto de permissões para acessar recursos específicos do Kubernetes, enquanto
+as RoleBindings associam as Roles a usuários ou grupos específicos, permitindo que os usuários tenham acesso aos recursos do cluster Kubernetes de acordo com as
+permissões definidas nas Roles, garantindo que os dados sejam protegidos de forma eficiente usando o kubectl.
+
+Para que o RBAC funcione corretamente, é necessario que tenha um certificado de autenticação configurado no cluster Kubernetes, como o certificado de
+autenticação do Kubernetes, para garantir que os usuários sejam autenticados de forma segura e possam acessar os recursos do cluster Kubernetes de acordo com as
+permissões definidas nas Roles e RoleBindings, garantindo que os dados sejam protegidos de forma eficiente usando o kubectl. Para configurar um certificado de
+autenticação no cluster Kubernetes, siga os passos a passos do link https://kubernetes.io/docs/reference/access-authn-authz/authentication/#x509-client-certs.
+
+Para poder gerar um certificado e uma CSR (Certificate Signing Request) para um usuário específico, você pode usar a ferramenta `openssl` para criar um par de
+chaves e uma CSR, e em seguida usar o comando `kubectl` para criar um certificado assinado pela autoridade certificadora do Kubernetes, permitindo que os
+usuários sejam autenticados de forma segura e possam acessar os recursos do cluster Kubernetes de acordo com as permissões definidas nas Roles e RoleBindings,
+garantindo que os dados sejam protegidos de forma eficiente usando o kubectl. Siga os passos abaixo para gerar um certificado e uma CSR para um usuário
+específico:
+
+1. Gere um par de chaves usando o comando `openssl req -nodes `
+   -days 365 `
+  -newkey rsa:2048 `
+   -keyout estagiario.key `
+  -out estagiario.csr `
+   -subj "/CN=estagiario/O=mateusmullerme" `
+  -addext "subjectAltName = DNS:estagiario.mateusmuller.me"` para criar uma chave privada para o usuário.
+2. Dentro da pasta que o comando acima foi executado foi gerado 2 arquivos, o `estagiario.key` que é a chave privada do usuário e o `estagiario.csr` que é a
+   CSR (Certificate Signing Request) do usuário.
+3. Agora execute o comando `cat estagiario.csr| base64 -w 0` para codificar a CSR em base64, e copie o resultado para usar no próximo passo.
+4. Crie um arquivo YAML para solicitar um certificado assinado pela autoridade certificadora do Kubernetes igual ao modelo abaixo e troque o campo `<csr aqui>`,
+   pelo valor do base64 retornado no passo 3.
+5. Após criar o arquivo YAML, execute o comando `kubectl apply -f <nome-do-arquivo>.yaml` para criar a solicitação de certificado no cluster Kubernetes.
+6. Agora execute o comando `kubectl get csr` para verificar se a solicitação de certificado foi criada corretamente, e em seguida execute o comando
+   `kubectl certificate approve <nome-da-csr>` para aprovar a solicitação de certificado, permitindo que o certificado seja assinado pela autoridade
+   certificadora do Kubernetes.
+7. Após aprovar a solicitação de certificado, execute o comando `kubectl get csr <nome-da-csr> -o jsonpath='{.status.certificate}' | base64 -d > estagiario.crt`
+   para obter o certificado assinado e salvar em um arquivo chamado `estagiario.crt`. O certificado assinado pode ser usado para autenticar o usuário no cluster
+   Kubernetes e acessar os recursos de acordo com as permissões definidas nas Roles e RoleBindings, garantindo que os dados sejam protegidos de forma eficiente
+   usando o kubectl.
+8. Agora para configurar a autenticação com o cluster Kubernetes usando o certificado assinado, você pode criar um arquivo de configuração do kubeconfig que
+   inclua as informações do usuário, do cluster e do contexto, permitindo que o usuário se autentique no cluster Kubernetes usando o certificado assinado e
+   acesse os recursos de acordo com as permissões definidas nas Roles e RoleBindings, garantindo que os dados sejam protegidos de forma eficiente usando o
+   kubectl. Siga os passos abaixo para configurar a autenticação com o cluster Kubernetes usando o certificado assinado:
+9. Execute o comando `kubectl config set-credentials estagiario --client-certificate estagiario.crt --client-key estagiario.key` para criar um usuário chamado
+   `estagiario` com o certificado
+   assinado e a chave privada.
+10. Execute o comando `kubectl config set-context estagiario-context --cluster=<nome-do-cluster> --user=estagiario` para criar um contexto chamado
+    `estagiario-context` que associa o usuário `estagiario` ao cluster Kubernetes.
+11. Agora execute o comando `kubectl config set-context estagiario luster kind-kind ser estagiario` e depois `kubectl config use-context estagiario` e por
+    ultimo `kubectl get pods` para verificar se o usuário `estagiario` consegue acessar os recursos do cluster Kubernetes de acordo com as permissões definidas
+    nas Roles e RoleBindings, garantindo que os dados sejam protegidos de forma eficiente usando o kubectl.
+
+Modelo certificado assinado
+
+```yaml
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: estagiario-csr
+spec:
+  request: <csr aqui>
+  signerName: kubernetes.io/kube-apiserver-client
+  usages:
+    - client auth
+```
+
+Abaixo um exemplo de configuração de RBAC em um
+arquivo YAML para uma Role e RoleBinding do Kubernetes:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: estagiario-ro
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+  - kind: User
+    name: estagiario
+    apiGroup: rbac.authorization.k8s.io
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: kubectl
+  name: kubectl
+spec:
+  serviceAccountName: kubectl
+  containers:
+    - image: bitnami/kubectl
+      name: kubectl
+      command:
+        - sleep
+        - "999999999999999"
+```
