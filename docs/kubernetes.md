@@ -2872,3 +2872,243 @@ spec:
         - sleep
         - "999999999999999"
 ```
+
+--Scheduling no Kubernetes
+O Scheduling no Kubernetes permite que os usuários definam regras e políticas para controlar como os pods são agendados e distribuídos nos nós do cluster
+Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. O Scheduling no Kubernetes inclui recursos como Affinity e
+Anti-Affinity, Taints e Tolerations, e Node Selectors, permitindo que os usuários controlem como os pods são agendados e distribuídos nos nós do cluster
+Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. Para mais informações sobre os recursos de Scheduling no Kubernetes,
+siga o link da documentação oficial do Kubernetes sobre Scheduling: https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling/.
+
+Node Selectors: Os Node Selectors permitem que os usuários definam rótulos nos nós do cluster Kubernetes e usem esses rótulos para controlar onde os pods são
+agendados, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. Segue abaixo ya um exemplo de configuração de Node Selector em um
+arquivo YAML para um Node Selector do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: comunidade-devops-worker3
+      containers:
+        - image: nginx
+          name: nginx
+```
+
+Node Affinity: O Node Affinity é um recurso do Kubernetes que permite que os usuários definam regras de afinidade para controlar onde os pods são agendados nos
+nós do cluster Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. O Node Affinity é recomendado para casos em que os
+usuários desejam definir regras de afinidade para controlar onde os pods são agendados nos nós do cluster Kubernetes, garantindo que os dados sejam transmitidos
+de forma eficiente usando o kubectl. Segue abaixo um exemplo de configuração de Node Affinity em um arquivo YAML para um Node Affinity do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - comunidade-devops-worker3
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - comunidade-devops-worker2
+      containers:
+        - image: nginx
+          name: nginx
+```
+
+Pod Affinity: O Pod Affinity é um recurso do Kubernetes que permite que os usuários definam regras de afinidade para controlar como os pods são agendados em
+relação a
+outros pods dentro do cluster Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. O Pod Affinity é recomendado para
+casos em que os usuários desejam definir regras de afinidade para controlar como os pods são agendados em relação a outros pods dentro do cluster Kubernetes,
+garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. Segue abaixo um exemplo de configuração de Pod Affinity em um arquivo YAML para
+um Pod Affinity do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: { }
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - database
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+        - image: nginx
+          name: nginx
+```
+
+Pod Topology Spread Constraints: O Pod Topology Spread Constraints é um recurso do Kubernetes que permite que os usuários definam regras de afinidade para
+controlar como os
+pods são agendados em relação à topologia do cluster Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. O Pod Topology
+Spread Constraints é recomendado para casos em que os usuários desejam definir regras de afinidade para controlar como os pods são agendados em relação à
+topologia do cluster Kubernetes, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. Segue abaixo um exemplo de configuração de Pod
+Topology Spread Constraints em um arquivo YAML para um Pod Topology Spread Constraints do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: nginx
+          matchLabelKeys:
+            - pod-template-hash
+      containers:
+        - image: nginx
+          name: nginx
+```
+
+Taints e Tolerations: Os Taints e Tolerations são recursos do Kubernetes que permitem que os usuários definam regras para controlar como os pods são agendados
+em relação a nós com taints, garantindo que os dados sejam transmitidos de forma eficiente usando o kubectl. Os Taints e Tolerations são recomendados para casos
+em que os usuários desejam definir regras para controlar como os pods são agendados em relação a nós com taints, garantindo que os dados sejam transmitidos de
+forma eficiente usando o kubectl. Segue abaixo um exemplo de configuração de Taints e Tolerations em um arquivo YAML para um Taints e Tolerations do Kubernetes:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      tolerations:
+        - key: nodegroup
+          operator: Equal
+          value: backend
+          effect: NoSchedule
+      containers:
+        - image: nginx
+          name: nginx
+```
+
+--Troubleshootings
+
+ImagePullBackOff: Esse erro ocorre quando o Kubernetes não consegue puxar a imagem do contêiner especificada no arquivo YAML, geralmente devido a um problema de
+autenticação com o registro de contêiner ou a imagem não existe. Para resolver esse problema,verifique se a imagem existe no registro de contêiner e se as
+credenciais de autenticação estão corretas. Você pode usar o comando `kubectl describe pod <nome-do-pod>` para obter mais detalhes sobre o erro e verificar os
+eventos relacionados ao pod, o que pode fornecer informações adicionais sobre o motivo do erro ImagePullBackOff. Certifique-se de que o registro de contêiner
+esteja acessível e que as credenciais de autenticação estejam configuradas corretamente para resolver o erro ImagePullBackOff e garantir que os dados sejam
+transmitidos de forma eficiente usando o kubectl.
+
+CrashLoopBackOff: Esse erro ocorre quando um contêiner dentro de um pod está falhando repetidamente, causando um loop de falhas. Para resolver esse problema,
+você pode usar o comando `kubectl logs <nome-do-pod> -c <nome-do-container>` para obter os logs do contêiner e identificar a causa da falha. Verifique se há
+erros de configuração, dependências ausentes ou problemas de código dentro do contêiner que possam estar causando a falha. Corrija os problemas identificados e
+reinicie o pod para resolver o erro CrashLoopBackOff e garantir que os dados sejam transmitidos de forma eficiente usando o kubectl.
+
+NodeNotReady: Esse erro ocorre quando um nó dentro do cluster Kubernetes está em um estado de "NotReady", o que significa que o nó não está disponível para
+agendar pods ou executar cargas de trabalho. Para resolver esse problema, você pode usar o comando `kubectl describe node <nome-do-node>` para obter mais
+detalhes sobre o estado do nó e verificar os eventos relacionados ao nó, o que pode fornecer informações adicionais sobre o motivo do erro NodeNotReady.
+Verifique se o nó está com problemas de hardware, problemas de rede ou se há algum problema com os serviços de kubelet ou kube-proxy no nó. Corrija os problemas
+identificados e aguarde o nó retornar ao estado "Ready" para resolver o erro NodeNotReady e garantir que os dados sejam transmitidos de forma eficiente usando o
+kubectl.
+
+--Estrategia de testes
+
+Sidecar: A estratégia de teste Sidecar envolve a criação de um contêiner adicional dentro do mesmo pod para executar testes ou monitoramento em conjunto com o
+contêiner principal. O contêiner Sidecar pode ser configurado para executar testes automatizados, coletar métricas ou realizar outras tarefas de monitoramento
+enquanto o contêiner principal está em execução. Essa estratégia é útil para garantir que os testes sejam executados de forma eficiente e integrada com o
+contêiner principal, permitindo que os dados sejam transmitidos de forma eficiente usando o kubectl.
+Init Container: A estratégia de teste Init Container envolve a criação de um contêiner de inicialização que é executado antes do contêiner principal dentro do
+mesmo pod. O contêiner de inicialização pode ser configurado para executar tarefas de configuração, preparação de ambiente ou execução de testes antes que o
+contêiner principal seja iniciado. Essa estratégia é útil para garantir que as dependências estejam configuradas corretamente e que os testes sejam executados
+antes do contêiner principal, permitindo que os dados sejam transmitidos de forma eficiente usando o kubectl.
+
+--Netshoot - https://github.com/nicolaka/netshoot
+O Netshoot é uma imagem de contêiner popular usada para depuração e análise de rede dentro do cluster Kubernetes. Ele inclui uma variedade de ferramentas de
+rede, como ping, traceroute, tcpdump, netstat, entre outras, permitindo que os usuários realizem testes de conectividade, análise de tráfego e depuração de
+problemas de rede dentro do cluster Kubernetes de forma eficiente usando o kubectl. Para usar o Netshoot, você pode criar um pod usando a imagem do Netshoot e
+executar os comandos de rede dentro do contêiner do Netshoot para realizar testes e análises de rede. Siga os passos abaixo para usar o Netshoot para depuração
+e análise de rede dentro do cluster Kubernetes:
+
+1. Crie um pod usando a imagem do Netshoot com o comando `kubectl run -it --image=nicolaka/netshoot netshoot --rm sh` para criar um pod interativo com a
+   imagem do Netshoot.
+2. Dentro do contêiner do Netshoot, você pode usar as ferramentas de rede disponíveis para realizar testes de conectividade, análise de tráfego e depuração de
+   problemas de rede. Por exemplo, você pode usar o comando `ping <endereço-ip>` para testar a conectividade com um endereço IP específico, ou o comando
+   `tcpdump -i eth0` para capturar o tráfego de rede na interface eth0 e analisar os pacotes de rede.
+3. Use os resultados dos testes e análises de rede para identificar e resolver problemas de rede dentro do cluster Kubernetes, garantindo que os dados sejam
+   transmitidos de forma eficiente usando o kubectl. O Netshoot é uma ferramenta poderosa para depuração e análise de rede dentro do cluster Kubernetes,
+   permitindo que os usuários realizem testes e análises de rede de forma eficiente usando o kubectl, garantindo que os dados sejam transmitidos de forma
+   eficiente e que os problemas de rede sejam resolvidos de forma eficaz.
