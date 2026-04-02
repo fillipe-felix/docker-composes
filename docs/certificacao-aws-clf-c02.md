@@ -1,0 +1,270 @@
+Tempo: 90 minutos
+Questões: 65
+Nota de aprovação: 720 pontos
+Valor: $100.00
+
+# Certificação AWS Certified Cloud Practitioner (CLF-C02)
+
+## O que é a certificação AWS Certified Cloud Practitioner?
+
+A certificação AWS Certified Cloud Practitioner é uma credencial de nível fundamental que valida o conhecimento geral sobre a AWS Cloud. Ela é projetada para
+profissionais que desejam demonstrar uma compreensão básica dos serviços da AWS, seus casos de uso, arquitetura e práticas recomendadas. Esta certificação é
+ideal para aqueles que estão começando sua jornada na nuvem e desejam obter uma base sólida em conceitos de computação em nuvem e AWS. A certificação é válida
+por três anos e pode ser renovada por meio de exames de recertificação ou obtenção de certificações de nível superior.
+
+## O que é cloud computing e AWS?
+
+Cloud computing é a entrega de serviços de computação, como servidores, armazenamento, bancos de dados, rede, software, análise e inteligência, pela internet ("
+a nuvem") para oferecer inovação mais rápida, recursos flexíveis e economia de escala. A AWS (Amazon Web Services) é a plataforma de computação em nuvem mais
+abrangente e amplamente adotada do mundo, oferecendo mais de 200 serviços completos de data centers globalmente. A AWS permite que as empresas se movam mais
+rapidamente, reduzam os custos de TI e dimensionem suas aplicações. A AWS foi criada em 2006 e é uma subsidiária da Amazon.com, Inc. A AWS oferece uma ampla
+gama de serviços, incluindo computação, armazenamento, bancos de dados, análise, redes, segurança, inteligência artificial, machine learning, Internet das
+Coisas (IoT) e muito mais. A AWS é usada por milhões de clientes em todo o mundo, incluindo startups, empresas e agências governamentais, para impulsionar a
+inovação e acelerar a transformação digital. A AWS é conhecida por sua confiabilidade, segurança, escalabilidade e flexibilidade, permitindo que as organizações
+se concentrem em seus negócios, em vez de se preocuparem com a infraestrutura de TI.
+
+### Tipos de cloud computing
+
+Existem 3 tipos de cloud computing:
+**Publica:** A nuvem pública é um ambiente de computação em nuvem onde os recursos de computação, como servidores, armazenamento e aplicativos, são fornecidos
+por um provedor de serviços de nuvem terceirizado e estão disponíveis para o público em geral. Os usuários podem acessar esses recursos pela internet e pagam
+apenas pelo que usam. Exemplos de provedores de nuvem pública incluem Amazon Web Services (AWS), Microsoft Azure e Google Cloud Platform (GCP).
+**Privada:** A nuvem privada é um ambiente de computação em nuvem dedicado a uma única organização. Ela pode ser hospedada internamente ou por um provedor de
+serviços de nuvem terceirizado. A nuvem privada oferece maior controle, segurança e personalização em comparação com a nuvem pública, mas geralmente requer um
+investimento maior em infraestrutura e manutenção. A nuvem privada é ideal para organizações que lidam com dados sensíveis ou regulamentados, como instituições
+financeiras ou de saúde.
+**Híbrida:** A nuvem híbrida é uma combinação de nuvens públicas e privadas, permitindo que as organizações aproveitem os benefícios de ambos os ambientes. Com
+uma nuvem híbrida, as organizações podem manter dados e aplicativos sensíveis em uma nuvem privada, enquanto aproveitam a escalabilidade e os recursos da nuvem
+pública para cargas de trabalho menos críticas. A nuvem híbrida oferece flexibilidade e agilidade, permitindo que as organizações se adaptem rapidamente às
+mudanças nas demandas de negócios e aproveitem as inovações tecnológicas. A nuvem híbrida é ideal para organizações que desejam equilibrar segurança, controle e
+escalabilidade, como empresas de comércio eletrônico ou de mídia.
+
+### Vantagens do cloud computing
+
+- **Escalabilidade:** O cloud computing permite que as organizações dimensionem seus recursos de computação para atender às demandas de negócios em tempo real.
+  Isso significa que as empresas podem aumentar ou diminuir seus recursos de acordo com as necessidades, sem se preocupar com a capacidade de infraestrutura.
+- **Flexibilidade:** O cloud computing oferece uma ampla gama de serviços e opções de implantação, permitindo que as organizações escolham a melhor solução para
+  suas necessidades específicas. As empresas podem escolher entre nuvens públicas, privadas ou híbridas, e podem acessar uma variedade de serviços, como
+  computação, armazenamento, bancos deados, análise e inteligência artificial.
+- **Custo-benefício:** O cloud computing pode ser mais econômico do que a infraestrutura de TI tradicional, pois as empresas pagam apenas pelo que usam. Isso
+  significa que as organizações podem evitar os custos iniciais de hardware e software, bem como os custos contínuos de manutenção e atualização. O cloud
+  computing também pode ajudar as empresas a reduzir os custos operacionais, permitindo que elas se concentrem em seus negócios, em vez de se preocuparem com a
+  infraestrutura de TI.
+- **Segurança:** O cloud computing pode oferecer uma segurança robusta, com recursos como criptografia, controle de acesso e monitoramento. Os provedores de
+  nuvem investem pessoalmente em segurança para proteger os dados e aplicativos de seus clientes, e muitas vezes têm equipes dedicadas à segurança. No entanto,
+  é importante que as organizações também adotem práticas de segurança adequadas, como a implementação de políticas de segurança, a realização de auditorias
+  regulares e a conscientização dos funcionários sobre segurança cibernética.
+- **Inovação:** O cloud computing pode acelerar a inovação, permitindo que as organizações acessem rapidamente novos serviços e tecnologias. Os provedores de
+  nuvem estão constantemente lançando novos serviços e recursos, o que permite que as empresas experimentem e inovem sem se preocupar com a infraestrutura
+  subjacente. O cloud computing também pode ajudar as organizações a se adaptarem rapidamente às mudanças nas demandas de negócios, permitindo que elas se movam
+  mais rapidamente e se mantenham competitivas no mercado.
+
+### Regiões e zonas de disponibilidade da AWS
+
+A AWS é organizada em regiões e zonas de disponibilidade para fornecer alta disponibilidade, resiliência e desempenho para seus clientes. Uma região é uma área
+geográfica que contém várias zonas de disponibilidade. Cada zona de disponibilidade é um data center isolado e independente, projetado para ser resiliente a
+falhas e fornecer alta disponibilidade. As regiões da AWS são compostas por várias zonas de disponibilidade, o que permite que os clientes implantem suas
+aplicações e dados em múltiplas zonas para garantir a continuidade dos negócios e a recuperação de desastres. A AWS tem regiões em todo o mundo, incluindo
+América do Norte, América do Sul, Europa, Ásia-Pacífico, Oriente Médio e África. Cada região é composta por pelo menos duas zonas de disponibilidade, e algumas
+regiões têm até seis zonas de disponibilidade. A AWS também oferece serviços globais, como o Amazon CloudFront, que é uma rede de entrega de conteúdo (CDN) que
+distribui conteúdo para os usuários finais com baixa latência e alta transferência de dados. A AWS é projetada para fornecer alta disponibilidade e resiliência,
+e os clientes podem escolher a região e as zonas de disponibilidade que melhor atendem às suas necessidades de negócios e requisitos de conformidade. A AWS
+também oferece recursos de replicação e backup para garantir a proteção dos dados e a continuidade dos negócios em caso de falhas ou desastres. Um exemplo de
+região da AWS é a região "us-east-1", que está localizada na Virgínia do Norte, nos Estados Unidos. Esta região é composta por várias zonas de disponibilidade,
+incluindo "us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d" e "us-east-1e". Cada zona de disponibilidade é um data center isolado e independente, projetado
+para fornecer alta disponibilidade e resiliência para os clientes da AWS. Os clientes podem escolher implantar suas aplicações e dados em múltiplas zonas de
+disponibilidade dentro da região "us-east-1" para garantir a continuidade dos negócios e a recuperação de desastres. A região "us-east-1" é uma das regiões mais
+populares da AWS, devido à sua proximidade com a maioria dos clientes e à ampla gama de serviços disponíveis. A AWS tem regiões em todo o mundo, e os clientes
+podem escolher a região que melhor atende às suas necessidades de negócios e requisitos de conformidade. A AWS também oferece recursos de replicação e backup
+para garantir a proteção dos dados e a continuidade dos negócios em caso de falhas ou desastres. Cada região da AWS tem no mínimo duas zonas de disponibilidade,
+e algumas regiões têm até seis zonas de disponibilidade. Na AWS existe também os conceitos de **Edge Locations, Local Zones e Wavelength Zones**, que são usados
+para fornecer baixa latência e alta transferência de dados para os usuários finais. As Edge Locations são pontos de presença que estão localizados em todo o
+mundo e são usados para entregar conteúdo para os usuários finais com baixa latência e alta transferência de dados. As Local Zones são zonas de disponibilidade
+que estão localizadas em áreas metropolitanas e são usadas para fornecer baixa latência e alta transferência de dados para os usuários finais. As Wavelength
+Zones são zonas de disponibilidade que estão localizadas em áreas metropolitanas e são usadas para fornecer baixa latência e alta transferência de dados para os
+usuários finais, especialmente para aplicações de 5G. A AWS é projetada para fornecer alta disponibilidade e resiliência, e os clientes podem escolher a região
+e as zonas de disponibilidade que melhor atendem às suas necessidades de negócios e requisitos de conformidade.
+
+## AWS S3
+
+O Amazon S3 (Simple Storage Service) é um serviço de armazenamento de objetos da AWS que oferece escalabilidade, disponibilidade e segurança para armazenar e
+recuperar qualquer quantidade de dados a qualquer momento e de qualquer lugar na web. O S3 é projetado para ser altamente durável, com uma durabilidade de
+99,999999999% (11 noves) e uma disponibilidade de 99,99%. O S3 é amplamente utilizado para armazenar e proteger dados, como arquivos de backup, arquivos de log,
+arquivos de mídia, arquivos de aplicativos e muito mais. O S3 é um serviço de armazenamento de objetos, o que significa que os dados são armazenados como
+objetos em um bucket. Cada objeto é composto por dados, metadados e uma chave exclusiva. Os buckets são usados para organizar os objetos e podem ser
+configurados com políticas de acesso, regras de ciclo de vida e outras opções para gerenciar os dados.
+
+### Classes de armazenamento do S3
+
+O S3 oferece várias classes de armazenamento para atender a diferentes necessidades de armazenamento e acesso. As classes de armazenamento do S3 incluem:
+
+- **S3 Standard:** A classe de armazenamento padrão do S3 é projetada para dados que são acessados com frequência e exigem alta durabilidade e disponibilidade.
+  Ela é ideal para armazenar arquivos de backup, arquivos de log, arquivos de mídia e outros dados que precisam ser acessados regularmente.
+- **S3 Intelligent-Tiering:** A classe de armazenamento inteligente do S3 é projetada para dados com padrões de acesso desconhecidos ou variáveis. Ela
+  monitora automaticamente os padrões de acesso aos objetos e move os objetos entre as camadas de armazenamento com base nesses padrões, otimizando os
+  custos de armazenamento.
+- **S3 Standard-IA (Infrequent Access):** A classe de armazenamento padrão para acesso infrequente do S3 é projetada para dados que são acessados com menos
+  frequência, mas ainda exigem alta durabilidade e disponibilidade. Ela é ideal para armazenar arquivos de backup, arquivos de log, arquivos de mídia e outros
+  dados que precisam ser acessados ocasionalmente.
+- **S3 One Zone-IA (Infrequent Access):** A classe de armazenamento de acesso infrequente em uma zona do S3 é projetada para dados que são acessados com menos
+  frequência e podem ser armazenados em uma única zona de disponibilidade. Ela é ideal para armazenar arquivos de backup, arquivos de log, arquivos de mídia e
+  outros dados que precisam ser acessados ocasionalmente, mas não exigem a mesma durabilidade e disponibilidade que as outras classes de armazenamento do S3.
+- **S3 Glacier:** A classe de armazenamento Glacier do S3 é projetada para dados que são acessados com pouca frequência e exigem arquivamento de longo prazo.
+  Ela é ideal para armazenar arquivos de backup, arquivos de log, arquivos de mídia e outros dados que precisam ser arquivados por um longo período de tempo,
+  mas não exigem acesso imediato. O S3 Glacier oferece opções de recuperação de dados em minutos ou horas, dependendo da urgência do acesso aos dados.
+- **S3 Glacier Instant Retrieval:** A classe de armazenamento Glacier Instant Retrieval do S3 é projetada para dados que são acessados com pouca frequência e
+  exigem
+  arquivamento de longo prazo, mas ainda precisam ser acessados rapidamente quando necessário. Ela é ideal para armazenar arquivos de backup, arquivos de log,
+  arquivos de mídia e outros dados que precisam ser arquivados por um longo período de tempo, mas exigem acesso imediato quando necessário. O S3 Glacier Instant
+  Retrieval oferece opções de recuperação de dados em minutos, permitindo que os usuários acessem seus dados rapidamente quando necessário.
+- **S3 Glacier Deep Archive:** A classe de armazenamento Glacier Deep Archive do S3 é projetada para dados que são acessados com muito pouca frequência e exigem
+  arquivamento de longo prazo. Ela é ideal para armazenar arquivos de backup, arquivos de log, arquivos de mídia e outros dados que precisam ser arquivados por
+  um longo período de tempo, mas não exigem acesso imediato. O S3 Glacier Deep Archive oferece opções de recuperação de dados em horas ou dias, dependendo da
+  urgência do acesso aos dados. O S3 Glacier Deep Archive é a opção mais econômica para arquivamento de longo prazo, mas tem um tempo de recuperação mais longo
+  em comparação com o S3 Glacier.
+
+Cada classe de armazenamento do S3 tem suas próprias características e casos de uso recomendados, e os clientes podem escolher a classe de armazenamento que
+melhor atende às suas necessidades de armazenamento e acesso. O S3 também oferece recursos de gerenciamento de ciclo de vida, que permitem que os clientes
+definam regras para mover objetos entre as classes de armazenamento com base em critérios como idade, data de criação ou data de última modificação. Caso deseje
+calcular o custo de armazenamento do S3, a AWS oferece uma calculadora de preços que permite estimar os custos com base na quantidade de dados armazenados, na
+classe de armazenamento escolhida e no número de solicitações feitas para acessar os dados. A calculadora de preços do S3 pode ser encontrada no site da AWS e é
+uma ferramenta útil para ajudar os clientes a entender os custos associados ao armazenamento de dados no S3 e a escolher a classe de armazenamento mais adequada
+para suas necessidades. Para acessar a calculadora de preços do S3, basta visitar o site da AWS e procurar por "AWS Pricing Calculator" ou acessar o
+link https://calculator.aws/#/addService.
+
+### Permissões e políticas do S3
+
+O S3 oferece um sistema de permissões e políticas para controlar o acesso aos buckets e objetos. As permissões do S3 são baseadas em políticas, que são
+documentos JSON que definem as ações permitidas ou negadas para um usuário, grupo ou função. As políticas do S3 podem ser aplicadas a buckets, objetos ou ambos,
+e podem ser usadas para conceder ou negar acesso a recursos específicos. As políticas do S3 podem ser criadas e gerenciadas usando o AWS Identity and Access
+Management (IAM), que é um serviço da AWS que permite gerenciar o acesso aos recursos da AWS. O IAM permite criar usuários, grupos e funções, e atribuir
+permissões a esses usuários, grupos e funções usando políticas. As políticas do S3 podem ser usadas para conceder acesso a recursos específicos, como buckets ou
+objetos, ou para conceder acesso a ações específicas, como ler, gravar ou excluir objetos. As políticas do S3 também podem ser usadas para conceder acesso a
+recursos específicos com base em condições, como o endereço IP do solicitante ou a hora do dia. O S3 também oferece recursos de controle de acesso baseados em
+ACLs (Access Control Lists), que permitem controlar o acesso a objetos individuais usando listas de controle de acesso. As ACLs do S3 permitem conceder ou negar
+acesso a objetos específicos para usuários ou grupos específicos, e podem ser usadas em conjunto com as políticas do S3 para fornecer um controle de acesso
+granular aos recursos do S3. O S3 é projetado para fornecer segurança robusta para os dados armazenados, e os clientes podem usar as políticas do S3 e as ACLs
+para controlar o acesso aos seus recursos de armazenamento de forma eficaz. Abaixo estão alguns exemplos de políticas do S3:
+
+Liberando acesso de leitura a um bucket específico:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::meu-bucket/*"
+      ]
+    }
+  ]
+}
+```
+
+Negando acesso de exclusão a um bucket específico:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Deny",
+      "Action": [
+        "s3:DeleteObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::meu-bucket/*"
+      ]
+    }
+  ]
+}
+```
+
+Concedendo acesso de gravação a um bucket específico, mas apenas para um intervalo de endereços IP específico:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::meu-bucket/*"
+      ],
+      "Condition": {
+        "IpAddress": {
+          "aws:SourceIp": [
+            "<IP_ADDRESS>/24"
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+Concedendo acesso de leitura a um bucket específico para todos os usuários:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::fillipefelix-bucket/*"
+    }
+  ]
+}
+```
+
+Esses são apenas alguns exemplos de políticas do S3, e os clientes podem criar políticas personalizadas para atender às suas necessidades específicas de
+controle de acesso.
+
+### Estrutura de URL do S3
+
+A estrutura de URL do S3 é usada para acessar os recursos do S3, como buckets e objetos. A estrutura de URL do S3 é composta por três partes principais: o
+protocolo, o nome do bucket e o caminho do objeto. A estrutura de URL do S3 é a seguinte:
+
+```https://<bucket-name>.s3.<region>.amazonaws.com/<object-key>
+```
+
+Onde:
+
+- `<bucket-name>` é o nome do bucket do S3 onde o objeto está armazenado
+- `<region>` é a região da AWS onde o bucket está localizado
+- `<object-key>` é o caminho do objeto dentro do bucket, que pode incluir subdiretórios e o nome do arquivo
+
+Por exemplo, se você tiver um bucket chamado "meu-bucket" localizado na região "us-east-1" e um objeto chamado "meu-arquivo.txt" armazenado nesse bucket, a URL
+para acessar esse objeto seria:
+
+```https://meu-bucket.s3.us-east-1.amazonaws.com/meu-arquivo.txt
+```
+
+### Versionamento de objetos no S3
+
+O versionamento de objetos no S3 é um recurso que permite manter várias versões de um objeto em um bucket. Quando o versionamento está habilitado para um
+bucket, cada vez que um objeto é criado ou modificado, uma nova versão do objeto é criada e armazenada no bucket. Isso permite que os clientes recuperem versões
+anteriores de um objeto, restaurando-o para um estado anterior, ou até mesmo excluam versões específicas de um objeto. O versionamento de objetos no S3 é útil
+para proteger contra exclusões acidentais, corrupção de dados e para manter um histórico de alterações em objetos importantes. O versionamento pode ser
+habilitado ou desabilitado para um bucket a qualquer momento, e os clientes podem escolher como gerenciar as versões dos objetos usando políticas de ciclo de
+vida e outras opções de gerenciamento de armazenamento.
+
+### Replicação de objetos no S3
+
+A replicação de objetos no S3 é um recurso que permite replicar objetos de um bucket para outro bucket em uma região diferente. A replicação de objetos no S3 é
+útil para melhorar a disponibilidade e a durabilidade dos dados, bem como para atender a requisitos de conformidade e regulamentação. A replicação de objetos no
+S3 pode ser configurada para replicar objetos automaticamente quando eles são criados ou modificados, ou pode ser configurada para replicar objetos manualmente
+usando a API do S3. A replicação de objetos no S3 é baseada em regras de replicação, que definem quais objetos devem ser replicados, para onde eles devem ser
+replicados e como eles devem ser gerenciados. As regras de replicação podem ser configuradas para replicar objetos com base em critérios como prefixo de chave,
+tags ou outras condições. A replicação de objetos no S3 é projetada para ser altamente durável e confiável, com uma durabilidade de 99,999999999% (11 noves) e
+uma disponibilidade de 99,99%.
