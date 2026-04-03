@@ -407,5 +407,46 @@ visitar o site da AWS e procurar por "AWS Pricing Calculator" ou acessar o link 
 significativamente com base no tipo de instância, região e modelo de preço escolhido, e os clientes podem usar a calculadora de preços da AWS para estimar os
 custos do EC2 com base em suas necessidades específicas de computação.
 
+### Security Groups do EC2
+
+Os Security Groups do EC2 são um recurso de segurança que atua como um firewall virtual para controlar o tráfego de entrada e saída das instâncias do EC2. Os
+Security Groups permitem que os clientes definam regras de segurança para suas instâncias do EC2, especificando quais tipos de tráfego são permitidos ou negados
+com base em critérios como protocolo, porta e endereço IP de origem ou destino. Os Security Groups do EC2 são associados a instâncias do EC2 e podem ser usados
+para controlar o acesso às instâncias, protegendo-as contra tráfego indesejado ou malicioso. Os clientes podem criar e gerenciar seus Security Groups usando o
+AWS Management Console, a AWS CLI ou as APIs do EC2. Os Security Groups do EC2 são projetados para fornecer segurança robusta para as instâncias do EC2, e os
+clientes podem usar as regras de segurança para controlar o acesso às suas instâncias de forma eficaz. Os Security Groups do EC2 são uma parte importante da
+estratégia de segurança de uma organização na nuvem da AWS, e os clientes devem usar as melhores práticas de segurança ao configurar seus Security Groups para
+garantir que suas instâncias do EC2 estejam protegidas contra ameaças de segurança. Algumas melhores práticas para configurar Security Groups do EC2 incluem:
+
+- **Permitir apenas o tráfego necessário:** Os clientes devem configurar seus Security Groups para permitir apenas o tráfego necessário para suas instâncias do
+  EC2, e negar todo o tráfego desnecessário ou indesejado. Isso pode ajudar a reduzir a superfície de ataque e proteger as instâncias contra ameaças de
+  segurança.
+- **Usar regras de segurança específicas:** Os clientes devem configurar suas regras de segurança para serem específicas e restritivas, em vez de usar regras
+  amplas que permitem tráfego de qualquer origem ou destino. Isso pode ajudar a reduzir o risco de tráfego indesejado ou malicioso atingir as instâncias do EC2.
+- **Usar endereços IP específicos:** Os clientes devem configurar suas regras de segurança para usar endereços IP específicos ou intervalos de endereços IP em
+  vez de permitir tráfego de qualquer endereço IP. Isso pode ajudar a reduzir o risco de tráfego indesejado ou malicioso atingir as instâncias do EC2.
+- **Revisar e atualizar regularmente as regras de segurança:** Os clientes devem revisar e atualizar regularmente suas regras de segurança para garantir que
+  elas estejam alinhadas com as necessidades de negócios e os requisitos de conformidade, e para garantir que as instâncias do EC2 estejam protegidas contra
+  ameaças de segurança em constante evolução. O AWS Security Hub é um serviço que pode ajudar os clientes a monitorar e gerenciar a segurança de suas instâncias
+  do EC2, fornecendo uma visão centralizada de alertas de segurança e conformidade, e permitindo que os clientes respondam rapidamente a ameaças de segurança. O
+  AWS Security Hub pode ser integrado com os Security Groups do EC2 para fornecer uma visão abrangente da segurança das instâncias do EC2 e ajudar os clientes a
+  identificar e responder a ameaças de segurança de forma eficaz.
+- **Usar VPCs para isolamento de rede:** Os clientes devem usar Virtual Private Clouds (VPCs) para isolar suas instâncias do EC2 em uma rede virtual privada, o
+  que pode ajudar a proteger as instâncias contra tráfego indesejado ou malicioso e fornecer um nível adicional de segurança para as instâncias do EC2. Os
+  clientes podem configurar suas VPCs para usar sub-redes, tabelas de roteamento e gateways de internet para controlar o tráfego de rede e proteger suas
+  instâncias do EC2 de forma eficaz. O AWS VPC é um serviço que permite que os clientes criem e gerenciem suas próprias redes virtuais na nuvem da AWS, e pode
+  ser usado em conjunto com os Security Groups do EC2 para fornecer uma estratégia de segurança robusta para as instâncias do EC2.
+- **Usar Network Access Control Lists (NACLs) para controle de tráfego adicional:** Os clientes podem usar NACLs para fornecer um nível adicional de controle de
+  tráfego para suas instâncias do EC2, permitindo que eles definam regras de segurança adicionais para controlar o tráfego de entrada e saída em suas VPCs. As
+  NACLs do EC2 são associadas a sub-redes em uma VPC e podem ser usadas para controlar o acesso às instâncias do EC2 com base em critérios como protocolo, porta
+  e endereço IP de origem ou destino. O uso de NACLs em conjunto com os Security Groups do EC2 pode ajudar a fornecer uma estratégia de segurança abrangente
+  para as instâncias do EC2, protegendo-as contra ameaças de segurança de forma eficaz.
+- **Usar AWS Identity and Access Management (IAM) para controle de acesso:** Os clientes devem usar o AWS IAM para controlar o acesso às suas instâncias do EC2,
+  garantindo que apenas usuários autorizados tenham acesso às instâncias e aos recursos associados. O IAM permite que os clientes criem usuários, grupos e
+  funções, e atribuam permissões a esses usuários, grupos e funções usando políticas. Os clientes podem usar o IAM para controlar o acesso às instâncias do EC2
+  com base em critérios como identidade do usuário, grupo ou função, e podem usar políticas para conceder ou negar acesso a recursos específicos, como
+  instâncias do EC2 ou ações específicas, como iniciar ou parar instâncias. O uso do IAM em conjunto com os Security Groups do EC2 pode ajudar a fornecer uma
+  estratégia de segurança abrangente para as instâncias do EC2, garantindo que apenas usuários autorizados tenham acesso às instâncias e aos recursos
+  associados.
 
 
