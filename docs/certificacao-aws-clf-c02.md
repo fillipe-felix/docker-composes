@@ -328,3 +328,84 @@ limites forem atingidos ou excedidos. O AWS Budgets é uma ferramenta útil para
 fatura da AWS. Os clientes podem criar orçamentos para custos totais, custos por serviço, uso total, uso por serviço e muito mais. O AWS Budgets também oferece
 recursos avançados, como a capacidade de criar orçamentos com base em tags, o que permite que os clientes monitorem seus custos e uso com base em categorias
 específicas, como departamentos, projetos ou equipes.
+
+## EC2
+
+O Amazon Elastic Compute Cloud (EC2) é um serviço de computação em nuvem da AWS que permite criar e gerenciar instâncias de máquinas virtuais (VMs) na nuvem. O
+EC2 é projetado para fornecer capacidade de computação escalável e flexível, permitindo que as organizações criem e gerenciem suas próprias instâncias de
+computação na nuvem da AWS. O EC2 oferece uma ampla variedade de tipos de instâncias, cada um otimizado para diferentes casos de uso, como computação geral,
+computação otimizada para memória, computação otimizada para armazenamento e computação otimizada para GPU. O EC2 também oferece recursos avançados, como
+balanceamento de carga, escalabilidade automática, monitoramento e segurança, para ajudar as organizações a gerenciar suas instâncias de computação de forma
+eficiente e segura. O EC2 é amplamente utilizado para uma variedade de casos de uso, incluindo hospedagem de aplicativos, processamento de dados,
+desenvolvimento e teste de software, e muito mais. O EC2 é uma opção popular para organizações que desejam usar a nuvem da AWS para suas necessidades de
+computação, mas ainda precisam de controle total sobre suas instâncias de computação e a capacidade de personalizar suas configurações de hardware e software. O
+EC2 é projetado para ser fácil de usar, com uma interface de usuário intuitiva e uma ampla variedade de ferramentas de gerenciamento, como o AWS Management
+Console, a AWS CLI e as APIs do EC2. Os clientes podem criar, configurar e gerenciar suas instâncias de computação usando essas ferramentas, e podem escolher
+entre uma variedade de sistemas operacionais, como Linux, Windows e muito mais.
+
+### Casos de uso do EC2
+
+- **Hospedagem de aplicativos:** O EC2 é amplamente utilizado para hospedar aplicativos na nuvem da AWS. Ele permite que as organizações criem e gerenciem suas
+  próprias instâncias de computação, o que é ideal para aplicativos que exigem controle total sobre o ambiente de hospedagem, como aplicativos personalizados ou
+  aplicativos legados.
+- **Processamento de dados:** O EC2 é uma opção popular para processamento de dados na nuvem da AWS. Ele permite que as organizações criem e gerenciem suas
+  próprias instâncias de computação, o que é ideal para cargas de trabalho de processamento de dados que exigem controle total sobre o ambiente de computação,
+  como processamento de big data, análise de dados e muito mais.
+- **Desenvolvimento e teste de software:** O EC2 é amplamente utilizado para desenvolvimento e teste de software na nuvem da AWS. Ele permite que as
+  organizações criem e gerenciem suas próprias instâncias de computação, o que é ideal para ambientes de desenvolvimento e teste que exigem controle total sobre
+  o ambiente de computação, como desenvolvimento de aplicativos personalizados, teste de software e muito mais.
+- **Hospedagem de sites:** O EC2 é uma opção popular para hospedagem de sites na nuvem da AWS. Ele permite que as organizações criem e gerenciem suas próprias
+  instâncias de computação, o que é ideal para sites que exigem controle total sobre o ambiente de hospedagem, como sites personalizados ou sites legados.
+- **Jogos online:** O EC2 é amplamente utilizado para jogos online na nuvem da AWS. Ele permite que as organizações criem e gerenciem suas próprias instâncias
+  de computação, o que é ideal para jogos online que exigem controle total sobre o ambiente de computação, como jogos personalizados ou jogos legados.
+- **Machine learning:** O EC2 é uma opção popular para machine learning na nuvem da AWS. Ele permite que as organizações criem e gerenciem suas próprias
+  instâncias de computação, o que é ideal para cargas de trabalho de machine learning que exigem controle total sobre o ambiente de computação, como treinamento
+  de modelos personalizados, inferência de modelos e muito mais. O EC2 oferece tipos de instâncias otimizados para machine learning, como as instâncias P3 e G4,
+  que são projetadas para fornecer alto desempenho para cargas de trabalho de machine learning. O EC2 também oferece integração com outros serviços de machine
+  learning da AWS, como o Amazon SageMaker, o que facilita a criação, treinamento e implantação de modelos de machine learning na nuvem da AWS. O EC2 é uma
+  opção popular para organizações que desejam usar a nuvem da AWS para suas necessidades de machine learning, mas ainda precisam de controle total sobre suas
+  instâncias de computação e a capacidade de personalizar suas configurações de hardware e software para atender às necessidades específicas de suas cargas de
+  trabalho de machine learning.
+
+### Tipos de instâncias do EC2
+
+O EC2 oferece uma ampla variedade de tipos de instâncias, cada um otimizado para diferentes casos de uso. Os tipos de instâncias do EC2 incluem:
+
+- **Instâncias de computação geral:** As instâncias de computação geral do EC2 são projetadas para fornecer um equilíbrio entre recursos de computação, memória
+  e armazenamento. Elas são ideais para uma ampla variedade de casos de uso, como hospedagem de aplicativos, desenvolvimento e teste de software, e muito mais.
+- **Instâncias otimizadas para memória:** As instâncias otimizadas para memória do EC2 são projetadas para fornecer uma grande quantidade de memória em relação
+  à capacidade de computação. Elas são ideais para cargas de trabalho que exigem muita memória, como bancos de dados em memória, cache de dados e muito mais.
+- **Instâncias otimizadas para armazenamento:** As instâncias otimizadas para armazenamento do EC2 são projetadas para fornecer uma grande quantidade de
+  armazenamento em relação à capacidade de computação. Elas são ideais para cargas de trabalho que exigem muito armazenamento, como bancos de dados, data
+  warehouses e muito mais.
+- **Instâncias otimizadas para GPU:** As instâncias otimizadas para GPU do EC2 são projetadas para fornecer alto desempenho para cargas de trabalho que exigem
+  processamento gráfico intensivo, como machine learning, renderização de vídeo e muito mais. Elas são equipadas com unidades de processamento gráfico (GPUs)
+  que podem acelerar significativamente o desempenho de cargas de trabalho que exigem processamento gráfico intensivo.
+- **Instâncias otimizadas para computação:** As instâncias otimizadas para computação do EC2 são projetadas para fornecer alto desempenho de computação em
+  relação à memória e ao armazenamento. Elas são ideais para cargas de trabalho que exigem muita computação, como processamento de big data, análise de dados e
+  muito mais. As instâncias otimizadas para computação do EC2 são equipadas com processadores de última geração que podem fornecer alto desempenho para cargas
+  de trabalho que exigem muita computação, como as instâncias C5 e C6. O EC2 oferece uma ampla variedade de tipos de instâncias para atender às necessidades
+  específicas de cada organização, e os clientes podem escolher o tipo de instância que melhor atende às suas necessidades de negócios e requisitos de
+  conformidade. Os clientes também podem usar o recurso de escalabilidade automática do EC2 para ajustar automaticamente a capacidade de computação com base na
+  demanda, o que pode ajudar a otimizar os custos e garantir que as cargas de trabalho tenham os recursos de computação necessários para funcionar de forma
+  eficiente. O EC2 é uma opção popular para organizações que desejam usar a nuvem da AWS para suas necessidades de computação, mas ainda precisam de controle
+  total sobre suas instâncias de computação e a capacidade de personalizar suas configurações de hardware e software para atender às necessidades específicas de
+  suas cargas de trabalho.
+
+### Preços do EC2
+
+O preço do EC2 é baseado em vários fatores, incluindo o tipo de instância, a região onde a instância está localizada, o sistema operacional usado e o modelo de
+preço escolhido. O EC2 oferece vários modelos de preço, incluindo On-Demand, Reserved Instances, Savings Plans e Spot Instances. O modelo de preço On-Demand do
+EC2 é o modelo de preço padrão, onde os clientes pagam por hora ou por segundo (dependendo do tipo de instância) pelo uso da instância. O modelo de preço
+Reserved Instances do EC2 permite que os clientes reservem capacidade de computação por um período de um ou três anos, com descontos significativos em
+comparação com o modelo de preço On-Demand. O modelo de preço Savings Plans do EC2 é um modelo de preço flexível que oferece descontos em troca de um
+compromisso de uso por um período de um ou três anos. O modelo de preço Spot Instances do EC2 permite que os clientes aproveitem a capacidade de computação não
+utilizada da AWS a preços significativamente reduzidos, mas com a possibilidade de interrupção da instância se a capacidade for necessária para outros clientes.
+A calculadora de preços do EC2 pode ser encontrada no site da AWS e é uma ferramenta útil para ajudar os clientes a entender os custos associados ao uso do EC2
+e a escolher o modelo de preço mais adequado para suas necessidades de negócios e requisitos de conformidade. Para acessar a calculadora de preços do EC2, basta
+visitar o site da AWS e procurar por "AWS Pricing Calculator" ou acessar o link https://calculator.aws/#/addService. O preço do EC2 pode variar
+significativamente com base no tipo de instância, região e modelo de preço escolhido, e os clientes podem usar a calculadora de preços da AWS para estimar os
+custos do EC2 com base em suas necessidades específicas de computação.
+
+
+
