@@ -315,3 +315,16 @@ DataSync, o AWS Transfer Family e o AWS Database Migration Service (DMS). Esses 
 nuvem da AWS de forma eficiente e segura, independentemente do tamanho ou complexidade dos dados. A AWS oferece uma variedade de opções de migração de dados
 para atender às necessidades específicas de cada organização, e os clientes podem escolher a opção que melhor atende às suas necessidades de negócios e
 requisitos de conformidade.
+
+## Billing e Budgets
+
+O AWS Billing é um serviço que permite que os clientes da AWS monitorem e gerenciem seus custos e uso dos serviços da AWS. Ele fornece uma visão detalhada dos
+custos e uso dos serviços da AWS, permitindo que os clientes identifiquem áreas de gasto excessivo, otimizem seus custos e planejem seu orçamento de forma
+eficaz. O AWS Billing oferece uma variedade de recursos, incluindo relatórios de custos e uso, alertas de orçamento, análise de custos e uso, e muito mais. Os
+clientes podem usar o AWS Billing para monitorar seus custos e uso em tempo real, identificar tendências de gastos e tomar decisões informadas sobre como
+otimizar seus custos na nuvem da AWS. O AWS Budgets é um recurso do AWS Billing que permite que os clientes criem orçamentos personalizados para monitorar seus
+custos e uso dos serviços da AWS. Com o AWS Budgets, os clientes podem definir limites de orçamento para seus custos e uso,e receber alertas quando esses
+limites forem atingidos ou excedidos. O AWS Budgets é uma ferramenta útil para ajudar os clientes a manterem seus custos sob controle e evitar surpresas na
+fatura da AWS. Os clientes podem criar orçamentos para custos totais, custos por serviço, uso total, uso por serviço e muito mais. O AWS Budgets também oferece
+recursos avançados, como a capacidade de criar orçamentos com base em tags, o que permite que os clientes monitorem seus custos e uso com base em categorias
+específicas, como departamentos, projetos ou equipes.
