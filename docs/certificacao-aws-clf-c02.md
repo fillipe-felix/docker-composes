@@ -39,6 +39,19 @@ pública para cargas de trabalho menos críticas. A nuvem híbrida oferece flexi
 mudanças nas demandas de negócios e aproveitem as inovações tecnológicas. A nuvem híbrida é ideal para organizações que desejam equilibrar segurança, controle e
 escalabilidade, como empresas de comércio eletrônico ou de mídia.
 
+Acima estão os três tipos de cloud computting, mas também existe três tipos de cloud, que são:
+
+- **IaaS (Infrastructure as a Service):** A infraestrutura como serviço é um modelo de computação em nuvem onde os recursos de computação, como servidores,
+  armazenamento e redes, são fornecidos como um serviço pela nuvem. Os usuários podem provisionar e gerenciar esses recursos de forma flexível, pagando apenas
+  pelo que usam. Exemplos de provedores de IaaS incluem Amazon Web Services (AWS), Microsoft Azure e Google Cloud Platform (GCP).
+- **PaaS (Platform as a Service):** A plataforma como serviço é um modelo de computação em nuvem onde os usuários podem desenvolver, implantar e gerenciar
+  aplicativos sem se preocupar com a infraestrutura subjacente. Os provedores de PaaS oferecem uma plataforma completa para desenvolvimento de aplicativos,
+  incluindo ferramentas de desenvolvimento, bancos de dados, middleware e muito mais. Exemplos de provedores de PaaS incluem Heroku, Google App Engine e
+  Microsoft Azure App Service.
+- **SaaS (Software as a Service):** O software como serviço é um modelo de computação em nuvem onde os aplicativos são fornecidos como um serviço pela nuvem. Os
+  usuários podem acessar esses aplicativos pela internet, sem precisar se preocupar com a instalação, manutenção ou atualização do software. Exemplos de
+  provedores de SaaS incluem Salesforce, Google Workspace e Microsoft Office 365.
+
 ### Vantagens do cloud computing
 
 - **Escalabilidade:** O cloud computing permite que as organizações dimensionem seus recursos de computação para atender às demandas de negócios em tempo real.
@@ -84,6 +97,23 @@ que estão localizadas em áreas metropolitanas e são usadas para fornecer baix
 Zones são zonas de disponibilidade que estão localizadas em áreas metropolitanas e são usadas para fornecer baixa latência e alta transferência de dados para os
 usuários finais, especialmente para aplicações de 5G. A AWS é projetada para fornecer alta disponibilidade e resiliência, e os clientes podem escolher a região
 e as zonas de disponibilidade que melhor atendem às suas necessidades de negócios e requisitos de conformidade.
+
+### Planos de suporte da AWS
+
+A AWS oferece quatro planos de suporte para atender às necessidades de diferentes tipos de clientes:
+
+- **Basic:** O plano Basic é gratuito e inclui acesso ao suporte técnico 24/7 para problemas relacionados à conta e faturamento, bem como acesso à documentação
+  e fóruns de suporte da AWS.
+- **Developer:** O plano Developer é projetado para desenvolvedores individuais e pequenas equipes, oferecendo suporte técnico 24/7 para problemas relacionados
+  a desenvolvimento, além de acesso a recursos de treinamento e suporte para aplicativos.
+- **Business:** O plano Business é voltado para empresas de médio porte, oferecendo suporte técnico 24/7 para problemas relacionados a produção, além de acesso
+  a recursos de treinamento, suporte para aplicativos e um gerente de conta técnico dedicado.
+- **Enterprise:** O plano Enterprise é projetado para grandes empresas e organizações, oferecendo suporte técnico 24/7 para problemas relacionados a produção,
+  além de acesso a recursos de treinamento, suporte para aplicativos, um gerente de conta técnico dedicado e acesso a um arquiteto de soluções da AWS.
+
+Cada plano de suporte tem seus próprios preços e benefícios, e os clientes podem escolher o plano que melhor atende às suas necessidades de negócios e
+requisitos de conformidade. O plano de suporte da AWS é uma parte importante da experiência do cliente, e os clientes podem contar com o suporte técnico da AWS
+para ajudá-los a resolver problemas, otimizar seus recursos e garantir a continuidade dos negócios na nuvem da AWS.
 
 ## AWS S3
 
